@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\TipoUsuario;
 
 class UserController extends Controller
 {
@@ -32,7 +33,8 @@ class UserController extends Controller
     {
         return view('admin/users.form', [
             'is_editing' => false,
-            'user' => new User
+            'user' => new User,
+            'listaTipo' => TipoUsuario::all()
         ]);
     }
 
@@ -45,18 +47,28 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $name = $request->input('nombre');
-        $email = $request->input('correo', '');
+        $email = $request->input('correo');
         $password = Hash::make($request->input('password', 'P@ssw0rd'));
+        $tipo_usuario = $request->input('tipo_usuario');
+        $tipo_estado = $request->input('tipo_estado');
         $user = User::where('email', $email)->get();
-
         if ($user->count() > 0) {
             return redirect("/usuarios?error=user_exists");
+        }
+        if ($tipo_usuario <1 || $tipo_usuario >3){
+            $tipo_usuario = null;
+        }
+        if ($tipo_estado <1 || $tipo_estado >2){
+            $tipo_estado = 2;
         }
         $usuario = new User;
         $usuario->name = $name;
         $usuario->email = $email;
         $usuario->password = $password;
+        $usuario->tipo_usuario_id = $tipo_usuario;
+        $usuario->tipo_estado_id = $tipo_estado;
         $usuario->save();
+        return redirect("/usuarios?ok=create");
     }
 
     /**
@@ -81,7 +93,8 @@ class UserController extends Controller
         $user = User::find($id);
         return view('admin/users.form', [
             'user' => $user,
-            'is_editing' => true
+            'is_editing' => true,
+            'listaTipo' => TipoUsuario::all()
         ]);
     }
 
@@ -94,7 +107,29 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $usuario = User::find($id);
+        $name = $request->input('nombre');
+        $email = $request->input('correo');
+        $tipo_usuario = $request->input('tipo_usuario');
+        $tipo_estado = $request->input('tipo_estado');
+        $user = User::where('email', $email)->where('email','<>',$usuario->email)->get();
+
+        if ($user->count() > 0) {
+            return redirect('/usuarios?error=user_exists');
+        }
+
+        if ($tipo_usuario <1 || $tipo_usuario >3){
+            $tipo_usuario = null;
+        }
+        if ($tipo_estado <1 || $tipo_estado >2){
+            $tipo_estado = 2;
+        }
+        $usuario->name = $name;
+        $usuario->email = $email;
+        $usuario->tipo_usuario_id = $tipo_usuario;
+        $usuario->tipo_estado_id = $tipo_estado;
+        $usuario->save();
+        return redirect('/usuarios?ok=update');
     }
 
     /**

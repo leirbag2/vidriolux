@@ -18,25 +18,8 @@
                                 <div class="form">
                                     <div class="md:flex md:flex-row md:space-x-4 w-full text-xs">
                                         <div class="mb-3 md:space-y-2 w-full text-xs">
-                                            <label class="font-semibold text-gray-600 py-2">Rut <abbr title="obligatorio">*</abbr></label>
-                                            <input placeholder="Rut" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="rut" id="user_rut" value="{{ $user->rut }}">
-                                            <p class="text-red text-xs hidden">Please fill out this field.</p>
-                                        </div>
-                                        <div class="mb-3 md:space-y-2 w-full text-xs">
-                                            <label class="font-semibold text-gray-600 py-2">Nombre <abbr title="obligatorio">*</abbr></label>
+                                            <label class="font-semibold text-gray-600 py-2">Nombre<abbr title="obligatorio">*</abbr></label>
                                             <input placeholder="Nombre" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="nombre" id="user_name" value="{{ $user->name }}">
-                                            <p class="text-red text-xs hidden">Please fill out this field.</p>
-                                        </div>
-                                    </div>
-                                    <div class="md:flex md:flex-row md:space-x-4 w-full text-xs">
-                                        <div class="mb-3 md:space-y-2 w-full text-xs">
-                                            <label class="font-semibold text-gray-600 py-2">Apellido Paterno<abbr title="obligatorio">*</abbr></label>
-                                            <input placeholder="Apellido paterno" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="apellidoPaterno" id="user_apellidoPaterno" value="{{ $user->apellidoPaterno }}">
-                                            <p class="text-red text-xs hidden">Please fill out this field.</p>
-                                        </div>
-                                        <div class="mb-3 md:space-y-2 w-full text-xs">
-                                            <label class="font-semibold text-gray-600 py-2">Apellido Materno<abbr title="obligatorio">*</abbr></label>
-                                            <input placeholder="Apellido materno" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="apellidoMaterno" id="user_apellidoMaterno" value="{{ $user->apellidoMaterno }}">
                                             <p class="text-red text-xs hidden">Please fill out this field.</p>
                                         </div>
                                     </div>
@@ -44,6 +27,26 @@
                                         <div class="w-full flex flex-col mb-3">
                                             <label class="font-semibold text-gray-600 py-2">Correo<abbr title="obligatorio">*</abbr></label>
                                             <input placeholder="Correo" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="correo" id="user_mail" value="{{$user->email}}">
+                                        </div>
+                                    </div>
+                                    <div class="md:flex md:flex-row md:space-x-4 w-full text-xs">
+                                        <div class="w-full flex flex-col mb-3">
+                                            <label class="font-semibold text-gray-600 py-2">Tipo de usuario<abbr title="obligatorio">*</abbr></label>
+                                            <select class="block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4 md:w-full " required="required" name="tipo_usuario" id="tipo_usuario">
+                                                <option value="0">Seleccione un tipo de usuario</option>
+                                                @foreach ($listaTipo as $tipo)
+                                                <option value="{{$tipo->id}}" {{($user->tipo_usuario_id == $tipo->id) ? 'selected':'' }}> {{$tipo->descripcionTipo}}</option>
+                                                @endforeach
+                                            </select>
+                                            <p class="text-sm text-red-500 hidden mt-3" id="error">Por favor, completa este campo.</p>
+                                        </div>
+                                        <div class="w-full flex flex-col mb-3">
+                                            <label class="font-semibold text-gray-600 py-2">Estado<abbr title="obligatorio">*</abbr></label>
+                                            <select class="block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4 md:w-full " required="required" name="tipo_estado" id="tipo_estado">
+                                                <option value="1" {{($user->tipo_estado_id == 1) ? 'selected':'' }} >Habilitado</option>
+                                                <option value="2" {{($user->tipo_estado_id == 2) ? 'selected':'' }} >Deshabilitado</option>
+                                            </select>
+                                            <p class="text-sm text-red-500 hidden mt-3" id="error">Por favor, completa este campo.</p>
                                         </div>
                                     </div>
                                     <p class="text-xs text-red-500 text-right my-3">Los campos obligatorios están marcados con un asterisco <abbr title="Campo obligatorio">*</abbr></p>

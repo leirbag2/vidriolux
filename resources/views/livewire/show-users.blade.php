@@ -12,6 +12,8 @@
                 <th class="py-3 px-6 text-left">ID</th>
                 <th class="py-3 px-6 text-left">Nombre</th>
                 <th class="py-3 px-6 text-center">Correo</th>
+                <th class="py-3 px-6 text-center">Tipo</th>
+                <th class="py-3 px-6 text-center">Estado</th>
                 <th class="py-3 px-6 text-center">Acciones</th>
             </tr>
         </thead>
@@ -36,6 +38,20 @@
                     <div class="flex items-center justify-center">
                         <div class="mr-2">
                             <span class="font-medium">{{ $user->email }}</span>
+                        </div>
+                    </div>
+                </td>
+                <td class="py-3 px-6 text-center">
+                    <div class="flex items-center justify-center">
+                        <div class="mr-2">
+                            <span class="font-medium">{{ $user->tipo->descripcionTipo }}</span>
+                        </div>
+                    </div>
+                </td>
+                <td class="py-3 px-6 text-center">
+                    <div class="flex items-center justify-center">
+                        <div class="mr-2">
+                            <span class="font-medium">{{ $user->estado->descripcionEstado }}</span>
                         </div>
                     </div>
                 </td>
