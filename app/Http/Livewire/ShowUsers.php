@@ -18,6 +18,7 @@ class ShowUsers extends Component
 
     public function render()
     {
-        return view('livewire.show-users',['lista' => User::where('name','LIKE','%'.$this->search.'%')->orWhere('email','LIKE','%'.$this->search.'%')->paginate(12)]  );
+        $users = User::where('name','LIKE','%'.$this->search.'%')->orWhere('email','LIKE','%'.$this->search.'%')->paginate(12);
+        return view('livewire.show-users',compact('users'));
     }
 }

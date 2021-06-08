@@ -22,7 +22,7 @@
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-                @foreach ($lista as $user)
+                @foreach ($users as $user)
                     <tr class="hover:bg-gray-100">
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm font-medium text-gray-900">
@@ -85,5 +85,5 @@
             </tbody>
         </table>
     </x-table>
-    {{ $lista->links() }}
+    {{ $users->links() }}
 </div>

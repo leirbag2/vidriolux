@@ -19,7 +19,7 @@ class CreateHistorialTable extends Migration
             $table->unsignedBigInteger('productos_id');
             $table->foreign('productos_id')->references('id')->on('productos')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('cantidad');
-            $table->date('fecha');
+            $table->timestamps();
         });
     }
 

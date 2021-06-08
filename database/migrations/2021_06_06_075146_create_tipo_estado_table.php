@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\DB;
 
 class CreateTipoEstadoTable extends Migration
 {
@@ -18,13 +17,6 @@ class CreateTipoEstadoTable extends Migration
             $table->id();
             $table->string('descripcionEstado');
         });
-
-        DB::table('tipo_estado')->insert(
-            array(
-                ['descripcionEstado' => 'Habilitado'],
-                ['descripcionEstado' => 'Deshabilitado']
-            )
-        );
     }
 
     /**
