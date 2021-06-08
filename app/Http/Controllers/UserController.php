@@ -5,10 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use App\Models\TipoUsuario;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('can:usuarios.index')->only('index');
+        $this->middleware('can:usuarios.create')->only('create');
+        $this->middleware('can:usuarios.edit')->only('edit','update');
+        $this->middleware('can:usuarios.destroy')->only('destroy');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -30,8 +39,9 @@ class UserController extends Controller
     {
         return view('admin/users.form', [
             'is_editing' => false,
-            'user' => new User,
-            'listaTipo' => TipoUsuario::all()
+            'roles' => Role::all(),
+            'permissions' => Permission::all(),
+            'user' => new User
         ]);
     }
 
@@ -46,14 +56,10 @@ class UserController extends Controller
         $name = $request->input('nombre');
         $email = $request->input('correo');
         $password = Hash::make($request->input('password', 'P@ssw0rd'));
-        $tipo_usuario = $request->input('tipo_usuario');
         $tipo_estado = $request->input('tipo_estado');
         $user = User::where('email', $email)->get();
         if ($user->count() > 0) {
             return redirect("/usuarios?error=user_exists");
-        }
-        if ($tipo_usuario <1 || $tipo_usuario >3){
-            $tipo_usuario = null;
         }
         if ($tipo_estado <1 || $tipo_estado >2){
             $tipo_estado = 2;
@@ -62,8 +68,9 @@ class UserController extends Controller
         $usuario->name = $name;
         $usuario->email = $email;
         $usuario->password = $password;
-        $usuario->tipo_usuario_id = $tipo_usuario;
         $usuario->tipo_estado_id = $tipo_estado;
+        $usuario->roles()->sync($request->roles);
+        $usuario->syncPermissions($request->permissions);
         $usuario->save();
         return redirect("/usuarios?ok=create");
     }
@@ -87,11 +94,11 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
         return view('admin/users.form', [
-            'user' => $user,
-            'is_editing' => true,
-            'listaTipo' => TipoUsuario::all()
+            'user' => User::find($id),
+            'roles' => Role::all(),
+            'permissions' => Permission::all(),
+            'is_editing' => true
         ]);
     }
 
@@ -107,7 +114,6 @@ class UserController extends Controller
         $usuario = User::find($id);
         $name = $request->input('nombre');
         $email = $request->input('correo');
-        $tipo_usuario = $request->input('tipo_usuario');
         $tipo_estado = $request->input('tipo_estado');
         $user = User::where('email', $email)->where('email','<>',$usuario->email)->get();
 
@@ -115,15 +121,13 @@ class UserController extends Controller
             return redirect('/usuarios?error=user_exists');
         }
 
-        if ($tipo_usuario <1 || $tipo_usuario >3){
-            $tipo_usuario = null;
-        }
         if ($tipo_estado <1 || $tipo_estado >2){
             $tipo_estado = 2;
         }
+        $usuario->syncPermissions($request->permissions);
+        $usuario->roles()->sync($request->roles);
         $usuario->name = $name;
         $usuario->email = $email;
-        $usuario->tipo_usuario_id = $tipo_usuario;
         $usuario->tipo_estado_id = $tipo_estado;
         $usuario->save();
         return redirect('/usuarios?ok=update');

@@ -10,7 +10,6 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
-use App\Models\TipoUsuario;
 use App\Models\TipoEstado;
 
 
@@ -65,15 +64,6 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function getTipoAttribute() {
-        $tipo = TipoUsuario::firstWhere('id', $this->tipo_usuario_id);
-        if ($tipo == null){
-            $tipo = new TipoUsuario;
-            $tipo->descripcionTipo = 'No asignado';
-            return $tipo;
-        }
-        return $tipo;
-    }
     public function getEstadoAttribute() {
         return TipoEstado::firstWhere('id', $this->tipo_estado_id);
     }

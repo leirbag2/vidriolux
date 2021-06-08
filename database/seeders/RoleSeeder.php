@@ -19,29 +19,30 @@ class RoleSeeder extends Seeder
         $bodeguero = Role::create(['name'=>'Bodeguero']);
         $vendedor = Role::create(['name'=>'Vendedor']);
 
-        Permission::create(['name' => 'usuarios.index'])->assignRole($admin);
-        Permission::create(['name' => 'usuarios.create'])->assignRole($admin);
-        Permission::create(['name' => 'usuarios.edit'])->assignRole($admin);
-        Permission::create(['name' => 'usuarios.destroy'])->assignRole($admin);
+        Permission::create(['name' => 'usuarios.index', 'description' => 'Ver usuarios'])->assignRole($admin);
+        Permission::create(['name' => 'usuarios.create', 'description' => 'Crear usuarios'])->assignRole($admin);
+        Permission::create(['name' => 'usuarios.edit', 'description' => 'Modificar usuarios'])->assignRole($admin);
+        Permission::create(['name' => 'usuarios.destroy', 'description' => 'Eliminar usuarios'])->assignRole($admin);
 
-        Permission::create(['name' => 'productos.index'])->syncRoles([$admin,$bodeguero,$vendedor]);
-        Permission::create(['name' => 'productos.create'])->assignRole($admin);
-        Permission::create(['name' => 'productos.edit'])->assignRole($admin);
+        Permission::create(['name' => 'productos.index', 'description' => 'Ver productos'])->syncRoles([$admin,$bodeguero,$vendedor]);
+        Permission::create(['name' => 'productos.create', 'description' => 'Modificar productos'])->assignRole($admin);
+        Permission::create(['name' => 'productos.edit', 'description' => 'Eliminar productos'])->assignRole($admin);
 
-        Permission::create(['name' => 'categorias.index'])->syncRoles([$admin,$bodeguero,$vendedor]);
-        Permission::create(['name' => 'categorias.create'])->assignRole($admin);
-        Permission::create(['name' => 'categorias.edit'])->assignRole($admin);
-        Permission::create(['name' => 'categorias.destroy'])->assignRole($admin);
+        Permission::create(['name' => 'categorias.index', 'description' => 'Ver categorias'])->syncRoles([$admin,$bodeguero,$vendedor]);
+        Permission::create(['name' => 'categorias.create', 'description' => 'Crear categorias'])->assignRole($admin);
+        Permission::create(['name' => 'categorias.edit', 'description' => 'Modificar categorias'])->assignRole($admin);
+        Permission::create(['name' => 'categorias.destroy', 'description' => 'Eliminar categorias'])->assignRole($admin);
 
-        Permission::create(['name' => 'ventas.index'])->syncRoles([$admin,$vendedor]);
-        Permission::create(['name' => 'ventas.create'])->syncRoles([$admin,$vendedor]);
-        Permission::create(['name' => 'ventas.edit'])->assignRole($admin);
-        Permission::create(['name' => 'ventas.destroy'])->assignRole($admin);
+        Permission::create(['name' => 'ventas.index', 'description' => 'Ver ventas'])->syncRoles([$admin,$vendedor]);
+        Permission::create(['name' => 'ventas.create', 'description' => 'Crear ventas'])->syncRoles([$admin,$vendedor]);
+        Permission::create(['name' => 'ventas.edit', 'description' => 'Modificar ventas'])->assignRole($admin);
+        Permission::create(['name' => 'ventas.destroy', 'description' => 'Eliminar ventas'])->assignRole($admin);
 
-        Permission::create(['name' => 'historial.index'])->syncRoles([$admin,$bodeguero]);
-        Permission::create(['name' => 'historial.create'])->syncRoles([$admin,$bodeguero]);
-        Permission::create(['name' => 'historial.edit'])->assignRole($admin);
-        Permission::create(['name' => 'reportes.index'])->assignRole($admin);
+        Permission::create(['name' => 'historial.index', 'description' => 'Ver historial de actualización de stock'])->syncRoles([$admin,$bodeguero]);
+        Permission::create(['name' => 'historial.create', 'description' => 'Ingresar/Retirar productos de bodega'])->syncRoles([$admin,$bodeguero]);
+        Permission::create(['name' => 'historial.edit', 'description' => 'Modificar historial'])->assignRole($admin);
+        Permission::create(['name' => 'historial.destroy', 'description' => 'Eliminar historial'])->assignRole($admin);
+        Permission::create(['name' => 'reportes.index', 'description' => 'Ver reportes'])->assignRole($admin);
 
     }
 }

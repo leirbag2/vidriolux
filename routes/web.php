@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +24,3 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     })->name('dashboard');
     Route::resource('usuarios',UserController::class);
 });
-require __DIR__.'/auth.php';

@@ -1,11 +1,13 @@
 <div>
     <div class="flex relative mt-1">
-        <div class="flex-none mr-10">
-            <a href="/usuarios/create" type="button"
-                class="focus:outline-none text-white text-sm py-3 px-5 rounded-md bg-blue-500 hover:bg-blue-600 hover:shadow-lg">Agregar
-                usuario</a>
-        </div>
-
+        @can('usuarios.create')
+            <div class="flex-none mr-10">
+                <a href="/usuarios/create" type="button"
+                    class="focus:outline-none text-white text-sm py-3 px-5 rounded-md bg-blue-500 hover:bg-blue-600 hover:shadow-lg">
+                    Agregar usuario
+                </a>
+            </div>
+        @endcan
         <input type="text" id="password"
             class="w-full pl-3 pr-10 py-2 border-2 border-gray-200 rounded-xl hover:border-gray-300 focus:outline-none focus:border-blue-500 transition-colors"
             placeholder="Buscar" wire:model="search" type="search">
@@ -16,9 +18,11 @@
                 <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal font-bold">
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Nombre</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Correo</th>
-                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Tipo</th>
+                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Tipo de usuario</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Estado</th>
+                    @canany(['usuarios.edit','usuarios.destroy'])
                     <th scope="col" class="px-6 py-3 text-center uppercase tracking-wider">Acciones</th>
+                    @endcanany
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -36,7 +40,7 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">
-                                {{ $user->tipo->descripcionTipo }}
+                                {{ count($user->getRoleNames()) > 0 ? $user->getRoleNames()[0] : 'Sin rol' }}
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
@@ -44,6 +48,7 @@
                                 {{ $user->estado->descripcionEstado }}
                             </div>
                         </td>
+                        @canany(['usuarios.edit','usuarios.destroy'])
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex item-center justify-center">
                                 <!--div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
@@ -54,8 +59,9 @@
                                 </svg>
                             </a>
                         </div-->
+                                @can('usuarios.edit')
                                 <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                    <a href="/usuarios/{{ $user->id }}/edit">
+                                    <a href="{{ route('usuarios.edit', $user) }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -63,6 +69,8 @@
                                         </svg>
                                     </a>
                                 </div>
+                                @endcan
+                                @can('usuarios.destroy')
                                 <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                                     <a href="/usuarios/{{ $user->id }}/delete"
                                         onclick="event.preventDefault(); document.getElementById('delete-form-{{ $user->id }}').submit();">
@@ -78,8 +86,10 @@
                                     @csrf
                                     <input name="_method" type="hidden" value="DELETE">
                                 </form>
+                                @endcan
                             </div>
                         </td>
+                        @endcanany
                     </tr>
                 @endforeach
             </tbody>
