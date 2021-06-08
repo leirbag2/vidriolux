@@ -16,11 +16,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $lista = User::all();
-        $cantidad = $lista->count();
         return view('admin/users.users', [
-            'lista' => $lista,
-            'cantidad' => $cantidad
+            'cantidad' => User::all()->count()
         ]);
     }
 

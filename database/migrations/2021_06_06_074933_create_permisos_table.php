@@ -21,17 +21,20 @@ class CreatePermisosTable extends Migration
         DB::table('permisos')->insert(
             array(
                 ['descripcionPermiso' => 'Ver usuarios'],
+                ['descripcionPermiso' => 'Agregar usuarios'],
+                ['descripcionPermiso' => 'Modificar usuarios'],
                 ['descripcionPermiso' => 'Ver productos'],
+                ['descripcionPermiso' => 'Agregar productos'],
+                ['descripcionPermiso' => 'Modificar productos'],
+                ['descripcionPermiso' => 'Ver categorias'],
+                ['descripcionPermiso' => 'Agregar categorias'],
+                ['descripcionPermiso' => 'Modificar categorias'],
+                ['descripcionPermiso' => 'Eliminar categorias'],
                 ['descripcionPermiso' => 'Ver ventas'],
                 ['descripcionPermiso' => 'Ver reportes'],
-                ['descripcionPermiso' => 'Ver productos'],
-                ['descripcionPermiso' => 'Ver historial de movimientos',],
-                ['descripcionPermiso' => 'Administrar usuarios',],
-                ['descripcionPermiso' => 'Administrar productos',],
-                ['descripcionPermiso' => 'Administrar categorias',],
-                ['descripcionPermiso' => 'Ver productos',],
-                ['descripcionPermiso' => 'Modificar stock de bodega',],
-                ['descripcionPermiso' => 'Realizar venta',]
+                ['descripcionPermiso' => 'Ver historial de movimientos'],
+                ['descripcionPermiso' => 'Modificar stock de bodega'],
+                ['descripcionPermiso' => 'Realizar venta']
             )
         );
     }
