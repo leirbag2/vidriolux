@@ -7,14 +7,16 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
     //Define los permisos para acceder a cada ruta
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('can:usuarios.index')->only('index');
         $this->middleware('can:usuarios.create')->only('create');
-        $this->middleware('can:usuarios.edit')->only('edit','update');
+        $this->middleware('can:usuarios.edit')->only('edit', 'update');
         $this->middleware('can:usuarios.destroy')->only('destroy');
     }
 
@@ -59,9 +61,9 @@ class UserController extends Controller
         $tipo_estado = $request->input('tipo_estado');
         $user = User::where('email', $email)->get();
         if ($user->count() > 0) {
-            return redirect("/usuarios")->with('info','El correo ingresado ya existe en los registros');
+            return redirect("/usuarios")->with('info', 'El correo ingresado ya existe en los registros');
         }
-        if ($tipo_estado <1 || $tipo_estado >2){
+        if ($tipo_estado < 1 || $tipo_estado > 2) {
             $tipo_estado = 2;
         }
         $usuario = new User;
@@ -72,7 +74,7 @@ class UserController extends Controller
         $usuario->save();
         $usuario->roles()->sync($request->roles);
         $usuario->syncPermissions($request->permissions);
-        return redirect("/usuarios")->with('info','Se creó el usuario correctamente');
+        return redirect("/usuarios")->with('info', 'Se creó el usuario correctamente');
     }
 
     /**
@@ -104,25 +106,37 @@ class UserController extends Controller
         $name = $request->input('nombre');
         $email = $request->input('correo');
         $tipo_estado = $request->input('tipo_estado');
-        $user = User::where('email', $email)->where('email','<>',$usuario->email)->get();
+        $user = User::where('email', $email)->where('email', '<>', $usuario->email)->get();
 
         if ($user->count() > 0) {
-            return redirect('/usuarios')->with('info','El correo ingresado ya existe en los registros');
+            return redirect('/usuarios')->with('info', 'El correo ingresado ya existe en los registros');
         }
 
-        if ($tipo_estado <1 || $tipo_estado >2){
+        if ($tipo_estado < 1 || $tipo_estado > 2) {
             $tipo_estado = 2;
         }
-
         $usuario->name = $name;
         $usuario->email = $email;
         $usuario->tipo_estado_id = $tipo_estado;
         $usuario->save();
-        $usuario->syncPermissions($request->permissions);
-        $usuario->roles()->sync($request->roles);
-        return redirect('/usuarios')->with('info','El usuario se modificó correctamente');
-    }
 
+
+        if ($request->roles != null) {
+            $usuario->roles()->sync($request->roles);
+            $usuario->syncPermissions($request->permissions);
+            $roles = DB::table('roles')->whereNotIn('id', $request->roles)->where('id', '!=', 1)->get();
+            foreach ($roles as $rol) {
+                $permisos = DB::table('role_has_permissions')->where('role_id', $rol->id)->get();
+                foreach ($permisos as $permiso) {
+                    DB::table('model_has_permissions')->where('model_id', '=', $usuario->id)->where('permission_id', $permiso->permission_id)->delete();
+                }
+            }
+        } else {
+            $usuario->roles()->sync($request->roles);
+            $usuario->syncPermissions(null);
+        }
+        return redirect('/usuarios')->with('info', 'El usuario se modificó correctamente');
+    }
     /**
      * Elimina el usuario seleccionado.
      *
@@ -136,6 +150,6 @@ class UserController extends Controller
             return abort(404);
         }
         $usuario->delete();
-        return redirect("/usuarios")->with('info','Se eliminó el usuario correctamente');
+        return redirect("/usuarios")->with('info', 'Se eliminó el usuario correctamente');
     }
 }

@@ -70,8 +70,11 @@
                                                 <span class="ml-2">{{ $permission->description }}</span>
                                             </label>
                                         @endforeach
-                                        <a id="btn" class="cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center">
-                                            Eliminar todos los permisos
+                                        <a id="btn" class="cursor-pointer bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded text-center">
+                                            Activar todos los permisos
+                                        </a>
+                                        <a id="btn2" class="cursor-pointer bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded text-center">
+                                            Desactivar todos los permisos
                                         </a>
                                     </div>
                                 </div>
@@ -94,12 +97,18 @@
     </div>
     </div>
     <script>
-        document.getElementById("btn").addEventListener("click", actualizarCheckbox);
+        document.getElementById("btn").addEventListener("click", activar);
+        document.getElementById("btn2").addEventListener("click", desactivar);
         var checkboxes = document.getElementsByName('permissions[]');
 
-        function actualizarCheckbox() {
+        function desactivar() {
             for (var i in checkboxes) {
                 checkboxes[i].checked = '';
+            }
+        }
+        function activar() {
+            for (var i in checkboxes) {
+                checkboxes[i].checked = 'checked';
             }
         }
     </script>
