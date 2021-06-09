@@ -64,6 +64,8 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+
+    //Obtiene el estado del usuario
     public function getEstadoAttribute() {
         return TipoEstado::firstWhere('id', $this->tipo_estado_id);
     }

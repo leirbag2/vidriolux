@@ -1,4 +1,5 @@
 @php
+//Agregar rutas en el menú de navegación
 $nav_links = [
     [
         'name' => 'Usuarios',

@@ -10,7 +10,7 @@ use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
-
+    //Define los permisos para acceder a cada ruta
     public function __construct(){
         $this->middleware('can:usuarios.index')->only('index');
         $this->middleware('can:usuarios.create')->only('create');
@@ -31,7 +31,7 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Crea un nuevo usuario
      *
      * @return \Illuminate\Http\Response
      */
@@ -46,7 +46,7 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Guarda el usuario creado en la base de datos
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -59,7 +59,7 @@ class UserController extends Controller
         $tipo_estado = $request->input('tipo_estado');
         $user = User::where('email', $email)->get();
         if ($user->count() > 0) {
-            return redirect("/usuarios?error=user_exists");
+            return redirect("/usuarios")->with('info','El correo ingresado ya existe en los registros');
         }
         if ($tipo_estado <1 || $tipo_estado >2){
             $tipo_estado = 2;
@@ -69,25 +69,14 @@ class UserController extends Controller
         $usuario->email = $email;
         $usuario->password = $password;
         $usuario->tipo_estado_id = $tipo_estado;
+        $usuario->save();
         $usuario->roles()->sync($request->roles);
         $usuario->syncPermissions($request->permissions);
-        $usuario->save();
-        return redirect("/usuarios?ok=create");
+        return redirect("/usuarios")->with('info','Se creó el usuario correctamente');
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
+     * Muestra el formulario para editar un usuario seleccionado
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -103,7 +92,7 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza el usuario seleccionado
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -118,23 +107,24 @@ class UserController extends Controller
         $user = User::where('email', $email)->where('email','<>',$usuario->email)->get();
 
         if ($user->count() > 0) {
-            return redirect('/usuarios?error=user_exists');
+            return redirect('/usuarios')->with('info','El correo ingresado ya existe en los registros');
         }
 
         if ($tipo_estado <1 || $tipo_estado >2){
             $tipo_estado = 2;
         }
-        $usuario->syncPermissions($request->permissions);
-        $usuario->roles()->sync($request->roles);
+
         $usuario->name = $name;
         $usuario->email = $email;
         $usuario->tipo_estado_id = $tipo_estado;
         $usuario->save();
-        return redirect('/usuarios?ok=update');
+        $usuario->syncPermissions($request->permissions);
+        $usuario->roles()->sync($request->roles);
+        return redirect('/usuarios')->with('info','El usuario se modificó correctamente');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Elimina el usuario seleccionado.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -146,6 +136,6 @@ class UserController extends Controller
             return abort(404);
         }
         $usuario->delete();
-        return redirect("/usuarios?ok=delete");
+        return redirect("/usuarios")->with('info','Se eliminó el usuario correctamente');
     }
 }
