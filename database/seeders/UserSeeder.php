@@ -14,9 +14,9 @@ class UserSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name' => 'Gabriel Maturana',
-            'email' => 'gabrielmaturana1999@hotmail.com',
-            'password' => '$2y$10$XXN34dl3xfJJswhgEtoWDe3iL3FLeCGlVKPPTsrzY3Brztf34UKHu',
+            'name' => 'Administrador',
+            'email' => 'admin@gmail.com',
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',//password
         ])->assignRole('Administrador');
         User::factory(49)->create();
     }
