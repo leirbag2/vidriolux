@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use Database\Factories\ProductosFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -19,9 +21,11 @@ class DatabaseSeeder extends Seeder
                 ['descripcionEstado' => 'Deshabilitado']
             )
         );
+
         $this->call([
             RoleSeeder::class,
-            UserSeeder::class
+            UserSeeder::class,
+            ProductosSeeder::class
         ]);
     }
 }

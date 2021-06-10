@@ -21,6 +21,7 @@ class UserController extends Controller
     }
 
     /**
+     * Muestra la tabla de todos los usuarios
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -120,19 +121,10 @@ class UserController extends Controller
         $usuario->tipo_estado_id = $tipo_estado;
         $usuario->save();
 
-
+        $usuario->roles()->sync($request->roles);
         if ($request->roles != null) {
-            $usuario->roles()->sync($request->roles);
             $usuario->syncPermissions($request->permissions);
-            $roles = DB::table('roles')->whereNotIn('id', $request->roles)->where('id', '!=', 1)->get();
-            foreach ($roles as $rol) {
-                $permisos = DB::table('role_has_permissions')->where('role_id', $rol->id)->get();
-                foreach ($permisos as $permiso) {
-                    DB::table('model_has_permissions')->where('model_id', '=', $usuario->id)->where('permission_id', $permiso->permission_id)->delete();
-                }
-            }
         } else {
-            $usuario->roles()->sync($request->roles);
             $usuario->syncPermissions(null);
         }
         return redirect('/usuarios')->with('info', 'El usuario se modificó correctamente');

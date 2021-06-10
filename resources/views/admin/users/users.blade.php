@@ -5,16 +5,12 @@
                 <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
                     @if (session('info'))
                         <div class="mt-8 focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-green-500">
-                            {{session('info')}}
+                            {{ session('info') }}
                         </div>
                     @endif
                     <div class="text-gray-500">
-                        @if ($cantidad >= 1)
-                            @livewire('show-users')
-                            <!-- end table -->
-                        @else
-                            <h1>¡No hay usuarios!</h1>
-                        @endif
+                        @livewire('show-users')
+                        <!-- end table -->
                     </div>
                 </div>
             </div>
