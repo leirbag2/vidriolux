@@ -22,7 +22,7 @@ class ProductosFactory extends Factory
     public function definition()
     {
         return [
-            'codigo' => $this->faker->numerify('ABC###'),
+            'codigo' => $this->faker->unique()->numerify('ABC###'),
             'nombreProducto' => $this->faker->words(2,true),
             'descripcionProducto' => $this->faker->words(20,true),
             'stock' => $this->faker->numberBetween(1,100),
