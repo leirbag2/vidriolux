@@ -24,4 +24,3 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     })->name('dashboard');
     Route::resource('usuarios',UserController::class);
 });
-require __DIR__.'/auth.php';

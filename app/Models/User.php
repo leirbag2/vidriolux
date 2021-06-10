@@ -5,20 +5,23 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
-use App\Models\TipoUsuario;
 use App\Models\TipoEstado;
+
 
 class User extends Authenticatable
 {
+    use HasRoles;
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+
 
     /**
      * The attributes that are mass assignable.
@@ -61,15 +64,8 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function getTipoAttribute() {
-        $tipo = TipoUsuario::firstWhere('id', $this->tipo_usuario_id);
-        if ($tipo == null){
-            $tipo = new TipoUsuario;
-            $tipo->descripcionTipo = 'No asignado';
-            return $tipo;
-        }
-        return $tipo;
-    }
+
+    //Obtiene el estado del usuario
     public function getEstadoAttribute() {
         return TipoEstado::firstWhere('id', $this->tipo_estado_id);
     }

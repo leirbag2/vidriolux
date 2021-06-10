@@ -1,15 +1,12 @@
 @php
+//Agregar rutas en el menú de navegación
 $nav_links = [
-    [
-        'name' => 'Dashboard',
-        'route' => route('dashboard'),
-        'active' => request()->routeIs('dashboard'),
-    ],
     [
         'name' => 'Usuarios',
         'route' => route('usuarios.index'),
         'active' => request()->routeIs('usuarios.index') || request()->routeIs('usuarios.create') || request()->routeIs('usuarios.edit'),
-    ],/*
+        'can' => 'usuarios.index',
+    ] /*
     [
         'name' => 'Productos',
         'route' => route('productos.index'),
@@ -19,7 +16,7 @@ $nav_links = [
         'name' => 'Categorias',
         'route' => route('categorias.index'),
         'active' => request()->routeIs('categorias.index') || request()->routeIs('categorias.create') || request()->routeIs('categorias.edit'),
-    ]*/
+    ]*/,
 ];
 
 @endphp
@@ -38,10 +35,15 @@ $nav_links = [
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                        Dashboard
+                    </x-jet-nav-link>
                     @foreach ($nav_links as $nav_link)
-                        <x-jet-nav-link href="{{ $nav_link['route'] }}" :active="$nav_link['active']">
-                            {{ $nav_link['name'] }}
-                        </x-jet-nav-link>
+                        @can($nav_link['can'])
+                            <x-jet-nav-link href="{{ $nav_link['route'] }}" :active="$nav_link['active']">
+                                {{ $nav_link['name'] }}
+                            </x-jet-nav-link>
+                        @endcan
                     @endforeach
                 </div>
             </div>
@@ -181,11 +183,15 @@ $nav_links = [
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-
+            <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                Dashboard
+            </x-jet-nav-link>
             @foreach ($nav_links as $nav_link)
-                <x-jet-responsive-nav-link href="{{ $nav_link['route'] }}" :active="$nav_link['active']">
-                    {{ $nav_link['name'] }}
-                </x-jet-responsive-nav-link>
+                @can($nav_link['can'])
+                    <x-jet-responsive-nav-link href="{{ $nav_link['route'] }}" :active="$nav_link['active']">
+                        {{ $nav_link['name'] }}
+                    </x-jet-responsive-nav-link>
+                @endcan
             @endforeach
         </div>
 
