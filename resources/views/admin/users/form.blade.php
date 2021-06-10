@@ -34,10 +34,12 @@
                             <div class="md:flex md:flex-row md:space-x-4 w-full text-xs">
                                 <div class="w-full flex flex-col mb-3">
                                     <label class="font-semibold text-gray-600 py-2">Tipo de usuario</label>
-                                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-2 text-xs">
+                                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-2 text-xs" id="tipos">
                                         @foreach ($roles as $rol)
                                             <label class="inline-flex items-center">
-                                                <div id="{{ $rol->name }}" value="select">{!! Form::checkbox('roles[]', $rol->id, null, ['class' => 'block bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4']) !!}</div>
+                                                <div id="{{ $rol->name }}" estado="">
+                                                    {!! Form::checkbox('roles[]', $rol->id, null, ['class' => 'block bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4']) !!}
+                                                </div>
                                                 <span class="ml-2">{{ $rol->name }}</span>
                                             </label>
                                         @endforeach
@@ -66,16 +68,10 @@
                                     <div class="grid sm:grid-cols-3 md:grid-cols-4 gap-2 text-xs">
                                         @foreach ($permissions as $permission)
                                             <label class="inline-flex items-center">
-                                                {!! Form::checkbox('permissions[]', $permission->id, $user->hasPermissionTo($permission->id), ['class' => 'block bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4']) !!}
+                                                {!! Form::checkbox('permissions[]', $permission->id, $user->hasPermissionTo($permission->id), ['class' => 'block bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4', 'id' => $permission->id]) !!}
                                                 <span class="ml-2">{{ $permission->description }}</span>
                                             </label>
                                         @endforeach
-                                        <a id="btn" class="cursor-pointer bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded text-center">
-                                            Activar todos los permisos
-                                        </a>
-                                        <a id="btn2" class="cursor-pointer bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded text-center">
-                                            Desactivar todos los permisos
-                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -97,19 +93,116 @@
     </div>
     </div>
     <script>
-        document.getElementById("btn").addEventListener("click", activar);
-        document.getElementById("btn2").addEventListener("click", desactivar);
+        admin = document.getElementById("Administrador").addEventListener("click", activarAdmin);
+        document.getElementById("Bodeguero").addEventListener("click", activarBodeguero);
+        document.getElementById("Vendedor").addEventListener("click", activarVendedor);
         var checkboxes = document.getElementsByName('permissions[]');
+        var permisosBodeguero = (@json($roles[1]->permissions));
+        var permisosVendedor = @json($roles[2]->permissions);
+        var tipos = document.getElementById('tipos');
+        var admin = document.getElementById("Administrador");
+        var bodeguero = document.getElementById("Bodeguero");
+        var vendedor = document.getElementById("Vendedor");
+        for (var i = 0; i < 3; i++) {
+            if (tipos.children[i].children[0].children[0].getAttribute('checked') == "checked") {
+                tipos.children[i].children[0].setAttribute('estado', "selected");
+            } else {
+                tipos.children[i].children[0].setAttribute('estado', "unselected");
+            }
+        }
+
+        function activarAdmin() {
+
+            if (admin.getAttribute('estado') == "unselected") {
+                activar();
+                admin.setAttribute('estado', "selected");
+            } else {
+                desactivar();
+                admin.setAttribute('estado', "unselected");
+            }
+            reset();
+        }
+
+        function activarBodeguero() {
+            var checked;
+            if (bodeguero.getAttribute('estado') == "unselected") {
+                bodeguero.setAttribute('estado', "selected");
+                checked = true;
+            } else {
+                bodeguero.setAttribute('estado', "unselected");
+                checked = false;
+            }
+            for (var i in permisosBodeguero) {
+                for (var j in checkboxes) {
+                    if (checkboxes[j].id == permisosBodeguero[i].id) {
+                        checkboxes[j].checked = checked;
+                    }
+                }
+            }
+            reset();
+        }
+
+        function activarVendedor() {
+            var checked;
+            if (vendedor.getAttribute('estado') == "unselected") {
+                vendedor.setAttribute('estado', "selected");
+                checked = true;
+            } else {
+                vendedor.setAttribute('estado', "unselected");
+                checked = false;
+
+            }
+            for (var i in permisosVendedor) {
+                for (var j in checkboxes) {
+                    if (checkboxes[j].id == permisosVendedor[i].id) {
+                        checkboxes[j].checked = checked;
+                    }
+                }
+            }
+            reset();
+        }
+
+        function reset() {
+
+            if (admin.getAttribute('estado') == "unselected" && bodeguero.getAttribute('estado') == "unselected" && vendedor.getAttribute('estado') == "unselected"){
+                desactivar();
+            }
+
+            if (vendedor.getAttribute('estado') == "selected") {
+                for (var i in permisosVendedor) {
+                    for (var j in checkboxes) {
+                        if (checkboxes[j].id == permisosVendedor[i].id) {
+                            checkboxes[j].checked = true;
+                        }
+                    }
+                }
+
+                //vendedor.setAttribute('estado', "unselected");
+            }
+            if (bodeguero.getAttribute('estado') == "selected") {
+
+                for (var i in permisosBodeguero) {
+                    for (var j in checkboxes) {
+                        if (checkboxes[j].id == permisosBodeguero[i].id) {
+                            checkboxes[j].checked = true;
+                        }
+                    }
+                }
+                //bodeguero.setAttribute('estado', "unselected");
+            }
+        }
 
         function desactivar() {
             for (var i in checkboxes) {
                 checkboxes[i].checked = '';
             }
         }
+
         function activar() {
             for (var i in checkboxes) {
                 checkboxes[i].checked = 'checked';
             }
         }
+
     </script>
 </x-app-layout>
