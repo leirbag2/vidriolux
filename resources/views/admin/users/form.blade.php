@@ -93,9 +93,6 @@
     </div>
     </div>
     <script>
-        admin = document.getElementById("Administrador").addEventListener("click", activarAdmin);
-        document.getElementById("Bodeguero").addEventListener("click", activarBodeguero);
-        document.getElementById("Vendedor").addEventListener("click", activarVendedor);
         var checkboxes = document.getElementsByName('permissions[]');
         var permisosBodeguero = (@json($roles[1]->permissions));
         var permisosVendedor = @json($roles[2]->permissions);
@@ -104,6 +101,7 @@
         var bodeguero = document.getElementById("Bodeguero");
         var vendedor = document.getElementById("Vendedor");
         for (var i = 0; i < 3; i++) {
+            tipos.children[i].children[0].setAttribute('onClick', "actualizar(" + (i + 1) + ")");
             if (tipos.children[i].children[0].children[0].getAttribute('checked') == "checked") {
                 tipos.children[i].children[0].setAttribute('estado', "selected");
             } else {
@@ -111,96 +109,86 @@
             }
         }
 
-        function activarAdmin() {
+        function actualizar(tipo) {
+            var aEstado = admin.getAttribute('estado');
+            var bEstado = bodeguero.getAttribute('estado');
+            var vEstado = vendedor.getAttribute('estado');
 
-            if (admin.getAttribute('estado') == "unselected") {
-                activar();
-                admin.setAttribute('estado', "selected");
-            } else {
-                desactivar();
-                admin.setAttribute('estado', "unselected");
+            if (tipo == 1) {
+                if (aEstado == "unselected") {
+                    admin.setAttribute('estado', "selected");
+                    console.log("admin true")
+                    activarTodo(true);
+                } else {
+                    console.log("admin false")
+                    activarTodo(false);
+                    admin.setAttribute('estado', "unselected");
+                    if (bEstado == "selected") {
+                        console.log("admin bodeguero true")
+                        activarPermisos(bodeguero);
+                    }
+                    if (vEstado == "selected") {
+                        activarPermisos(vendedor);
+                    }
+                }
             }
-            reset();
-        }
 
-        function activarBodeguero() {
-            var checked;
-            if (bodeguero.getAttribute('estado') == "unselected") {
-                bodeguero.setAttribute('estado', "selected");
+            if (tipo == 2) {
+                if (bEstado == "unselected") {
+                    console.log("bodega true")
+                    bodeguero.setAttribute("estado", "selected");
+                } else {
+                    bodeguero.setAttribute("estado", "unselected");
+                }
+                if (aEstado == "unselected") {
+                    activarPermisos(bodeguero);
+                }
+                if( vEstado == "selected"){
+                    activarPermisos(vendedor);
+                }
+            }
+
+            if (tipo == 3) {
+                if (vEstado == "unselected") {
+                    console.log("bodega true")
+                    vendedor.setAttribute("estado", "selected");
+                } else {
+                    vendedor.setAttribute("estado", "unselected");
+                }
+                if (aEstado == "unselected") {
+                    activarPermisos(vendedor);
+                }
+                if(bEstado == "selected"){
+                    activarPermisos(bodeguero);
+                }
+            }
+
+        }
+        function activarPermisos(nombre) {
+            var checked = true;
+            if (nombre.getAttribute('estado') == "selected") {
                 checked = true;
             } else {
-                bodeguero.setAttribute('estado', "unselected");
                 checked = false;
             }
-            for (var i in permisosBodeguero) {
+            if (nombre.id == 'Bodeguero') {
+                var permisos = permisosBodeguero;
+            } else {
+                var permisos = permisosVendedor;
+            }
+
+            for (var i in permisos) {
                 for (var j in checkboxes) {
-                    if (checkboxes[j].id == permisosBodeguero[i].id) {
+                    if (checkboxes[j].id == permisos[i].id) {
                         checkboxes[j].checked = checked;
                     }
                 }
             }
-            reset();
         }
 
-        function activarVendedor() {
-            var checked;
-            if (vendedor.getAttribute('estado') == "unselected") {
-                vendedor.setAttribute('estado', "selected");
-                checked = true;
-            } else {
-                vendedor.setAttribute('estado', "unselected");
-                checked = false;
-
-            }
-            for (var i in permisosVendedor) {
-                for (var j in checkboxes) {
-                    if (checkboxes[j].id == permisosVendedor[i].id) {
-                        checkboxes[j].checked = checked;
-                    }
-                }
-            }
-            reset();
-        }
-
-        function reset() {
-
-            if (admin.getAttribute('estado') == "unselected" && bodeguero.getAttribute('estado') == "unselected" && vendedor.getAttribute('estado') == "unselected"){
-                desactivar();
-            }
-
-            if (vendedor.getAttribute('estado') == "selected") {
-                for (var i in permisosVendedor) {
-                    for (var j in checkboxes) {
-                        if (checkboxes[j].id == permisosVendedor[i].id) {
-                            checkboxes[j].checked = true;
-                        }
-                    }
-                }
-
-                //vendedor.setAttribute('estado', "unselected");
-            }
-            if (bodeguero.getAttribute('estado') == "selected") {
-
-                for (var i in permisosBodeguero) {
-                    for (var j in checkboxes) {
-                        if (checkboxes[j].id == permisosBodeguero[i].id) {
-                            checkboxes[j].checked = true;
-                        }
-                    }
-                }
-                //bodeguero.setAttribute('estado', "unselected");
-            }
-        }
-
-        function desactivar() {
+        function activarTodo(v) {
             for (var i in checkboxes) {
-                checkboxes[i].checked = '';
-            }
-        }
-
-        function activar() {
-            for (var i in checkboxes) {
-                checkboxes[i].checked = 'checked';
+                checkboxes[i].checked = v;
             }
         }
 
