@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+
 class UserController extends Controller
 {
     //Define los permisos para acceder a cada ruta
@@ -72,7 +73,9 @@ class UserController extends Controller
         $usuario->tipo_estado_id = $tipo_estado;
         $usuario->save();
         $usuario->roles()->sync($request->roles);
-        $usuario->syncPermissions($request->permissions);
+        if ($request->roles != null) {
+            $usuario->syncPermissions($request->permissions);
+        }
         return redirect("/usuarios")->with('info', 'Se creó el usuario correctamente');
     }
 
