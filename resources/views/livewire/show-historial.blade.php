@@ -2,7 +2,7 @@
     <div class="flex relative mt-1">
         @can('usuarios.create')
         <div class="flex-none mr-10">
-            <a href="/usuarios/create" type="button" class="focus:outline-none text-white text-sm py-3 px-5 rounded-md bg-blue-500 hover:bg-blue-600 hover:shadow-lg">
+            <a href="/historial/create" type="button" class="focus:outline-none text-white text-sm py-3 px-5 rounded-md bg-blue-500 hover:bg-blue-600 hover:shadow-lg">
                 Modificar Stock de Bodega
             </a>
         </div>

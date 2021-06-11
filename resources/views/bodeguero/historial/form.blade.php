@@ -12,12 +12,12 @@
                         <div class="mt-5">
                             <div class="md:flex md:flex-row md:space-x-4 w-full text-xs">
                                 <div class="mb-3 md:space-y-2 w-full text-xs">
-                                    <label class="font-semibold text-gray-600 py-2">Nombre del Producto<abbr
+                                    <label class="font-semibold text-gray-600 py-2">Codigo del Producto<abbr
                                             title="obligatorio">*</abbr></label>
                                     <input placeholder="Nombre"
                                         class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
-                                        required="required" type="text" name="nombre" id="nombre"
-                                        value="{{ $historial->producto->nombreProducto }}">
+                                        required="required" type="text" name="codigo" id="codigo"
+                                        value="">
                                     <p class="text-red text-xs hidden">Please fill out this field.</p>
                                 </div>
                             </div>

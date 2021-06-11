@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Historial;
-
+use App\Models\Productos;
+use Illuminate\Support\Facades\Auth;
 class HistorialController extends Controller
 {
     public function __construct()
@@ -33,7 +34,10 @@ class HistorialController extends Controller
      */
     public function create()
     {
-        //
+        return view('bodeguero/historial.form', [
+            'is_editing' => false,
+            'historial' => new Historial
+        ]);
     }
 
     /**
@@ -44,9 +48,29 @@ class HistorialController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        
+        $codigo = $request->input('codigo');
+        $producto = Productos::where('codigo',$codigo)->orWhere('id',$codigo)->first();
+        $cantidad = $request->input('cantidad');
+        $tipo = $request->input('tipo');
+        
+        if ($tipo < 1 || $tipo > 2) {
+            $tipo = 1;
+        }
+        if ($cantidad <= 0) {
+            return redirect('/historial')->with('info', 'La cantidad debe ser mayor a 0');
+        }
+        if ($tipo==2) {
+            $cantidad*=-1;
+        }
 
+        $historial = new Historial;
+        $historial->users_id = Auth::id();
+        $historial->productos_id = $producto->id;
+        $historial->cantidad = $cantidad;
+        $historial->save();
+        return redirect('/historial')->with('info', 'El registro se modificó correctamente');
+    }
     /**
      * Display the specified resource.
      *
