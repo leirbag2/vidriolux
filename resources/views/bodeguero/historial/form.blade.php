@@ -12,45 +12,39 @@
                         <div class="mt-5">
                             <div class="md:flex md:flex-row md:space-x-4 w-full text-xs">
                                 <div class="mb-3 md:space-y-2 w-full text-xs">
-                                    <label class="font-semibold text-gray-600 py-2">Codigo del Producto<abbr
-                                            title="obligatorio">*</abbr></label>
-                                    <input placeholder="Nombre"
-                                        class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
-                                        required="required" type="text" name="codigo" id="codigo"
-                                        value="">
+                                    @if (session('info'))
+                                    <div class="mt-8 focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-red-500 mb-5">
+                                        {{session('info')}}
+                                    </div>
+                                    @endif
+                                    <label class="font-semibold text-gray-600 py-2">Codigo del Producto<abbr title="obligatorio">*</abbr></label>
+                                    <input placeholder="Codigo" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="codigo" id="codigo" 
+                                    value="{{ $is_editing ? $historial->producto->codigo : ''}}">
                                     <p class="text-red text-xs hidden">Please fill out this field.</p>
                                 </div>
                             </div>
                             <div class="md:flex md:flex-row md:space-x-4 w-full text-xs">
                                 <div class="w-full flex flex-col mb-3">
-                                    <label class="font-semibold text-gray-600 py-2">Cantidad<abbr
-                                            title="obligatorio">*</abbr></label>
-                                    <input placeholder="cantidad"
-                                        class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
-                                        required="required" type="number" name="cantidad" id="cantidad"
-                                        value="{{abs($historial->cantidad )}}">
+                                    <label class="font-semibold text-gray-600 py-2">Cantidad<abbr title="obligatorio">*</abbr></label>
+                                    <input placeholder="Cantidad" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="number" name="cantidad" id="cantidad" value="{{abs($historial->cantidad )}}">
                                 </div>
                             </div>
                             <div class="md:flex md:flex-row md:space-x-4 w-full text-xs">
                                 <div class="w-full flex flex-col mb-3">
-                                    <label class="font-semibold text-gray-600 py-2">Seleccione una opcion<abbr
-                                            title="obligatorio">*</abbr></label>
-                                            <select min="1"
-                                        class="block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4 md:w-full "
-                                        required="required" name="tipo" id="tipo">
-                                        <option {{$historial->cantidad > 0 ? 'selected' : ''}} value="1" >
+                                    <label class="font-semibold text-gray-600 py-2">Seleccione una opcion<abbr title="obligatorio">*</abbr></label>
+                                    <select min="1" class="block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4 md:w-full " required="required" name="tipo" id="tipo">
+                                        <option {{$historial->cantidad > 0 ? 'selected' : ''}} value="1">
                                             Ingreso</option>
-                                        <option {{$historial->cantidad < 0 ? 'selected' : ''}} value="2" >
+                                        <option {{$historial->cantidad < 0 ? 'selected' : ''}} value="2">
                                             Retiro</option>
                                     </select>
                                 </div>
                             </div>
-                                                        
+
                             <p class="text-xs text-red-500 text-right my-3">Los campos obligatorios están
                                 marcados con un asterisco <abbr title="Campo obligatorio">*</abbr></p>
                             <div class="mt-5 text-right md:space-x-3 md:block flex flex-col-reverse">
-                                <a href="/historial"
-                                    class="mb-2 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-full hover:shadow-lg hover:bg-gray-100">
+                                <a href="/historial" class="mb-2 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-full hover:shadow-lg hover:bg-gray-100">
                                     Cancelar </a>
                                 {!! Form::submit('Guardar', ['class' => 'mb-2 md:mb-0 bg-green-400 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-green-500']) !!}
                             </div>
