@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {

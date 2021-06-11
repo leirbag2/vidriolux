@@ -27,7 +27,7 @@
                                             title="obligatorio">*</abbr></label>
                                     <input placeholder="Correo"
                                         class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
-                                        required="required" type="text" name="correo" id="user_mail"
+                                        required="required" type="email" name="correo" id="user_mail"
                                         value="{{ $user->email }}">
                                 </div>
                             </div>
