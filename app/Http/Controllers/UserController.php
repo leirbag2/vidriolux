@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -120,7 +119,6 @@ class UserController extends Controller
         $usuario->email = $email;
         $usuario->tipo_estado_id = $tipo_estado;
         $usuario->save();
-
         $usuario->roles()->sync($request->roles);
         if ($request->roles != null) {
             $usuario->syncPermissions($request->permissions);

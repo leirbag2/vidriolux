@@ -17,6 +17,12 @@ $nav_links = [
         'route' => route('categorias.index'),
         'active' => request()->routeIs('categorias.index') || request()->routeIs('categorias.create') || request()->routeIs('categorias.edit'),
     ]*/,
+    [
+        'name' => 'Historial',
+        'route' => route('historial.index'),
+        'active' => request()->routeIs('historial.index') || request()->routeIs('historial.create') || request()->routeIs('historial.edit'),
+        'can' => 'historial.index',
+    ]
 ];
 
 @endphp
