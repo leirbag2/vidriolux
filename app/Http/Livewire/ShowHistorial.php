@@ -17,7 +17,7 @@ class ShowHistorial extends Component
 
     public function render()
     {
-        $listaHistorial=Historial::paginate(12);
+        $listaHistorial=Historial::orderByDesc('created_at')->paginate(12);
         return view('livewire.show-historial',compact('listaHistorial'));
     }
 }

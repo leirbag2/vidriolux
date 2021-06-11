@@ -16,7 +16,7 @@ use App\Http\Controllers\HistorialController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth/login');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {

@@ -53,7 +53,9 @@ class HistorialController extends Controller
         $producto = Productos::where('codigo',$codigo)->orWhere('id',$codigo)->first();
         $cantidad = $request->input('cantidad');
         $tipo = $request->input('tipo');
-        
+        if(!$producto){
+            return redirect('/historial/create')->with('info', 'No existe el producto ingresado');
+        }
         if ($tipo < 1 || $tipo > 2) {
             $tipo = 1;
         }
@@ -67,23 +69,12 @@ class HistorialController extends Controller
             $cantidad*=-1;
         }
         
-
         $historial = new Historial;
         $historial->users_id = Auth::id();
         $historial->productos_id = $producto->id;
         $historial->cantidad = $cantidad;
         $historial->save();
-        return redirect('/historial')->with('info', 'El registro se agrego correctamente');
-    }
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return redirect()->back()->with('ok', 'El registro se agregó correctamente');
     }
 
     /**
@@ -115,6 +106,9 @@ class HistorialController extends Controller
         $productoA = Productos::where('id',$historial->productos_id)->first();
         $cantidad = $request->input('cantidad');
         $tipo = $request->input('tipo');
+        if(!$productoN){
+            return redirect('/historial/create')->with('info', 'No existe el producto ingresado');
+        }
         if ($tipo < 1 || $tipo > 2) {
             $tipo = 1;
         }

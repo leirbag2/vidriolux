@@ -13,8 +13,13 @@
                             <div class="md:flex md:flex-row md:space-x-4 w-full text-xs">
                                 <div class="mb-3 md:space-y-2 w-full text-xs">
                                     @if (session('info'))
-                                    <div class="mt-8 focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-red-500 mb-5">
+                                    <div class="mt-2 focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-red-500 mb-5">
                                         {{session('info')}}
+                                    </div>
+                                    @endif
+                                    @if (session('ok'))
+                                    <div class="mt-2 focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-green-500 mb-5">
+                                        {{session('ok')}}
                                     </div>
                                     @endif
                                     <label class="font-semibold text-gray-600 py-2">Codigo del Producto<abbr title="obligatorio">*</abbr></label>
