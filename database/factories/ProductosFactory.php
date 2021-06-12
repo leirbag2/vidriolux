@@ -21,13 +21,14 @@ class ProductosFactory extends Factory
      */
     public function definition()
     {
+        $precio = $this->faker->numberBetween(1000,10000);
         return [
             'codigo' => $this->faker->unique()->numerify('ABC###'),
             'nombreProducto' => $this->faker->words(2,true),
             'descripcionProducto' => $this->faker->words(20,true),
             'stock' => $this->faker->numberBetween(1,100),
-            'precioNeto' => $this->faker->numberBetween(1000,10000),
-            'precioIva' => $this->faker->numberBetween(100,1000),
+            'precioNeto' => $precio,
+            'precioIva' => $precio * 0.19,
             'categorias_id' => null,
             'tipo_estado_id' => 1
         ];
