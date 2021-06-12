@@ -27,7 +27,7 @@
                                             title="obligatorio">*</abbr></label>
                                     <input placeholder="Correo"
                                         class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
-                                        required="required" type="text" name="correo" id="user_mail"
+                                        required="required" type="email" name="correo" id="user_mail"
                                         value="{{ $user->email }}">
                                 </div>
                             </div>
@@ -117,14 +117,11 @@
             if (tipo == 1) {
                 if (aEstado == "unselected") {
                     admin.setAttribute('estado', "selected");
-                    console.log("admin true")
                     activarTodo(true);
                 } else {
-                    console.log("admin false")
                     activarTodo(false);
                     admin.setAttribute('estado', "unselected");
                     if (bEstado == "selected") {
-                        console.log("admin bodeguero true")
                         activarPermisos(bodeguero);
                     }
                     if (vEstado == "selected") {
@@ -135,7 +132,6 @@
 
             if (tipo == 2) {
                 if (bEstado == "unselected") {
-                    console.log("bodega true")
                     bodeguero.setAttribute("estado", "selected");
                 } else {
                     bodeguero.setAttribute("estado", "unselected");
@@ -150,7 +146,6 @@
 
             if (tipo == 3) {
                 if (vEstado == "unselected") {
-                    console.log("bodega true")
                     vendedor.setAttribute("estado", "selected");
                 } else {
                     vendedor.setAttribute("estado", "unselected");
@@ -162,7 +157,9 @@
                     activarPermisos(bodeguero);
                 }
             }
-
+            if (admin.getAttribute('estado') == "unselected" && bodeguero.getAttribute('estado') == "unselected" && vendedor.getAttribute('estado') == "unselected"){
+                activarTodo(false);
+            }
         }
         function activarPermisos(nombre) {
             var checked = true;
