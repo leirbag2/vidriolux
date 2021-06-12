@@ -8,7 +8,7 @@
                 </a>
             </div>
         @endcan
-        <input type="text" id="password"
+        <input type="text"
             class="w-full pl-3 pr-10 py-2 border-2 border-gray-200 rounded-xl hover:border-gray-300 focus:outline-none focus:border-blue-500 transition-colors"
             placeholder="Buscar" wire:model="search" type="search">
     </div>

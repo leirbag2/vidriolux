@@ -7,7 +7,7 @@
             </a>
         </div>
         @endcan
-        <input type="text" id="password" class="w-full pl-3 pr-10 py-2 border-2 border-gray-200 rounded-xl hover:border-gray-300 focus:outline-none focus:border-blue-500 transition-colors" placeholder="Buscar" wire:model="search" type="search">
+        <input type="text" class="w-full pl-3 pr-10 py-2 border-2 border-gray-200 rounded-xl hover:border-gray-300 focus:outline-none focus:border-blue-500 transition-colors" placeholder="Buscar" wire:model="search" type="search">
     </div>
     <x-table>
         <table class="min-w-full divide-y divide-gray-200">
@@ -19,7 +19,6 @@
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Producto</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Cantidad</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Tipo</th>
-
                     @canany(['historial.edit', 'historial.destroy'])
                     <th scope="col" class="px-6 py-3 text-center uppercase tracking-wider">Acciones</th>
                     @endcanany
@@ -58,8 +57,6 @@
                             {{$historial->cantidad > 0 ? 'Ingreso' : 'Retiro'}}
                         </div>
                     </td>
-
-
                     @canany(['historial.edit', 'historial.destroy'])
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex item-center justify-center">

@@ -11,7 +11,7 @@
                         {{session('info')}}
                     </div>
                     @endif
-                    <div class="text-gray-500">               
+                    <div class="text-gray-500">
                         @livewire('show-historial')
                         <!-- end table -->
                     </div>

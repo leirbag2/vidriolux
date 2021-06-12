@@ -20,7 +20,6 @@ class CreateDetalleVentasTable extends Migration
             $table->foreign('productos_id')->references('id')->on('productos')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('cantidad');
             $table->integer('subtotal');
-            $table->timestamps();
         });
     }
 
