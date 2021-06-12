@@ -11,7 +11,6 @@
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Categoria</th>
                 </tr>
             </thead>
-            {{$fecha}}
             <tbody class="bg-white divide-y divide-gray-200">
                 @foreach ($productos as $producto)
                 <tr class="hover:bg-gray-100">
