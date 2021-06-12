@@ -9,4 +9,8 @@ class Productos extends Model
 {
     use HasFactory;
     protected $table='productos';
+
+    public function getCategoriaAttribute() {
+        return Categorias::firstWhere('id', $this->categorias_id);
+    }
 }

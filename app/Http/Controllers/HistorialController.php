@@ -53,33 +53,28 @@ class HistorialController extends Controller
         $producto = Productos::where('codigo',$codigo)->orWhere('id',$codigo)->first();
         $cantidad = $request->input('cantidad');
         $tipo = $request->input('tipo');
-        
+        if(!$producto){
+            return redirect('/historial/create')->with('info', 'No existe el producto ingresado');
+        }
         if ($tipo < 1 || $tipo > 2) {
             $tipo = 1;
         }
         if ($cantidad <= 0) {
-            return redirect('/historial')->with('info', 'La cantidad debe ser mayor a 0');
+            return redirect('/historial/create')->with('info', 'La cantidad debe ser mayor a 0');
         }
         if ($tipo==2) {
+            if ($producto->stock < $cantidad) {
+                return redirect('/historial/create')->with('info', 'No hay suficiente stock para retirar');
+            }
             $cantidad*=-1;
         }
-
+        
         $historial = new Historial;
         $historial->users_id = Auth::id();
         $historial->productos_id = $producto->id;
         $historial->cantidad = $cantidad;
         $historial->save();
-        return redirect('/historial')->with('info', 'El registro se modificó correctamente');
-    }
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return redirect()->back()->with('ok', 'El registro se agregó correctamente');
     }
 
     /**
@@ -106,29 +101,35 @@ class HistorialController extends Controller
     public function update(Request $request, $id)
     {
         $historial = Historial::find($id);
-        $name = $request->input('nombre');
+        $codigo = $request->input('codigo');
+        $productoN = Productos::where('codigo',$codigo)->orWhere('id',$codigo)->first();
+        $productoA = Productos::where('id',$historial->productos_id)->first();
         $cantidad = $request->input('cantidad');
         $tipo = $request->input('tipo');
-        
-
-       
-
+        if(!$productoN){
+            return redirect('/historial/create')->with('info', 'No existe el producto ingresado');
+        }
         if ($tipo < 1 || $tipo > 2) {
             $tipo = 1;
         }
         if ($cantidad <= 0) {
-            return redirect('/historial')->with('info', 'La cantidad debe ser mayor a 0');
+            return redirect()->back()->with('info', 'La cantidad debe ser mayor a 0');
         }
-        if ($tipo==2) {
+        if ($tipo==2) {   
+            if ($productoN->id == $productoA->id){
+                $cantidadOriginal = ($productoA->stock + ($historial->cantidad * -1));
+            }else{
+                $cantidadOriginal = $productoN->stock;
+            }
+            if ($cantidadOriginal < $cantidad) {
+                return redirect()->back()->with('info', 'No hay suficiente stock para retirar');
+            }
             $cantidad*=-1;
         }
 
-    
         $historial->cantidad = $cantidad;
-        $historial->save();
-
-
-        
+        $historial->productos_id = $productoN->id;
+        $historial->save();    
         return redirect('/historial')->with('info', 'El registro se modificó correctamente');
     }
 

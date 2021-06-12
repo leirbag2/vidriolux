@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Database\Factories\ProductosFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
