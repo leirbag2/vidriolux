@@ -7,6 +7,11 @@ $nav_links = [
         'active' => request()->routeIs('usuarios.index') || request()->routeIs('usuarios.create') || request()->routeIs('usuarios.edit'),
         'can' => 'usuarios.index',
     ] /*
+
+
+  
+
+
     [
         'name' => 'Productos',
         'route' => route('productos.index'),
@@ -22,7 +27,14 @@ $nav_links = [
         'route' => route('historial.index'),
         'active' => request()->routeIs('historial.index') || request()->routeIs('historial.create') || request()->routeIs('historial.edit'),
         'can' => 'historial.index',
-    ]
+    ],
+
+    [
+        'name' => 'Ventas',
+        'route' => route('ventas.index'),
+        'active' => request()->routeIs('ventas.index'),
+        'can' => 'ventas.index',
+    ] ,  
 ];
 
 @endphp
