@@ -9,6 +9,7 @@ class Productos extends Model
 {
     use HasFactory;
     protected $table='productos';
+    public $timestamps = false;
 
     public function getCategoriaAttribute() {
         return Categorias::firstWhere('id', $this->categorias_id);
