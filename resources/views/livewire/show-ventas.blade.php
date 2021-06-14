@@ -1,13 +1,13 @@
 <div>
-    <div class="flex relative mt-1">
-
-        <div class="flex-none mr-10">
-            <a href="/ventas/create" type="button"
-                class="focus:outline-none text-white text-sm py-3 px-5 rounded-md bg-blue-500 hover:bg-blue-600 hover:shadow-lg">
-                Registrar nueva Venta
-            </a>
-        </div>
-
+<div class="flex relative mt-1">
+@can('ventas.create')
+            <div class="flex-none mr-10">
+                <a href="/ventas/create" type="button"
+                    class="focus:outline-none text-white text-sm py-3 px-5 rounded-md bg-blue-500 hover:bg-blue-600 hover:shadow-lg">
+                    Registrar nueva Venta
+                </a>
+            </div>
+            @endcan
         <input type="text" id="password"
             class="w-full pl-3 pr-10 py-2 border-2 border-gray-200 rounded-xl hover:border-gray-300 focus:outline-none focus:border-blue-500 transition-colors"
             placeholder="Buscar" wire:model="search" type="search">
@@ -104,4 +104,32 @@
             </tbody>
         </table>
     </x-table>
+    {{ $ventas->links() }}
+    @push('js')
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Livewire.on('ventas', ventas => {
+
+            Swal.fire({
+                title: '¿Está seguro?',
+                text: "No podrá revertir el cambio",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Eliminar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + ventas).submit();
+                    Swal.fire(
+                        '¡Eliminado!',
+                        'Se ha eliminado correctamente.',
+                        'success'
+                    )
+                }
+            })
+        });
+    </script>
+    @endpush
 </div>

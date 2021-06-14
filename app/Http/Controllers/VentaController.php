@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Productos;
 use Illuminate\Http\Request;
-use App\Http\Controllers\VentaController;
+use App\Models\Ventas;
+
 
 
 class VentaController extends Controller
@@ -13,11 +15,57 @@ class VentaController extends Controller
  //Define los permisos para acceder a cada ruta
  public function __construct()
  {
-     $this->middleware('can:detalleVentas.destroy')->only('destroy');
+     $this->middleware('can:ventas.destroy')->only('destroy');
+     $this->middleware('can:ventas.edit')->only('edit','update');
+     $this->middleware('can:ventas.create')->only('create');
+
  }
 
+ 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('ventas.ventasProductos', [
+            'is_editing' => false,
+            'ventas' => new Ventas,
+              
+    
+        ]);
+    }
 
+   /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        return view('ventas.form', [
+            'ventas' => Ventas::find($id),           
+            'is_editing' => true
+        ]);
+    }
 
+/**
+     * Actualiza el usuario seleccionado
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $venta = Ventas::find($id);
+        $numFactura = $request->input('numFactura');    
+        $venta->numFactura = $numFactura;
+        $venta->save();
+        return redirect('/ventas')->with('info', 'El numero de factura se modificó correctamente');
+    }
 
 
 
@@ -36,6 +84,26 @@ class VentaController extends Controller
     }
 
 
+    /**
+     * Guarda el usuario creado en la base de datos
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $numFactura = $request->input('numFactura');
+        $venta = new Ventas;
+        $venta->numFactura = $numFactura;
+        $venta->save();
+        return redirect("/ventas")->with('info', 'Se creó la facutra correctamente');
+    }
+
+
+
+
+
+
       /**
      * Eliminar la venta Seleccionada.
      *
@@ -44,12 +112,25 @@ class VentaController extends Controller
      */
     public function destroy($id)
     {
-        $venta = Ventas::find($id);
-        if ($venta == null) {
+        $ventas = Ventas::find($id);
+        if ($ventas == null) {
             return abort(404);
         }
-        $venta->delete();
-        return redirect("/detalleVentas")->with('info', 'Se eliminó la venta correctamente');
+        $ventas->delete();
+        return redirect("/ventas")->with('info', 'Se eliminó la venta correctamente');
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+    
 }
