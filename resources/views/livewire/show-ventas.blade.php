@@ -1,13 +1,13 @@
 <div>
 <div class="flex relative mt-1">
-      
+@can('ventas.create')
             <div class="flex-none mr-10">
                 <a href="/ventas/create" type="button"
                     class="focus:outline-none text-white text-sm py-3 px-5 rounded-md bg-blue-500 hover:bg-blue-600 hover:shadow-lg">
                     Registrar nueva Venta
                 </a>
             </div>
-       
+            @endcan
         <input type="text" id="password"
             class="w-full pl-3 pr-10 py-2 border-2 border-gray-200 rounded-xl hover:border-gray-300 focus:outline-none focus:border-blue-500 transition-colors"
             placeholder="Buscar" wire:model="search" type="search">
@@ -64,8 +64,10 @@
                             </div>
                         </td>      
                               <!-- Boton : VerDetalleVenta -->
+                              @canany(['ventas.edit', 'ventas.destroy'])
                                 <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex item-center justify-center">
+                                    
                                     <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                                         <a href="{{ route('detalle.show', $venta->id) }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -78,8 +80,9 @@
                                         </a>                              
                             </div>    
                                 <!-- Boton : EditarVenta -->
+                                @can('ventas.edit')
                             <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                            <a href="">
+                                            <a href="{{ route('ventas.edit', $venta) }}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke="currentColor" class="stroke-current text-green-600">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -87,9 +90,11 @@
                                                 </svg>
                                             </a>
                                         </div>
-                             <!-- Boton : EliminarVenta -->
+                                        @endcan
+                             <!-- Boton : EliminarVenta --> 
+                             @can('ventas.destroy')
                             <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                            <a wire:click="">
+                                            <a wire:click="$emit('ventas',{{ $venta->id }})">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke="currentColor" class="stroke-current text-red-600">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -97,13 +102,46 @@
                                                 </svg>
                                             </a>
                                         </div>  
+                                        <form id="delete-form-{{ $venta->id }}" action="/ventas/{{ $venta->id }}" method="POST">
+                                @csrf
+                                <input name="_method" type="hidden" value="DELETE">
+                            </form>
+                            @endcan
                             </td> 
                                              
                         </td>
-                      
+                        @endcanany
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </x-table>
+    {{ $ventas->links() }}
+    @push('js')
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Livewire.on('ventas', ventas => {
+
+            Swal.fire({
+                title: '¿Está seguro?',
+                text: "No podrá revertir el cambio",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Eliminar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + ventas).submit();
+                    Swal.fire(
+                        '¡Eliminado!',
+                        'Se ha eliminado correctamente.',
+                        'success'
+                    )
+                }
+            })
+        });
+    </script>
+    @endpush
 </div>
