@@ -50,7 +50,7 @@ class HistorialController extends Controller
     {
         
         $codigo = $request->input('codigo');
-        $producto = Productos::where('codigo',$codigo)->orWhere('id',$codigo)->first();
+        $producto = Productos::where('codigo',$codigo)->where('tipo_estado_id',1)->first();
         $cantidad = $request->input('cantidad');
         $tipo = $request->input('tipo');
         if(!$producto){
@@ -102,7 +102,7 @@ class HistorialController extends Controller
     {
         $historial = Historial::find($id);
         $codigo = $request->input('codigo');
-        $productoN = Productos::where('codigo',$codigo)->orWhere('id',$codigo)->first();
+        $productoN = Productos::where('codigo',$codigo)->where('tipo_estado_id',1)->first();
         $productoA = Productos::where('id',$historial->productos_id)->first();
         $cantidad = $request->input('cantidad');
         $tipo = $request->input('tipo');
