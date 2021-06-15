@@ -16,8 +16,6 @@ class UpdateUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->unsignedBigInteger('tipo_estado_id')->default(1);
             $table->foreign('tipo_estado_id')->references('id')->on('tipo_estado')->onUpdate('cascade')->onDelete('cascade');
-            $table->unsignedBigInteger('tipo_usuario_id')->nullable(true);
-            $table->foreign('tipo_usuario_id')->references('id')->on('tipo_usuario')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

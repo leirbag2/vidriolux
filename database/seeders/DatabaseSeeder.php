@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,6 +14,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         \App\Models\User::factory(50)->create();
+        DB::table('tipo_estado')->insert(
+            array(
+                ['descripcionEstado' => 'Habilitado'],
+                ['descripcionEstado' => 'Deshabilitado']
+            )
+        );
+
+        $this->call([
+            RoleSeeder::class,
+            UserSeeder::class,
+            ProductosSeeder::class
+        ]);
     }
 }

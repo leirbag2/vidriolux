@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\HistorialController;
+use App\Http\Controllers\VentaController;
+use App\Http\Controllers\DetalleVentasController;
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\CategoriaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +20,7 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth/login');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
@@ -23,5 +28,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
     Route::resource('usuarios',UserController::class);
+    Route::resource('ventas',VentaController::class);
+    Route::resource('detalle',DetalleVentasController::class);
+    Route::resource('historial',HistorialController::class);
+    Route::resource('productos',ProductoController::class);
+    Route::resource('categorias',CategoriaController::class);
 });
-require __DIR__.'/auth.php';

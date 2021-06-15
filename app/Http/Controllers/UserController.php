@@ -5,24 +5,33 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use App\Models\TipoUsuario;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
+    //Define los permisos para acceder a cada ruta
+    public function __construct()
+    {
+        $this->middleware('can:usuarios.index')->only('index');
+        $this->middleware('can:usuarios.create')->only('create');
+        $this->middleware('can:usuarios.edit')->only('edit', 'update');
+        $this->middleware('can:usuarios.destroy')->only('destroy');
+    }
+
     /**
+     * Muestra la tabla de todos los usuarios
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return view('admin/users.users', [
-            'cantidad' => User::all()->count()
-        ]);
+        return view('admin/users.users');
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Crea un nuevo usuario
      *
      * @return \Illuminate\Http\Response
      */
@@ -30,13 +39,14 @@ class UserController extends Controller
     {
         return view('admin/users.form', [
             'is_editing' => false,
-            'user' => new User,
-            'listaTipo' => TipoUsuario::all()
+            'roles' => Role::all(),
+            'permissions' => Permission::all(),
+            'user' => new User
         ]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Guarda el usuario creado en la base de datos
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -46,57 +56,45 @@ class UserController extends Controller
         $name = $request->input('nombre');
         $email = $request->input('correo');
         $password = Hash::make($request->input('password', 'P@ssw0rd'));
-        $tipo_usuario = $request->input('tipo_usuario');
         $tipo_estado = $request->input('tipo_estado');
         $user = User::where('email', $email)->get();
         if ($user->count() > 0) {
-            return redirect("/usuarios?error=user_exists");
+            return redirect()->back()->with('info', 'El correo ingresado ya existe en los registros');
         }
-        if ($tipo_usuario <1 || $tipo_usuario >3){
-            $tipo_usuario = null;
-        }
-        if ($tipo_estado <1 || $tipo_estado >2){
+        if ($tipo_estado < 1 || $tipo_estado > 2) {
             $tipo_estado = 2;
         }
         $usuario = new User;
         $usuario->name = $name;
         $usuario->email = $email;
         $usuario->password = $password;
-        $usuario->tipo_usuario_id = $tipo_usuario;
         $usuario->tipo_estado_id = $tipo_estado;
         $usuario->save();
-        return redirect("/usuarios?ok=create");
+        $usuario->roles()->sync($request->roles);
+        if ($request->roles != null) {
+            $usuario->syncPermissions($request->permissions);
+        }
+        return redirect("/usuarios")->with('info', 'Se creó el usuario correctamente');
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
+     * Muestra el formulario para editar un usuario seleccionado
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $user = User::find($id);
         return view('admin/users.form', [
-            'user' => $user,
-            'is_editing' => true,
-            'listaTipo' => TipoUsuario::all()
+            'user' => User::find($id),
+            'roles' => Role::all(),
+            'permissions' => Permission::all(),
+            'is_editing' => true
         ]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza el usuario seleccionado
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -107,36 +105,41 @@ class UserController extends Controller
         $usuario = User::find($id);
         $name = $request->input('nombre');
         $email = $request->input('correo');
-        $tipo_usuario = $request->input('tipo_usuario');
         $tipo_estado = $request->input('tipo_estado');
-        $user = User::where('email', $email)->where('email','<>',$usuario->email)->get();
+        $user = User::where('email', $email)->where('email', '<>', $usuario->email)->get();
 
         if ($user->count() > 0) {
-            return redirect('/usuarios?error=user_exists');
+            return redirect()->back()->with('info', 'El correo ingresado ya existe en los registros');
         }
 
-        if ($tipo_usuario <1 || $tipo_usuario >3){
-            $tipo_usuario = null;
-        }
-        if ($tipo_estado <1 || $tipo_estado >2){
+        if ($tipo_estado < 1 || $tipo_estado > 2) {
             $tipo_estado = 2;
         }
         $usuario->name = $name;
         $usuario->email = $email;
-        $usuario->tipo_usuario_id = $tipo_usuario;
         $usuario->tipo_estado_id = $tipo_estado;
         $usuario->save();
-        return redirect('/usuarios?ok=update');
+        $usuario->roles()->sync($request->roles);
+        if ($request->roles != null) {
+            $usuario->syncPermissions($request->permissions);
+        } else {
+            $usuario->syncPermissions(null);
+        }
+        return redirect('/usuarios')->with('info', 'El usuario se modificó correctamente');
     }
-
     /**
-     * Remove the specified resource from storage.
+     * Elimina el usuario seleccionado.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        $usuario = User::find($id);
+        if ($usuario == null) {
+            return abort(404);
+        }
+        $usuario->delete();
+        return redirect("/usuarios")->with('info', 'Se eliminó el usuario correctamente');
     }
 }

@@ -14,12 +14,13 @@ class CreateHistorialTable extends Migration
     public function up()
     {
         Schema::create('historial', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('users_id');
             $table->foreign('users_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('productos_id');
             $table->foreign('productos_id')->references('id')->on('productos')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('cantidad');
-            $table->date('fecha');
+            $table->timestamps();
         });
     }
 
