@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\TipoEstado;
 
 class Productos extends Model
 {
@@ -13,5 +14,9 @@ class Productos extends Model
 
     public function getCategoriaAttribute() {
         return Categorias::firstWhere('id', $this->categorias_id);
+    }
+
+    public function getEstadoAttribute() {
+        return TipoEstado::firstWhere('id', $this->tipo_estado_id);
     }
 }
