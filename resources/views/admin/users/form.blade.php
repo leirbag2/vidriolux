@@ -91,13 +91,12 @@
                                 {!! Form::submit('Guardar', ['class' => 'mb-2 md:mb-0 bg-green-400 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-green-500']) !!}
                             </div>
                         </div>
-                    </div>
-                    {!! Form::close() !!}
+                        {!! Form::close() !!}
                     <!-- FIN FORMULARIO -->
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
     <script>
         var checkboxes = document.getElementsByName('permissions[]');
