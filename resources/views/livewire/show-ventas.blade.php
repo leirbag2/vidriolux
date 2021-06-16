@@ -92,7 +92,7 @@
                                     </div>
                                     <!-- Boton : EliminarVenta -->
                                     <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                        <a wire:click="">
+                                        <a wire:click="$emit('ventas',{{ $venta->id }})">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 stroke="currentColor" class="stroke-current text-red-600">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -100,6 +100,10 @@
                                             </svg>
                                         </a>
                                     </div>
+                                    <form id="delete-form-{{ $venta->id }}" action="/ventas/{{ $venta->id }}" method="POST">
+                                        @csrf
+                                        <input name="_method" type="hidden" value="DELETE">
+                                    </form>
                                 </div>
                             </td>
                         @endcanany
