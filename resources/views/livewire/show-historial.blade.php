@@ -16,6 +16,7 @@
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Fecha</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Fecha Actualizacion</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Usuario</th>
+                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Codigo</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Producto</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Cantidad</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Tipo</th>
@@ -40,6 +41,11 @@
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-sm text-gray-900">
                             {{$historial->usuario->name}}
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">
+                            {{$historial->producto->codigo}}
                         </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
