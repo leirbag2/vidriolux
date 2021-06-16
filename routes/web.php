@@ -27,6 +27,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+    Route::get('/', function () {
+        return view('dashboard');
+    })->name('dashboard');
     Route::resource('usuarios',UserController::class);
     Route::resource('ventas',VentaController::class);
     Route::resource('historial',HistorialController::class);

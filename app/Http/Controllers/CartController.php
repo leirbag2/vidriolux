@@ -38,7 +38,6 @@ class CartController extends Controller
     public function store(Request $request)
     {
         $cart = $request->session()->get('cart');
-        //dd($cart);
         $numFactura = $request->input('numFactura');
         $venta = new Ventas;
         $venta->users_id = auth()->id();
@@ -59,7 +58,7 @@ class CartController extends Controller
                 );
         }
         $request->session()->forget('cart');
-        return redirect('ventas/create')->with('info', 'Venta realizada correctamente');
+        return redirect('ventas')->with('info', 'Venta realizada correctamente');
     }
 
     public function destroy(Request $request)
