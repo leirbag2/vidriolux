@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HistorialController;
 use App\Http\Controllers\VentaController;
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\CategoriaController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,11 +32,13 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         return view('dashboard');
     });
     Route::resource('usuarios',UserController::class);
+    Route::resource('productos',ProductoController::class);
+    Route::resource('categorias',CategoriaController::class);
     Route::resource('ventas',VentaController::class);
     Route::resource('historial',HistorialController::class);
     Route::get('/cart/add',[CartController::class,'add']);
     Route::get('/cart/store',[CartController::class,'store']);
     Route::get('/cart/destroy',[CartController::class,'destroy']);
     Route::get('/cart/deleteAll',[CartController::class,'deleteAll']);
-    Route::resource('cart',CartController::class);  
+    Route::resource('cart',CartController::class);
 });
