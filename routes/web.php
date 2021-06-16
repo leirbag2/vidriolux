@@ -1,11 +1,10 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HistorialController;
 use App\Http\Controllers\VentaController;
-use App\Http\Controllers\DetalleVentasController;
-use App\Http\Controllers\VentaProductosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,9 +25,15 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+    Route::get('/', function () {
+        return view('dashboard');
+    });
     Route::resource('usuarios',UserController::class);
     Route::resource('ventas',VentaController::class);
-    Route::resource('detalle',DetalleVentasController::class);
     Route::resource('historial',HistorialController::class);
-    Route::resource('ventaproductos',VentaProductosController::class);
+    Route::get('/cart/add',[CartController::class,'add']);
+    Route::get('/cart/store',[CartController::class,'store']);
+    Route::get('/cart/destroy',[CartController::class,'destroy']);
+    Route::get('/cart/deleteAll',[CartController::class,'deleteAll']);
+    Route::resource('cart',CartController::class);  
 });

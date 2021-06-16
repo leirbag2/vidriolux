@@ -69,7 +69,7 @@
                                 <div class="flex item-center justify-center">
                                     
                                     <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                        <a href="{{ route('detalle.show', $venta->id) }}">
+                                        <a href="{{ route('ventas.show', $venta->id) }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 stroke="currentColor" class="stroke-current text-blue-600">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

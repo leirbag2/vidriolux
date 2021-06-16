@@ -18,7 +18,6 @@ class VentaController extends Controller
      $this->middleware('can:ventas.destroy')->only('destroy');
      $this->middleware('can:ventas.edit')->only('edit','update');
      $this->middleware('can:ventas.create')->only('create');
-
  }
 
  
@@ -31,9 +30,7 @@ class VentaController extends Controller
     {
         return view('ventas.ventasProductos', [
             'is_editing' => false,
-            'ventas' => new Ventas,
-              
-    
+            'ventas' => new Ventas
         ]);
     }
 
@@ -95,14 +92,18 @@ class VentaController extends Controller
         $numFactura = $request->input('numFactura');
         $venta = new Ventas;
         $venta->numFactura = $numFactura;
+        
         $venta->save();
         return redirect("/ventas")->with('info', 'Se creó la facutra correctamente');
     }
 
 
-
-
-
+    public function show($id)
+    {
+      $venta = Ventas::find($id);
+      $detalleVentas = $venta->detalle;
+      return view('ventas/detalle' ,compact('detalleVentas','venta')); 
+    }
 
       /**
      * Eliminar la venta Seleccionada.
@@ -116,6 +117,7 @@ class VentaController extends Controller
         if ($ventas == null) {
             return abort(404);
         }
+        $ventas->productos()->sync(null);
         $ventas->delete();
         return redirect("/ventas")->with('info', 'Se eliminó la venta correctamente');
     }

@@ -17,7 +17,7 @@ class CreateVentasTable extends Migration
             $table->id();
             $table->unsignedBigInteger('users_id');
             $table->foreign('users_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('numFactura');
+            $table->string('numFactura')->unique();
             $table->date('fechaVenta');
             $table->integer('totalNeto');
             $table->integer('iva');

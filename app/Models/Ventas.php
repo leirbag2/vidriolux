@@ -11,13 +11,15 @@ use App\Models\Productos;
 class Ventas extends Model
 {
     use HasFactory;
-    
-    
-    public function getUsuarioAttribute() {
+
+
+    public function getUsuarioAttribute()
+    {
         return User::firstWhere('id', $this->users_id);
     }
 
-    public function getProductoAttribute() {
+    public function getProductoAttribute()
+    {
         return Productos::firstWhere('id', $this->id);
     }
 
@@ -27,9 +29,9 @@ class Ventas extends Model
         return $this->hasMany(DetalleVentas::class);
     }
 
-    public function ventaProductos()
+    public function productos()
     {
-        return $this->hasMany(Productos::class);
+        return $this->belongsToMany(Productos::class, 'detalle_ventas')->withPivot('cantidad', 'subtotal', 'precioCompra', 'precioVenta');
     }
 
 

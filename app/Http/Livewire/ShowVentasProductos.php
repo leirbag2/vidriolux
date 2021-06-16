@@ -18,6 +18,6 @@ class ShowVentasProductos extends Component
     public function render()
     {
         $productos = Productos::where('nombreProducto','LIKE','%'.$this->search.'%')->paginate(5);
-        return view('livewire.show-product-form',compact('productos'));
+        return view('livewire.show-ventas-productos',compact('productos'));
     }
 }
