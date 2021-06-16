@@ -6,14 +6,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\DetalleVentas;
+use App\Models\Productos;
 
 class Ventas extends Model
 {
     use HasFactory;
-    
-    
-    public function getUsuarioAttribute() {
+
+
+    public function getUsuarioAttribute()
+    {
         return User::firstWhere('id', $this->users_id);
+    }
+
+    public function getProductoAttribute()
+    {
+        return Productos::firstWhere('id', $this->id);
     }
 
 
@@ -22,4 +29,11 @@ class Ventas extends Model
         return $this->hasMany(DetalleVentas::class);
     }
 
+    public function productos()
+    {
+        return $this->belongsToMany(Productos::class, 'detalle_ventas')->withPivot('cantidad', 'subtotal', 'precioCompra', 'precioVenta');
+    }
+
+
+    public $timestamps = false;
 }
