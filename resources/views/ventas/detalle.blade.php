@@ -6,11 +6,6 @@
                     <h2 class="font-semibold text-2xl text-gray-800 leading-tight text-center mb-5">
                         Factura: {{$venta->numFactura}}
                     </h2>
-                    @if (session('info'))
-                    <div class="mt-8 focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-green-500">
-                        {{session('info')}}
-                    </div>
-                    @endif
                     <div class="text-gray-500">
                         <x-table>
                             <table class="min-w-full divide-y divide-gray-200">
@@ -38,7 +33,6 @@
                                                 {{ $detalleventa->producto->nombreProducto }}
                                             </div>
                                         </td>
-
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">
                                                 {{ $detalleventa->producto->precioNeto }}
@@ -55,7 +49,6 @@
                                                 {{ $detalleventa->cantidad }}
                                             </div>
                                         </td>
-
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">
                                                 {{ $detalleventa->subtotal }}

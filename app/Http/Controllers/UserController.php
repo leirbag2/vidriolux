@@ -61,7 +61,7 @@ class UserController extends Controller
         $tipo_estado = $request->input('tipo_estado');
         $user = User::where('email', $email)->get();
         if ($user->count() > 0) {
-            return redirect("/usuarios")->with('info', 'El correo ingresado ya existe en los registros');
+            return redirect()->back()->with('info', 'El correo ingresado ya existe en los registros');
         }
         if ($tipo_estado < 1 || $tipo_estado > 2) {
             $tipo_estado = 2;
@@ -75,7 +75,7 @@ class UserController extends Controller
         $usuario->roles()->sync($request->roles);
         if ($request->roles != null) {
             $usuario->syncPermissions($request->permissions);
-        };
+        }
         return redirect("/usuarios")->with('info', 'Se creó el usuario correctamente');
     }
 
@@ -111,7 +111,7 @@ class UserController extends Controller
         $user = User::where('email', $email)->where('email', '<>', $usuario->email)->get();
 
         if ($user->count() > 0) {
-            return redirect('/usuarios')->with('info', 'El correo ingresado ya existe en los registros');
+            return redirect()->back()->with('info', 'El correo ingresado ya existe en los registros');
         }
 
         if ($tipo_estado < 1 || $tipo_estado > 2) {

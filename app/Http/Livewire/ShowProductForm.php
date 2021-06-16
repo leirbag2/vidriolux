@@ -16,7 +16,14 @@ class ShowProductForm extends Component
     }
     public function render()
     {
-        $productos = Productos::where('nombreProducto','LIKE','%'.$this->search.'%')->paginate(5);
+        $productos = Productos::
+        leftJoin('categorias', 'categorias.id', '=', 'productos.categorias_id')
+        ->where('tipo_estado_id',1)
+        ->where(function ($query){
+            $query->where('nombreProducto','LIKE','%'.$this->search.'%')
+            ->orWhere('codigo','LIKE','%'.$this->search.'%')
+            ->orWhere('nombreCategoria','LIKE','%'.$this->search.'%');
+        })->paginate(5);
         return view('livewire.show-product-form',compact('productos'));
     }
 }
