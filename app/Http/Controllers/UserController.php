@@ -27,9 +27,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin/users.users', [
-            'cantidad' => User::all()->count()
-        ]);
+        return view('admin/users.users');
     }
 
     /**

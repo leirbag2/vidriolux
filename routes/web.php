@@ -5,7 +5,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\HistorialController;
 use App\Http\Controllers\VentaController;
 use App\Http\Controllers\DetalleVentasController;
-use App\Http\Controllers\VentaProductosController;
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\CategoriaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,5 +31,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('ventas',VentaController::class);
     Route::resource('detalle',DetalleVentasController::class);
     Route::resource('historial',HistorialController::class);
-    Route::resource('ventaproductos',VentaProductosController::class);
+    Route::resource('productos',ProductoController::class);
+    Route::resource('categorias',CategoriaController::class);
 });
