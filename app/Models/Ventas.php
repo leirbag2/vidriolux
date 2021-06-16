@@ -28,6 +28,6 @@ class Ventas extends Model
 
     public function productos()
     {
-        return $this->belongsToMany(Productos::class,'detalle_ventas')->withPivot('cantidad','subtotal');
+        return $this->belongsToMany(Productos::class, 'detalle_ventas')->withPivot('cantidad', 'subtotal', 'precioCompra', 'precioVenta');
     }
 }

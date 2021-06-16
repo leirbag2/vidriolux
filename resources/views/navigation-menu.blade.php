@@ -28,9 +28,15 @@ $nav_links = [
     [
         'name' => 'Ventas',
         'route' => route('ventas.index'),
-        'active' => request()->routeIs('ventas.index'),
-        'can' => 'ventas.index',
+        'active' => request()->routeIs('ventas.index')|| request()->routeIs('ventas.show') || request()->routeIs('ventas.create') || request()->routeIs('ventas.edit'),
+        'can' => 'ventas.index'
     ] ,  
+    [
+        'name' => 'Carro',
+        'route' => route('cart.index'),
+        'active' => request()->routeIs('cart.index'),
+        'can' => 'ventas.index'
+    ]
 ];
 
 @endphp

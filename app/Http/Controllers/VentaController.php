@@ -5,16 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Productos;
 use Illuminate\Http\Request;
 use App\Models\Ventas;
+
 class VentaController extends Controller
 {
 
-    //Define los permisos para acceder a cada ruta
+ //Define los permisos para acceder a cada ruta
     public function __construct()
     {
         $this->middleware('can:ventas.destroy')->only('destroy');
-        $this->middleware('can:ventas.edit')->only('edit', 'update');
+        $this->middleware('can:ventas.edit')->only('edit','update');
         $this->middleware('can:ventas.create')->only('create');
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -29,7 +31,7 @@ class VentaController extends Controller
         ]);
     }
 
-    /**
+   /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -43,7 +45,7 @@ class VentaController extends Controller
         ]);
     }
 
-    /**
+/**
      * Actualiza el usuario seleccionado
      *
      * @param  \Illuminate\Http\Request  $request
@@ -59,7 +61,9 @@ class VentaController extends Controller
         return redirect('/ventas')->with('info', 'El numero de factura se modificó correctamente');
     }
 
-    /**
+
+
+ /**
      * Muestra la tabla de todos las ventas
      * Display a listing of the resource.
      *
@@ -68,7 +72,9 @@ class VentaController extends Controller
 
     public function index()
     {
-        return view('ventas/ventas', []);
+    return view('ventas/ventas' ,[
+
+    ]);
     }
 
     /**
@@ -82,11 +88,19 @@ class VentaController extends Controller
         $numFactura = $request->input('numFactura');
         $venta = new Ventas;
         $venta->numFactura = $numFactura;
+
         $venta->save();
-        return redirect("/ventas")->with('info', 'Se creó la venta correctamente');
+        return redirect("/ventas")->with('info', 'Se creó la facutra correctamente');
     }
 
-    /**
+    public function show($id)
+    {
+      $venta = Ventas::find($id);
+      $detalleVentas = $venta->detalle;
+      return view('ventas/detalle' ,compact('detalleVentas','venta'));
+    }
+
+      /**
      * Eliminar la venta Seleccionada.
      *
      * @param  int  $id
@@ -98,6 +112,7 @@ class VentaController extends Controller
         if ($ventas == null) {
             return abort(404);
         }
+        $ventas->productos()->sync(null);
         $ventas->delete();
         return redirect("/ventas")->with('info', 'Se eliminó la venta correctamente');
     }

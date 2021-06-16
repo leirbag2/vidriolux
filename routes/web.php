@@ -6,6 +6,7 @@ use App\Http\Controllers\HistorialController;
 use App\Http\Controllers\VentaController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,4 +32,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('historial',HistorialController::class);
     Route::resource('productos',ProductoController::class);
     Route::resource('categorias',CategoriaController::class);
+    Route::get('/cart/add',[CartController::class,'add']);
+    Route::get('/cart/store',[CartController::class,'store']);
+    Route::get('/cart/destroy',[CartController::class,'destroy']);
+    Route::get('/cart/deleteAll',[CartController::class,'deleteAll']);
+    Route::resource('cart',CartController::class);
 });
