@@ -4,15 +4,15 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
                     <h2 class="font-semibold text-2xl text-gray-800 leading-tight text-center mb-5">
-                        Usuarios
+                        Realizar Venta
                     </h2>
                     @if (session('info'))
-                        <div class="mt-8 focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-green-500">
-                            {{ session('info') }}
-                        </div>
+                    <div class="mt-8 focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-green-500">
+                        {{session('info')}}
+                    </div>
                     @endif
-                    <div class="text-gray-500">
-                        @livewire('show-users')
+                    <div class="text-gray-500">               
+                        @livewire('show-ventas-productos')
                         <!-- end table -->
                     </div>
                 </div>

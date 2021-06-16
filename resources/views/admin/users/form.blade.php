@@ -11,7 +11,14 @@
                         {!! Form::model($user, ['route' => [$is_editing ? 'usuarios.update' : 'usuarios.store', $user], 'method' => $is_editing ? 'PUT' : 'POST']) !!}
                         <div class="mt-5">
                             <div class="md:flex md:flex-row md:space-x-4 w-full text-xs">
+
                                 <div class="mb-3 md:space-y-2 w-full text-xs">
+                                    @if (session('info'))
+                                        <div
+                                            class="mt-8 focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-red-500 mb-5">
+                                            {{ session('info') }}
+                                        </div>
+                                    @endif
                                     <label class="font-semibold text-gray-600 py-2">Nombre<abbr
                                             title="obligatorio">*</abbr></label>
                                     <input placeholder="Nombre"
@@ -84,13 +91,12 @@
                                 {!! Form::submit('Guardar', ['class' => 'mb-2 md:mb-0 bg-green-400 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-green-500']) !!}
                             </div>
                         </div>
-                    </div>
-                    {!! Form::close() !!}
+                        {!! Form::close() !!}
                     <!-- FIN FORMULARIO -->
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
     <script>
         var checkboxes = document.getElementsByName('permissions[]');
@@ -139,7 +145,7 @@
                 if (aEstado == "unselected") {
                     activarPermisos(bodeguero);
                 }
-                if( vEstado == "selected"){
+                if (vEstado == "selected") {
                     activarPermisos(vendedor);
                 }
             }
@@ -153,7 +159,7 @@
                 if (aEstado == "unselected") {
                     activarPermisos(vendedor);
                 }
-                if(bEstado == "selected"){
+                if (bEstado == "selected") {
                     activarPermisos(bodeguero);
                 }
             }
@@ -161,6 +167,7 @@
                 activarTodo(false);
             }
         }
+
         function activarPermisos(nombre) {
             var checked = true;
             if (nombre.getAttribute('estado') == "selected") {

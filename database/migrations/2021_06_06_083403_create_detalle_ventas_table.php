@@ -18,6 +18,8 @@ class CreateDetalleVentasTable extends Migration
             $table->foreign('ventas_id')->references('id')->on('ventas')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('productos_id');
             $table->foreign('productos_id')->references('id')->on('productos')->onUpdate('cascade')->onDelete('cascade');
+            $table->integer('precioCompra')->nullable();
+            $table->integer('precioVenta')->nullable();
             $table->integer('cantidad');
             $table->integer('subtotal');
         });
