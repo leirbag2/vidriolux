@@ -56,33 +56,36 @@
                         </div>
                     </td>
 
+
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-right text-gray-900">
-                        <form action="/cart/add" id="add-form-{{$producto->id}}" method="GET">
-                            @csrf
-                            <input class=" w-20 text-grey-darker border border-gray-200 rounded-lg h-10 px-4" min="1" max="{{$producto->stock}}" type="number" id="cantidad-{{$producto->id}}" name="cantidad" value="">
-                            <input type="hidden" name="id" value="{{$producto->id}}">
+                            <input class=" w-20 text-grey-darker border border-gray-200 rounded-lg h-10 px-4" min="1" max="{{ $producto->stock }}" type="number" id="cantidad-{{ $producto->id }}" name="cantidad" value="">
                         </div>
                     </td>
 
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="mt-0 text-center md:space-x-3 md:block flex flex-col-reverse">
-                            <a wire:click="$emit('add',{{ $producto->id }})" class="cursor-pointer mb-2 md:mb-0 bg-green-400 px-5 py-2 text-sm 
+                            <a wire:click="$emit('add',{{ $producto->id }})" class="cursor-pointer mb-2 md:mb-0 bg-green-400 px-5 py-2 text-sm
                             shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-green-500">Agregar
                             </a>
                         </div>
-                      
+                        <form action="/cart/add" id="add-form-{{ $producto->id }}" method="GET">
+                            @csrf
+                            <input type="hidden" id="add-{{ $producto->id }}" name="cantidad" value="">
+                            <input type="hidden" name="id" value="{{ $producto->id }}">
                         </form>
                     </td>
-
                 </tr>
                 @endforeach
             </tbody>
         </table>
     </x-table>
+    </form>
     @push('js')
     <script>
         Livewire.on('add', id => {
+            var cantidad = document.getElementById('cantidad-' + id).value;
+            document.getElementById('add-' + id).setAttribute("value", cantidad);
             document.getElementById('add-form-' + id).submit();;
         });
     </script>
