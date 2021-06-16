@@ -92,7 +92,9 @@ class VentaController extends Controller
         $numFactura = $request->input('numFactura');
         $venta = new Ventas;
         $venta->numFactura = $numFactura;
-        
+           
+
+
         $venta->save();
         return redirect("/ventas")->with('info', 'Se creó la facutra correctamente');
     }
@@ -104,6 +106,7 @@ class VentaController extends Controller
       $detalleVentas = $venta->detalle;
       return view('ventas/detalle' ,compact('detalleVentas','venta')); 
     }
+
 
       /**
      * Eliminar la venta Seleccionada.

@@ -52,13 +52,16 @@
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-center text-gray-900">
                             <input class="w-40 text-grey-darker border
-                            border-gray-200 rounded-lg h-10 px-4" type="number" name="precioVenta" value="{{$producto->precioNeto}}">
+                            border-gray-200 rounded-lg h-10 px-4" type="number" name="precioVenta" value="{{$producto->precioVenta}}">
                         </div>
                     </td>
 
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-right text-gray-900">
-                            <input class=" w-20 text-grey-darker border border-gray-200 rounded-lg h-10 px-4" min="1" max="{{$producto->stock}}" type="number" name="cantidad" id="cantidad" value="">
+                        <form action="/cart/add" id="add-form-{{$producto->id}}" method="GET">
+                            @csrf
+                            <input class=" w-20 text-grey-darker border border-gray-200 rounded-lg h-10 px-4" min="1" max="{{$producto->stock}}" type="number" id="cantidad-{{$producto->id}}" name="cantidad" value="">
+                            <input type="hidden" name="id" value="{{$producto->id}}">
                         </div>
                     </td>
 
@@ -68,11 +71,10 @@
                             shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-green-500">Agregar
                             </a>
                         </div>
+                      
+                        </form>
                     </td>
-                    <form action="/cart/add" id="add-form-{{$producto->id}}" method="POST">
-                        @csrf
-                        <input type="hidden" name="id" value="{{$producto->id}}">
-                    </form>
+
                 </tr>
                 @endforeach
             </tbody>

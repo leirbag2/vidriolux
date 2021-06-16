@@ -35,7 +35,7 @@
                                 marcados con un asterisco <abbr title="Campo obligatorio">*</abbr></p>
 
                             <div class="mt-5 text-right md:space-x-3 md:block flex flex-col-reverse">
-                                <a href="/historial" class="mb-2 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-full hover:shadow-lg hover:bg-gray-100">
+                                <a href="/ventas" class="mb-2 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-full hover:shadow-lg hover:bg-gray-100">
                                     Cancelar </a>
                                 {!! Form::submit('Guardar', ['class' => 'mb-2 md:mb-0 bg-green-400 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-green-500']) !!}
                             </div>

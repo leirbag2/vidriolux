@@ -27,7 +27,7 @@ class CartController extends Controller
 
         $id = $request->get('id');
         $producto = Productos::find($id);
-        $cantidad = $request->get('cantidad');
+        $cantidad = $request->input('cantidad');
         $oldCart =  $request->session()->has('cart') ? $request->session()->get('cart') : null;
         $cart = new Cart($oldCart);
         $cart->add($producto, $producto->id, $cantidad);
@@ -68,10 +68,10 @@ class CartController extends Controller
         $oldCart =  $request->session()->has('cart') ? $request->session()->get('cart') : null;
         $cart = new Cart($oldCart);
         $cart->remove($id);
-        if($cart->Cantidad > 0){
+        if ($cart->Cantidad > 0) {
             $request->session()->put('cart', $cart);
             return redirect('/cart');
-        }else{
+        } else {
             $request->session()->forget('cart');
         }
         return redirect('/ventas/create');
