@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Ventas;
 
 class Productos extends Model
 {
@@ -13,5 +14,10 @@ class Productos extends Model
 
     public function getCategoriaAttribute() {
         return Categorias::firstWhere('id', $this->categorias_id);
+    }
+
+    public function ventas()
+    {
+        return $this->belongsToMany(Ventas::class,'detalle_ventas')->withPivot('cantidad','subtotal');
     }
 }

@@ -8,10 +8,6 @@ $nav_links = [
         'can' => 'usuarios.index',
     ] /*
 
-
-  
-
-
     [
         'name' => 'Productos',
         'route' => route('productos.index'),
