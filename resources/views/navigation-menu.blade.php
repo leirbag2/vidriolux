@@ -5,26 +5,26 @@ $nav_links = [
         'name' => 'Usuarios',
         'route' => route('usuarios.index'),
         'active' => request()->routeIs('usuarios.index') || request()->routeIs('usuarios.create') || request()->routeIs('usuarios.edit'),
-        'can' => 'usuarios.index',
-    ] /*
-
+        'can' => 'usuarios.index'
+    ],
     [
         'name' => 'Productos',
         'route' => route('productos.index'),
         'active' => request()->routeIs('productos.index') || request()->routeIs('productos.create') || request()->routeIs('productos.edit'),
+        'can' => 'productos.index'
     ],
     [
         'name' => 'Categorias',
         'route' => route('categorias.index'),
         'active' => request()->routeIs('categorias.index') || request()->routeIs('categorias.create') || request()->routeIs('categorias.edit'),
-    ]*/,
+        'can' => 'categorias.index'
+    ],
     [
         'name' => 'Historial',
         'route' => route('historial.index'),
         'active' => request()->routeIs('historial.index') || request()->routeIs('historial.create') || request()->routeIs('historial.edit'),
         'can' => 'historial.index',
     ],
-
     [
         'name' => 'Ventas',
         'route' => route('ventas.index'),
