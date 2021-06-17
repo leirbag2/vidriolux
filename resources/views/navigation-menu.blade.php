@@ -36,6 +36,13 @@ $nav_links = [
         'route' => route('cart.index'),
         'active' => request()->routeIs('cart.index'),
         'can' => 'ventas.index'
+    ],
+
+    [
+        'name' => 'Reportes',
+        'route' => route('reporte.index'),
+        'active' => request()->routeIs('reporte.index'),
+        'can' => 'ventas.index'
     ]
 ];
 
