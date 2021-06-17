@@ -52,18 +52,17 @@
                                 <div class="flex-auto w-full mb-1 text-xs space-y-2">
                                     <label class="font-semibold text-gray-600 py-2">Descripción</label>
                                     <textarea name="description" 
-                                    class="w-full min-h-[100px] max-h-[300px] h-28 appearance-none block w-full
-                                    bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg  py-4 px-4" placeholder="" spellcheck="false">{{$producto->descripcionProducto}}
-                                    </textarea>
+                                    class="w-full min-h-[100px] max-h-[300px] h-28 appearance-none block
+                                    bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg  py-4 px-4" placeholder="" spellcheck="false">{{$producto->descripcionProducto}}</textarea>
                                 </div>
                             </div>
 
 
                             <div class="md:flex md:flex-row md:space-x-4 w-full text-xs">
                                 <div class="w-full flex flex-col mb-3">
-                                    <label class="font-semibold text-gray-600 py-2">Precio<abbr
+                                    <label class="font-semibold text-gray-600 py-2">Precio Neto<abbr
                                             title="obligatorio">*</abbr></label>
-                                    <input placeholder="Precio"
+                                    <input placeholder="Precio neto "
                                         class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
                                         required="required" type="number" name="precio" min="0"
                                         value="{{ $producto->precioNeto }}">
@@ -75,6 +74,14 @@
                                         class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
                                         type="number" name="precio" disabled
                                         value="{{ $producto->precioIva }}">
+                                </div>
+                                <div class="w-full flex flex-col mb-3">
+                                    <label class="font-semibold text-gray-600 py-2">Precio Venta<abbr
+                                            title="obligatorio">*</abbr></label>
+                                    <input placeholder="Precio Venta"
+                                        class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
+                                        type="number" name="precioVenta"
+                                        value="{{ $producto->precioVenta }}">
                                 </div>
                                 <div class="w-full flex flex-col mb-3">
                                     <label class="font-semibold text-gray-600 py-2">Cantidad<abbr

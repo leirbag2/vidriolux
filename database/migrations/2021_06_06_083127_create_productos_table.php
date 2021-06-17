@@ -21,6 +21,7 @@ class CreateProductosTable extends Migration
             $table->integer('stock');
             $table->integer('precioNeto');
             $table->integer('precioIva');
+            $table->integer('precioVenta');
             $table->unsignedBigInteger('categorias_id')->nullable(true);
             $table->foreign('categorias_id')->references('id')->on('categorias')->onUpdate('cascade')->onDelete('set null');
             $table->unsignedBigInteger('tipo_estado_id')->default(1);

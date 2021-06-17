@@ -15,7 +15,7 @@
                     <th scope="col" class="px-6 py-3 text-center uppercase tracking-wider">Producto</th>
                     <th scope="col" class="px-6 py-3 text-center uppercase tracking-wider">Stock</th>
                     <th scope="col" class="px-6 py-3 text-center uppercase tracking-wider">Categoria</th>
-                    <th scope="col" class="px-6 py-3 text-center uppercase tracking-wider">Precio Neto</th>
+                    <th scope="col" class="px-6 py-3 text-center uppercase tracking-wider">Precio Compra</th>
                     <th scope="col" class="px-6 py-3 text-center uppercase tracking-wider">Precio Venta</th>
                     <th scope="col" class="px-6 py-3 text-right uppercase tracking-wider">Cantidad</th>
                     <th scope="col" class="px-6 py-3 text-center uppercase tracking-wider">Acciones</th>
@@ -41,12 +41,12 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-center text-gray-900">
-                            {{ $producto->categoria != null ? $producto->categoria->nombreCategoria : 'Sin categoria' }}
+                            {{ $producto->nombreCategoria != null ? $producto->nombreCategoria : 'Sin categoria' }}
                         </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-center text-gray-900">
-                            {{ $producto->precioNeto }}
+                            ${{ number_format(($producto->precioNeto + $producto->precioIva), 0, ',', '.')  }}
                         </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
