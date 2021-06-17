@@ -41,7 +41,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/cart/destroy',[CartController::class,'destroy']);
     Route::get('/cart/deleteAll',[CartController::class,'deleteAll']);
     Route::resource('cart',CartController::class);
+    Route::get('/reporte/dia',[ReportController::class,'reportes_dia']);
+    Route::get('/reporte/resultado',[ReportController::class,'resultados']);
+    Route::get('/reporte/mes',[ReportController::class,'reportes_mes']);
     Route::resource('reporte',ReportController::class);
-    Route::get('/reporte/reportes_dia',[CartController::class,'reportes_dia']);
-    Route::get('/reporte/reportes_mes',[CartController::class,'reportes_mes']);
 });
