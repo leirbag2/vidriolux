@@ -10,11 +10,11 @@ class DetalleVentas extends Model
 {
     use HasFactory;
 
+    public function productos(){
+        return $this->hasMany(Productos::class);
+    }
 
     public function getProductoAttribute() {
         return Productos::firstWhere('id', $this->productos_id);
     }
-
-
-
 }

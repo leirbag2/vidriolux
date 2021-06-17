@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\TipoEstado;
+use App\Models\Ventas;
 
 class Productos extends Model
 {
@@ -18,5 +19,10 @@ class Productos extends Model
 
     public function getEstadoAttribute() {
         return TipoEstado::firstWhere('id', $this->tipo_estado_id);
+    }
+  
+    public function ventas()
+    {
+        return $this->belongsToMany(Ventas::class,'detalle_ventas')->withPivot('cantidad','subtotal');
     }
 }
