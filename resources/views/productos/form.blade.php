@@ -138,11 +138,9 @@
     </div>
     <script>
         document.getElementById("precio").addEventListener('keyup', (event) => {
-            document.getElementById("precioIva").setAttribute("value",null);
             var precio = document.getElementById("precio").value;
             precio *= 1.19;
             document.getElementById("precioIva").setAttribute("value",Math.round(precio));
-            console.log(precio);
         });
     </script>
 </x-app-layout>
