@@ -5,23 +5,29 @@ namespace App\Http\Livewire;
 use Livewire\WithPagination;
 use App\Models\Ventas;
 use Livewire\Component;
-
 class ShowReportes extends Component
 {
-
-
-
     use WithPagination;
-    public $search;
+    public $fechaIn;
+    public $fechaFin; 
+
+    public function mount()
+    {
+        $this->fechaIn = date('Y-m-d',strtotime(Ventas::orderby('fechaVenta')->first()->fechaVenta));
+        $this->fechaFin = date('Y-m-d');
+    }
     public function updatingSearch()
     {
         $this->resetPage();
     }
 
-
     public function render()
     {
-        $ventas = Ventas::where('fechaVenta', 'LIKE', '%' . $this->search . '%')->orWhere('totalIva', 'LIKE', '%' . $this->search . '%')->paginate(10);
-        return view('livewire.show-reportes', compact('ventas'));
+        $ventas = Ventas::where('fechaVenta', '>=', $this->fechaIn.' 00:00:00')
+        ->where('fechaVenta', '<=', $this->fechaFin.' 23:59:59')
+        ->orderByDesc('id')
+        ->paginate(5);
+        $ventasTotal = $ventas->sum('totalIva');
+        return view('livewire.show-reportes', compact('ventas','ventasTotal'));
     }
 }

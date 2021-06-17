@@ -10,22 +10,21 @@
                     <div class="mt-8 focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-green-500">
                         {{session('info')}}
                     </div>
-                    @endif              
-
-                    {{Form::open(array('route' => 'cart.store'))}}
-                    <div class="md:flex md:flex-row md:space-x-4 w-full text-xs">
-                                <div class="w-full flex flex-col mb-3">
-                                    <label class="font-semibold text-gray-600 py-2">Factura:<abbr
-                                            title="obligatorio">*</abbr></label>
-                                    <input placeholder="numero factura"
-                                        class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
-                                        required="required" type="text" name="num_factura" id=""
-                                        value="">
-                                </div>
+                    @endif
+                    @if (session('error'))
+                    <div class="mt-8 focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-red-500">
+                        {{session('error')}}
                     </div>
-                    
+                    @endif
                     <div class="text-gray-500">
                         @if($cart)
+                        {{Form::open(array('route' => 'cart.store'))}}
+                        <div class="md:flex md:flex-row md:space-x-4 w-full text-xs">
+                            <div class="w-full flex flex-col mb-3">
+                                <label class="font-semibold text-gray-600 py-2">Factura:<abbr title="obligatorio">*</abbr></label>
+                                <input placeholder="Número factura" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="num_factura" id="" value="">
+                            </div>
+                        </div>
                         <x-table>
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead>
@@ -33,6 +32,7 @@
                                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Código</th>
                                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Producto</th>
                                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Precio</th>
+                                        <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Precio Venta</th>
                                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Disponible</th>
                                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Cantidad</th>
                                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Total</th>
@@ -59,6 +59,11 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">
+                                                ${{number_format(($producto['item']->precioVenta),0,',','.')}}
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">
                                                 {{$producto['item']->stock}}
                                             </div>
                                         </td>
@@ -69,7 +74,7 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">
-                                                ${{number_format(($producto['item']->precioNeto * $producto['Cantidad']),0,',','.')}}
+                                                ${{number_format(($producto['item']->precioVenta * $producto['Cantidad']),0,',','.')}}
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
@@ -93,6 +98,7 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
+                                        <td></td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900 font-bold">
                                                 {{$cart->Cantidad}}
@@ -100,7 +106,7 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900 font-bold">
-                                                {{ $cart->PrecioTotal }}
+                                                ${{ number_format($cart->PrecioTotal,0,',','.') }}
                                             </div>
                                         </td>
                                     </tr>
