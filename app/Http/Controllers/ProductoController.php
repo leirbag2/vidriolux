@@ -76,7 +76,7 @@ class ProductoController extends Controller
         $producto->tipo_estado_id = $tipo_estado;
         $producto->save();
         
-        return redirect()->back()->with('info', 'Se agrego el producto correctamente');
+        return redirect()->back()->with('info', 'Se agregó el producto correctamente');
     }
 
 
@@ -117,6 +117,9 @@ class ProductoController extends Controller
             $categoria = null;
         }
         $producto = Productos::where('codigo', $codigo)->where('id','<>',Productos::find($id)->id)->get();
+        if (!Categorias::find($categoria)){
+            $categoria = null;
+        }
         if ($producto->count() > 0) {
             return redirect()->back()->with('error', 'El codigo ingresado ya existe en los registros');
         }
