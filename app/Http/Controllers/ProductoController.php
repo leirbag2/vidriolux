@@ -50,10 +50,14 @@ class ProductoController extends Controller
         $nombre = $request->input('nombre');
         $descripcion = $request->input('description');
         $precio = $request->input('precio');
+        $precioVenta = $request->input('precioVenta');
         $tipo_estado = $request->input('tipo_estado');
         $cantidad = $request->input('cantidad');
         $categoria = $request->input('categoria');
         $producto = Productos::where('codigo', $codigo)->get();
+        if (!Categorias::find($categoria)){
+            $categoria = null;
+        }
         if ($producto->count() > 0) {
             return redirect()->back()->with('error', 'El codigo ingresado ya existe en los registros');
         }
@@ -66,6 +70,7 @@ class ProductoController extends Controller
         $producto->descripcionProducto = $descripcion;
         $producto->precioNeto = $precio;
         $producto->precioIva = $precio*0.19;
+        $producto->precioVenta = $precioVenta;
         $producto->stock = $cantidad;
         $producto->categorias_id = $categoria;
         $producto->tipo_estado_id = $tipo_estado;
@@ -104,9 +109,13 @@ class ProductoController extends Controller
         $nombre = $request->input('nombre');
         $descripcion = $request->input('description');
         $precio = $request->input('precio');
+        $precioVenta = $request->input('precioVenta');
         $tipo_estado = $request->input('tipo_estado');
         $cantidad = $request->input('cantidad');
         $categoria = $request->input('categoria');
+        if (!Categorias::find($categoria)){
+            $categoria = null;
+        }
         $producto = Productos::where('codigo', $codigo)->where('id','<>',Productos::find($id)->id)->get();
         if ($producto->count() > 0) {
             return redirect()->back()->with('error', 'El codigo ingresado ya existe en los registros');
@@ -120,11 +129,11 @@ class ProductoController extends Controller
         $producto->descripcionProducto = $descripcion;
         $producto->precioNeto = $precio;
         $producto->precioIva = $precio*0.19;
+        $producto->precioVenta = $precioVenta;
         $producto->stock = $cantidad;
         $producto->categorias_id = $categoria;
         $producto->tipo_estado_id = $tipo_estado;
         $producto->save();
-        
         return redirect()->back()->with('info', 'Se modificó el producto correctamente');
     }
 

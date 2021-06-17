@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Productos;
+use App\Models\Categorias;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProductosFactory extends Factory
@@ -29,7 +30,8 @@ class ProductosFactory extends Factory
             'stock' => $this->faker->numberBetween(1,100),
             'precioNeto' => $precio,
             'precioIva' => $precio * 0.19,
-            'categorias_id' => null,
+            'precioVenta' => $precio * 1.19,
+            'categorias_id' => Categorias::inRandomOrder()->first()->id,
             'tipo_estado_id' => 1
         ];
     }
