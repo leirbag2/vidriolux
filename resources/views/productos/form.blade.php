@@ -59,9 +59,9 @@
 
                             <div class="md:flex md:flex-row md:space-x-4 w-full text-xs">
                                 <div class="w-full flex flex-col mb-3">
-                                    <label class="font-semibold text-gray-600 py-2">Precio<abbr
+                                    <label class="font-semibold text-gray-600 py-2">Precio Neto<abbr
                                             title="obligatorio">*</abbr></label>
-                                    <input placeholder="Precio"
+                                    <input placeholder="Precio neto "
                                         class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
                                         required="required" type="number" name="precio" min="0" id="precio"
                                         value="{{ $producto->precioNeto }}">
@@ -72,6 +72,14 @@
                                     <input placeholder="Precio + IVA" id="precioIva"
                                         class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
                                         type="number" name="precio" disabled value="{{ $producto->precioIva }}">
+                                </div>
+                                <div class="w-full flex flex-col mb-3">
+                                    <label class="font-semibold text-gray-600 py-2">Precio Venta<abbr
+                                            title="obligatorio">*</abbr></label>
+                                    <input placeholder="Precio Venta"
+                                        class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
+                                        type="number" name="precioVenta"
+                                        value="{{ $producto->precioVenta }}">
                                 </div>
                                 <div class="w-full flex flex-col mb-3">
                                     <label class="font-semibold text-gray-600 py-2">Cantidad<abbr

@@ -7,6 +7,7 @@ use App\Http\Controllers\VentaController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,4 +41,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/cart/destroy',[CartController::class,'destroy']);
     Route::get('/cart/deleteAll',[CartController::class,'deleteAll']);
     Route::resource('cart',CartController::class);
+    Route::get('/reporte/dia',[ReportController::class,'reportes_dia']);
+    Route::get('/reporte/resultado',[ReportController::class,'resultados']);
+    Route::get('/reporte/mes',[ReportController::class,'reportes_mes']);
+    Route::resource('reporte',ReportController::class);
 });
