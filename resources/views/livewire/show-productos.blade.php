@@ -21,7 +21,6 @@
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Descripción</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Cantidad</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Precio Neto</th>
-                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">IVA</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Precio con IVA</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Categoria</th>
                     @canany(['productos.edit', 'productos.destroy'])
@@ -56,11 +55,6 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">
                                 {{ $producto->precioNeto }}
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900">
-                                {{ $producto->precioIva }}
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
