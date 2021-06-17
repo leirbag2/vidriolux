@@ -1,31 +1,32 @@
 <div>
-
 <div class="row">
-            <div class="col-12 col-md-4 text-center">
-                <span>Fecha de consulta: <b> </b> </span>
+            <div class="flex-none mr-10">
                 <div class="form-group">
-                    <strong>{{Carbon\Carbon::now()->format('Y-m-d')}}</strong>
+                <span>Fecha inicial <b> </b> </span>
+                  <input class="form-control" type="date" value="{{old('fecha_inicial')}}"
+                  name="fecha_inicial" id="fecha_inicial">
+                  <span>Fecha fin: <b> </b> </span>
+                  <input class="form-control" type="date" value="{{old('fecha_fin')}}"
+                  name="fecha_fin" id="fecha_fin">
+                  <a href="/usuarios/create" type="button"
+                    class="focus:outline-none text-white text-sm py-3 px-5 rounded-md bg-blue-500 hover:bg-blue-600 hover:shadow-lg">
+                    Consultar
+                </a>
                 </div>
             </div>
+        </div>
+
+
             <div class="col-12 col-md-4 text-center">
-                <span>Cantidad de ventas Registradas: <b> </b> </span>
-                <div class="form-group">
-                    <strong>{{$ventas->count()}}</strong>
-                </div>
-            </div>
-            <div class="col-12 col-md-4 text-center">
-            @foreach ($ventas as $venta)
                 <span>Total de ingresos: <b> </b> </span>
                 <div class="form-group">
-                    <strong> {{ $venta->totalIva }}</strong>
+                    <strong></strong>
                 </div>
-                   @endforeach
             </div>
         </div>
     <div class="flex relative mt-1">
         <input type="text" id="password" class="w-full pl-3 pr-10 py-2 border-2 border-gray-200 rounded-xl hover:border-gray-300 focus:outline-none focus:border-blue-500 transition-colors" placeholder="Buscar" wire:model="search" type="search">
     </div>
-    
     <x-table>
         <table class="min-w-full divide-y divide-gray-200">
             <thead>

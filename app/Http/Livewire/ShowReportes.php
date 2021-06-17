@@ -21,7 +21,7 @@ class ShowReportes extends Component
 
     public function render()
     {
-        $ventas = Ventas::where('fechaVenta', 'LIKE', '%' . $this->search . '%')->orWhere('numFactura', 'LIKE', '%' . $this->search . '%')->paginate(10);
+        $ventas = Ventas::where('fechaVenta', 'LIKE', '%' . $this->search . '%')->orWhere('totalIva', 'LIKE', '%' . $this->search . '%')->paginate(10);
         return view('livewire.show-reportes', compact('ventas'));
     }
 }
