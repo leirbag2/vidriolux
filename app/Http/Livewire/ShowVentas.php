@@ -3,6 +3,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Ventas; 
+use App\Models\ReportController; 
 class ShowVentas extends Component
 {
     use WithPagination;

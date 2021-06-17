@@ -41,8 +41,6 @@ class Cart extends Model
             if (array_key_exists($id, $this->items)) {
                 $ItemAlmacenado = $this->items[$id];
                 $this->Cantidad -= $ItemAlmacenado['Cantidad'];
-                //$c = $ItemAlmacenado['Precio'].' '.$ItemAlmacenado['Cantidad'];
-                //return dd($c);
                 $this->PrecioTotal -= $ItemAlmacenado['Precio'];
                 unset($this->items[$id]);
             }

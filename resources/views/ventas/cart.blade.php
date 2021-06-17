@@ -10,7 +10,20 @@
                     <div class="mt-8 focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-green-500">
                         {{session('info')}}
                     </div>
-                    @endif
+                    @endif              
+
+                    {{Form::open(array('route' => 'cart.store'))}}
+                    <div class="md:flex md:flex-row md:space-x-4 w-full text-xs">
+                                <div class="w-full flex flex-col mb-3">
+                                    <label class="font-semibold text-gray-600 py-2">Factura:<abbr
+                                            title="obligatorio">*</abbr></label>
+                                    <input placeholder="numero factura"
+                                        class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
+                                        required="required" type="text" name="num_factura" id=""
+                                        value="">
+                                </div>
+                    </div>
+                    
                     <div class="text-gray-500">
                         @if($cart)
                         <x-table>
@@ -96,10 +109,7 @@
                         </x-table>
                         <div class="grid grid-cols-2">
                             <div class="">
-                                <a href="/cart/store" class="mb-2 md:mb-0 bg-green-400
-                             px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-green-500">
-                                    Realizar venta
-                                </a>
+                                {!! Form::submit('Realizar venta', ['class' => 'mb-2 md:mb-0 bg-green-400 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-green-500']) !!}
                             </div>
                             <div class="">
                                 <a href="/cart/deleteAll" class="mb-2 md:mb-0 bg-red-400
@@ -108,6 +118,7 @@
                                 </a>
                             </div>
                         </div>
+                        {!! Form::close() !!}
                         @else
                         <h2 class="text-xl text-gray-800 leading-tight mb-5">
                             No hay productos agregados

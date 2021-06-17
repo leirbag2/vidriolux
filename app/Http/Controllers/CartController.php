@@ -42,7 +42,7 @@ class CartController extends Controller
         $venta = new Ventas;
         $venta->users_id = auth()->id();
         $venta->fechaVenta = date("Y-m-d H:i:s");
-        $venta->numFactura = rand(1, 1000);
+        $venta->numFactura = $numFactura;
         $venta->totalNeto = $cart->PrecioTotal;
         $venta->iva = $cart->PrecioTotal * 0.19;
         $venta->totalIva = $cart->PrecioTotal * 1.19;
@@ -53,7 +53,9 @@ class CartController extends Controller
                     $producto['item']->id,
                     [
                         'cantidad' => $producto['Cantidad'],
-                        'subtotal' => $producto['Cantidad'] * $producto['item']->precioNeto
+                        'subtotal' => $producto['Cantidad'] * ($producto['item']->precioNeto + $producto['item']->iva),
+                        'precioCompra' => ($producto['item']->precioNeto + $producto['item']->iva),
+                        'precioVenta' => $producto['item']->precioVenta
                     ]
                 );
         }
