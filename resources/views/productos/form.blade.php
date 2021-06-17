@@ -53,8 +53,7 @@
                                     <label class="font-semibold text-gray-600 py-2">Descripción</label>
                                     <textarea name="description" 
                                     class="w-full min-h-[100px] max-h-[300px] h-28 appearance-none block w-full
-                                    bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg  py-4 px-4" placeholder="" spellcheck="false">{{$producto->descripcionProducto}}
-                                    </textarea>
+                                    bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg  py-4 px-4" placeholder="" spellcheck="false">{{$producto->descripcionProducto}}</textarea>
                                 </div>
                             </div>
 
@@ -65,7 +64,7 @@
                                             title="obligatorio">*</abbr></label>
                                     <input placeholder="Precio"
                                         class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
-                                        required="required" type="number" name="precio" min="0"
+                                        required="required" type="number" name="precio" id="precio" min="0" onkeyup="agregarPrecioIva()"
                                         value="{{ $producto->precioNeto }}">
                                 </div>
                                 <div class="w-full flex flex-col mb-3">
@@ -73,7 +72,7 @@
                                             title="obligatorio">*</abbr></label>
                                     <input placeholder="PrecioIva"
                                         class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
-                                        type="number" name="precio" disabled
+                                        type="number" name="precioIva" id="precioIva" disabled
                                         value="{{ $producto->precioIva }}">
                                 </div>
                                 <div class="w-full flex flex-col mb-3">
@@ -129,5 +128,13 @@
                 </div>
             </div>
         </div>
+        <script>
+            function agregarPrecioIva(){
+                var precioIva= document.getElementById("precio").value;
+                var precioIva = precioIva*0.19;
+                document.getElementById("precioIva").value=precioIva;
+            }
+
+        </script>
     </div>
 </x-app-layout>

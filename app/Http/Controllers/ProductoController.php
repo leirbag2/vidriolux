@@ -53,6 +53,9 @@ class ProductoController extends Controller
         $tipo_estado = $request->input('tipo_estado');
         $cantidad = $request->input('cantidad');
         $categoria = $request->input('categoria');
+        if(!Categorias::find($categoria)){
+            $categoria=null;
+        }
         $producto = Productos::where('codigo', $codigo)->get();
         if ($producto->count() > 0) {
             return redirect()->back()->with('error', 'El codigo ingresado ya existe en los registros');
@@ -107,6 +110,9 @@ class ProductoController extends Controller
         $tipo_estado = $request->input('tipo_estado');
         $cantidad = $request->input('cantidad');
         $categoria = $request->input('categoria');
+        if(!Categorias::find($categoria)){
+            $categoria=null;
+        }
         $producto = Productos::where('codigo', $codigo)->where('id','<>',Productos::find($id)->id)->get();
         if ($producto->count() > 0) {
             return redirect()->back()->with('error', 'El codigo ingresado ya existe en los registros');
