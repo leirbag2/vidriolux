@@ -1,20 +1,24 @@
 <div>
-
     <div class="flex flex-row">
         <div class="mr-4">
             <span>Fecha Inicial:</span>
             <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" type="date" name="fecha_inicial" id="fecha_inicial" wire:model="fechaIn">
         </div>
         <div>
-            <span>Fecha Actual:</span>
+            <span>Fecha Final:</span>
             <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" type="date" name="fecha_fin" id="fecha_fin" wire:model="fechaFin">
         </div>
     </div>
-    <div class="">
+    <div class="p-5 mt-4 border border-gray-400 rounded-lg shadow max-w-40">
         <span>Total de ingresos:</span>
         <div class="text-lg font-bold">
             ${{number_format($ventasTotal, 0, ',', '.')}}
         </div>
+        <span>Total de ganancias:</span>
+        <div class="text-lg font-bold">
+            ${{number_format($ganancias, 0, ',', '.')}}
+        </div>
+
     </div>
     <x-table>
         <table class="min-w-full divide-y divide-gray-200">
@@ -23,12 +27,12 @@
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Vendedor</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Numero de Factura</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Fecha de Venta</th>
+                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Precio Compra</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Total Neto</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Iva</th>
-                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Total Iva</th>
+                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Total + Iva</th>
                 </tr>
             </thead>
-
             <tbody class="bg-white divide-y divide-gray-200">
                 @foreach ($ventas as $venta)
                 <tr class="hover:bg-gray-100">
@@ -51,6 +55,11 @@
 
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-sm text-gray-900">
+                            ${{ number_format($venta->precioCompra, 0, ',', '.') }}
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">
                             ${{ number_format($venta->totalNeto, 0, ',', '.') }}
                         </div>
                     </td>
@@ -60,7 +69,6 @@
                             ${{ number_format($venta->iva, 0, ',', '.') }}
                         </div>
                     </td>
-
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-sm text-gray-900">
                             ${{ number_format($venta->totalIva, 0, ',', '.')}}

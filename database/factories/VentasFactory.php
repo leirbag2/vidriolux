@@ -27,7 +27,8 @@ class VentasFactory extends Factory
             'users_id' => User::inRandomOrder()->first()->id,
             'totalNeto' =>0,
             'iva' => 0,
-            'totalIva' => 0
+            'totalIva' => 0,
+            'precioCompra' => 0
         ];
     }
 }

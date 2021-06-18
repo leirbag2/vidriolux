@@ -30,7 +30,7 @@ class ProductosFactory extends Factory
             'stock' => $this->faker->numberBetween(100,300),
             'precioNeto' => $precio,
             'precioIva' => $precio * 0.19,
-            'precioVenta' => $precio * 1.19,
+            'precioVenta' => (($precio * 1.19) *1.5),
             'categorias_id' => Categorias::inRandomOrder()->first()->id,
             'tipo_estado_id' => 1
         ];
