@@ -52,7 +52,7 @@ class ProductoController extends Controller
         $precio = $request->input('precio');
         $precioVenta = $request->input('precioVenta');
         $tipo_estado = $request->input('tipo_estado');
-        $cantidad = $request->input('cantidad');
+        $cantidad = $request->input('cantidad') > 0 ? $request->input('cantidad') : 1;
         $categoria = $request->input('categoria');
         $producto = Productos::where('codigo', $codigo)->get();
         if (!Categorias::find($categoria)){
