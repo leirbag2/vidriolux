@@ -27,7 +27,7 @@ class CartController extends Controller
 
         $id = $request->get('id');
         $producto = Productos::find($id);
-        $cantidad = $request->input('cantidad');
+        $cantidad = $request->input('cantidad') != null ? ($request->input('cantidad') > 0 ? $request->input('cantidad') : 1): 1;
         $precioVenta = $request->input('venta');
         $producto->precioVenta = $precioVenta;
         $oldCart =  $request->session()->has('cart') ? $request->session()->get('cart') : null;
