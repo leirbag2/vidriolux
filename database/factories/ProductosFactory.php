@@ -27,7 +27,7 @@ class ProductosFactory extends Factory
             'codigo' => $this->faker->unique()->numerify('ABC###'),
             'nombreProducto' => $this->faker->words(2,true),
             'descripcionProducto' => $this->faker->words(20,true),
-            'stock' => $this->faker->numberBetween(1,100),
+            'stock' => $this->faker->numberBetween(100,300),
             'precioNeto' => $precio,
             'precioIva' => $precio * 0.19,
             'precioVenta' => $precio * 1.19,
