@@ -14,7 +14,7 @@ class ShowVentas extends Component
     }
     public function render()
     {  
-        $ventas = Ventas::where('fechaVenta','LIKE','%'.$this->search.'%')->orWhere('numFactura','LIKE','%'.$this->search.'%')->paginate(10);
+        $ventas = Ventas::orderByDesc('fechaVenta')->where('fechaVenta','LIKE','%'.$this->search.'%')->orWhere('numFactura','LIKE','%'.$this->search.'%')->paginate(10);
         return view('livewire.show-ventas',compact('ventas'));
     }
 }

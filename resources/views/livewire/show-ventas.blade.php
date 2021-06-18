@@ -19,6 +19,7 @@
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Vendedor</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Numero de Factura</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Fecha de Venta</th>
+                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Precio de compra</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Total Neto</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Iva</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Total Iva</th>
@@ -47,7 +48,11 @@
                                 {{ $venta->fechaVenta }}
                             </div>
                         </td>
-
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-900">
+                                ${{ number_format($venta->precioCompra, 0, ',', '.') }}
+                            </div>
+                        </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">
                                 ${{ number_format($venta->totalNeto, 0, ',', '.') }}
