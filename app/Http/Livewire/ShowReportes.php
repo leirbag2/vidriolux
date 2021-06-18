@@ -33,6 +33,6 @@ class ShowReportes extends Component
             ->where('fechaVenta', '<=', $this->fechaFin . ' 23:59:59');
         $ventasTotal = $all->sum('totalIva');
         $ganancias = $ventasTotal - $all->sum('precioCompra');
-        return view('livewire.show-reportes', compact('ventas', 'ventasTotal', 'ganancias'));
+        return view('livewire.show-reportes', compact('ventas', 'ventasTotal', 'ganancias','all'));
     }
 }
