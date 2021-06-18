@@ -37,8 +37,7 @@ class CartController extends Controller
             $request->session()->put('cart', $cart);
             return redirect('ventas/create')->with('info', 'Agregado correctamente al carrito');
         }
-        return redirect()->back()->with('error', 'No hay suficiente stock');
-
+        return redirect()->back()->with('error', 'No hay suficiente');
     }
 
     public function store(Request $request)
@@ -55,6 +54,11 @@ class CartController extends Controller
         $venta->totalIva = $cart->PrecioTotal;
         $venta->iva = ($cart->PrecioTotal / 1.19) * 0.19;
         $venta->totalNeto = $cart->PrecioTotal / 1.19;
+        $precioCompra = 0;
+        foreach ($cart->items as $producto) {
+            $precioCompra += ($producto['item']->precioNeto + $producto['item']->precioIva) * $producto['Cantidad'];
+        }
+        $venta->precioCompra = $precioCompra;
         $venta->save();
         foreach ($cart->items as $producto) {
             $venta->productos()

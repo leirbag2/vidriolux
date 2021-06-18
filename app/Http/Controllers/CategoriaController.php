@@ -49,12 +49,11 @@ class CategoriaController extends Controller
         $nombreCategoria = $request->input('categoria');
         $categoria = Categorias::where('nombreCategoria', $nombreCategoria)->get();
         if ($categoria->count() > 0) {
-            return redirect()->back()->with('error', 'El codigo ingresado ya existe en los registros');
+            return redirect()->back()->with('error', 'El nombre ingresado ya existe en los registros');
         }
         $categoria = new Categorias;
         $categoria->nombreCategoria = $nombreCategoria;
         $categoria->save();
-        
         return redirect()->back()->with('info', 'Se agrego la categoría correctamente');
     }
 
@@ -96,7 +95,6 @@ class CategoriaController extends Controller
         $categoria = Categorias::find($id);
         $categoria->nombreCategoria = $nombreCategoria;
         $categoria->save();
-        
         return redirect()->back()->with('info', 'Se modificó la categoría correctamente');
     }
 

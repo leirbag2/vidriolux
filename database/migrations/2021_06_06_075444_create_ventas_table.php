@@ -22,6 +22,7 @@ class CreateVentasTable extends Migration
             $table->integer('totalNeto');
             $table->integer('iva');
             $table->integer('totalIva');
+            $table->integer('precioCompra');
         });
     }
 
