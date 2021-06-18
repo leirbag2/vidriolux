@@ -1,12 +1,11 @@
 <div>
-
     <div class="flex flex-row">
         <div class="mr-4">
             <span>Fecha Inicial:</span>
             <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" type="date" name="fecha_inicial" id="fecha_inicial" wire:model="fechaIn">
         </div>
         <div>
-            <span>Fecha Actual:</span>
+            <span>Fecha Final:</span>
             <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" type="date" name="fecha_fin" id="fecha_fin" wire:model="fechaFin">
         </div>
     </div>
@@ -28,7 +27,6 @@
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Total Iva</th>
                 </tr>
             </thead>
-
             <tbody class="bg-white divide-y divide-gray-200">
                 @foreach ($ventas as $venta)
                 <tr class="hover:bg-gray-100">
@@ -60,7 +58,6 @@
                             ${{ number_format($venta->iva, 0, ',', '.') }}
                         </div>
                     </td>
-
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-sm text-gray-900">
                             ${{ number_format($venta->totalIva, 0, ',', '.')}}

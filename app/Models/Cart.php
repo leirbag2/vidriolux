@@ -47,7 +47,6 @@ class Cart extends Model
         if (Productos::find($id)->stock >= ($ItemAlmacenado['Cantidad'] + $cantidad)) { 
             return true;
         }
-        return false;
     }
 
     public function remove($id)

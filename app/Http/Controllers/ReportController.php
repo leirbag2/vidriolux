@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Productos;
 use App\Models\Cart;
 use App\Models\Ventas;
@@ -10,8 +9,12 @@ use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('ventas/reporte');
+        return view('ventas/reporte', []);
     }
+
+  
+
+
 }

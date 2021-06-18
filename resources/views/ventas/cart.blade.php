@@ -56,7 +56,7 @@
                                             <div class="text-sm text-gray-900">
                                                 ${{number_format($producto['item']->precioNeto,0,',','.')}}
                                             </div>
-                                        </td>
+                                        </td>                                    
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">
                                                 ${{number_format(($producto['item']->precioVenta),0,',','.')}}

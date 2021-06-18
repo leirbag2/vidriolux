@@ -37,7 +37,7 @@ class CartController extends Controller
             $request->session()->put('cart', $cart);
             return redirect('ventas/create')->with('info', 'Agregado correctamente al carrito');
         }
-        return redirect()->back()->with('error', 'No hay suficiente stock');
+        return redirect()->back()->with('error', 'No hay suficiente');
 
     }
 
