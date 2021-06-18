@@ -19,6 +19,7 @@
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Vendedor</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Numero de Factura</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Fecha de Venta</th>
+                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Precio de compra</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Total Neto</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Iva</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Total Iva</th>
@@ -47,22 +48,26 @@
                                 {{ $venta->fechaVenta }}
                             </div>
                         </td>
-
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">
-                                {{ $venta->totalNeto }}
+                                ${{ number_format($venta->precioCompra, 0, ',', '.') }}
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-900">
+                                ${{ number_format($venta->totalNeto, 0, ',', '.') }}
                             </div>
                         </td>
 
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">
-                                {{ $venta->iva }}
+                                ${{ number_format($venta->iva, 0, ',', '.') }}
                             </div>
                         </td>
 
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">
-                                {{ $venta->totalIva }}
+                                ${{ number_format($venta->totalIva, 0, ',', '.') }}
                             </div>
                         </td>
                         <!-- Boton : VerDetalleVenta -->
@@ -82,7 +87,7 @@
                                     </div>
                                     <!-- Boton : EditarVenta -->
                                     <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                        <a href="{{route('ventas.edit',$venta->id)}}">
+                                        <a href="{{ route('ventas.edit', $venta->id) }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 stroke="currentColor" class="stroke-current text-green-600">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -100,7 +105,8 @@
                                             </svg>
                                         </a>
                                     </div>
-                                    <form id="delete-form-{{ $venta->id }}" action="/ventas/{{ $venta->id }}" method="POST">
+                                    <form id="delete-form-{{ $venta->id }}" action="/ventas/{{ $venta->id }}"
+                                        method="POST">
                                         @csrf
                                         <input name="_method" type="hidden" value="DELETE">
                                     </form>
@@ -138,6 +144,7 @@
                     }
                 })
             });
+
         </script>
     @endpush
 </div>

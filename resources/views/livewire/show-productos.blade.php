@@ -21,8 +21,8 @@
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Descripción</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Cantidad</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Precio Neto</th>
-                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">IVA</th>
-                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Precio con IVA</th>
+                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Precio + IVA</th>
+                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Precio Venta</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Categoria</th>
                     @canany(['productos.edit', 'productos.destroy'])
                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Estado</th>
@@ -55,25 +55,25 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">
-                                {{ $producto->precioNeto }}
+                                ${{ number_format($producto->precioNeto, 0, ',', '.') }}
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">
-                                {{ $producto->precioIva }}
+                                ${{ number_format($producto->precioNeto + $producto->precioIva, 0, ',', '.') }}
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">
-                                {{ $producto->precioNeto + $producto->precioIva }}
+                                ${{ number_format($producto->precioVenta, 0, ',', '.') }}
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">
-                                {{ $producto->categoria != null ? $producto->categoria->nombreCategoria:'Sin categoria' }}
+                                {{ $producto->categoria != null ? $producto->categoria->nombreCategoria : 'Sin categoria' }}
                             </div>
                         </td>
-                        
+
                         @canany(['productos.edit', 'productos.destroy'])
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm text-gray-900">
@@ -83,7 +83,7 @@
 
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex item-center justify-center">
-                                    
+
                                     @can('productos.edit')
                                         <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                                             <a href="{{ route('productos.edit', $producto) }}">

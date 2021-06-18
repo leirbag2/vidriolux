@@ -13,8 +13,8 @@
                                     <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal font-bold">
                                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Código</th>
                                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Producto</th>
-                                        <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Precio</th>
-                                        <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Precio con iva</th>
+                                        <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Precio Compra</th>
+                                        <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Precio Venta</th>
                                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Cantidad</th>
                                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Subtotal</th>
                                     </tr>
@@ -35,13 +35,14 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">
-                                                {{ $detalleventa->producto->precioNeto }}
+                                            ${{ number_format($detalleventa->precioCompra , 0, ',', '.') }}
+                                      
                                             </div>
                                         </td>
-
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">
-                                                {{ $detalleventa->producto->precioNeto + $detalleventa->producto->precioIva }}
+                                            ${{ number_format($detalleventa->precioVenta , 0, ',', '.') }}
+                                       
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
@@ -51,7 +52,8 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">
-                                                {{ $detalleventa->subtotal }}
+                                            ${{ number_format($detalleventa->subtotal , 0, ',', '.') }}
+            
                                             </div>
                                         </td>
                                     </tr>
@@ -75,7 +77,8 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900 font-bold">
-                                                {{ $venta->totalNeto }}
+                                            ${{ number_format($venta->totalIva , 0, ',', '.') }}
+                                
                                             </div>
                                         </td>
                                     </tr>

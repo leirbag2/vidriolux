@@ -11,15 +11,28 @@
                         {{session('info')}}
                     </div>
                     @endif
+                    @if (session('error'))
+                    <div class="mt-8 focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-red-500">
+                        {{session('error')}}
+                    </div>
+                    @endif
                     <div class="text-gray-500">
                         @if($cart)
+                        {{Form::open(array('route' => 'cart.store'))}}
+                        <div class="md:flex md:flex-row md:space-x-4 w-full text-xs">
+                            <div class="w-full flex flex-col mb-3">
+                                <label class="font-semibold text-gray-600 py-2">Factura:<abbr title="obligatorio">*</abbr></label>
+                                <input placeholder="Número factura" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" required="required" type="text" name="num_factura" id="" value="">
+                            </div>
+                        </div>
                         <x-table>
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead>
                                     <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal font-bold">
                                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Código</th>
                                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Producto</th>
-                                        <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Precio</th>
+                                        <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Precio Compra</th>
+                                        <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Precio Venta</th>
                                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Disponible</th>
                                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Cantidad</th>
                                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Total</th>
@@ -41,7 +54,12 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">
-                                                ${{number_format($producto['item']->precioNeto,0,',','.')}}
+                                                ${{number_format(($producto['item']->precioNeto+$producto['item']->precioIva),0,',','.')}}
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">
+                                                ${{number_format(($producto['item']->precioVenta),0,',','.')}}
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
@@ -56,7 +74,7 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">
-                                                ${{number_format(($producto['item']->precioNeto * $producto['Cantidad']),0,',','.')}}
+                                                ${{number_format(($producto['item']->precioVenta * $producto['Cantidad']),0,',','.')}}
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
@@ -80,6 +98,7 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
+                                        <td></td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900 font-bold">
                                                 {{$cart->Cantidad}}
@@ -87,7 +106,7 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900 font-bold">
-                                                {{ $cart->PrecioTotal }}
+                                                ${{ number_format($cart->PrecioTotal,0,',','.') }}
                                             </div>
                                         </td>
                                     </tr>
@@ -96,10 +115,7 @@
                         </x-table>
                         <div class="grid grid-cols-2">
                             <div class="">
-                                <a href="/cart/store" class="mb-2 md:mb-0 bg-green-400
-                             px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-green-500">
-                                    Realizar venta
-                                </a>
+                                {!! Form::submit('Realizar venta', ['class' => 'mb-2 md:mb-0 bg-green-400 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-green-500']) !!}
                             </div>
                             <div class="">
                                 <a href="/cart/deleteAll" class="mb-2 md:mb-0 bg-red-400
@@ -108,6 +124,7 @@
                                 </a>
                             </div>
                         </div>
+                        {!! Form::close() !!}
                         @else
                         <h2 class="text-xl text-gray-800 leading-tight mb-5">
                             No hay productos agregados

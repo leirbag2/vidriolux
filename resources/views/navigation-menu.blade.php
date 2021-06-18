@@ -36,6 +36,13 @@ $nav_links = [
         'route' => route('cart.index'),
         'active' => request()->routeIs('cart.index'),
         'can' => 'ventas.index'
+    ],
+
+    [
+        'name' => 'Reportes',
+        'route' => route('reporte.index'),
+        'active' => request()->routeIs('reporte.index'),
+        'can' => 'reportes.index'
     ]
 ];
 
@@ -56,7 +63,7 @@ $nav_links = [
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        Dashboard
+                        Inicio
                     </x-jet-nav-link>
                     @foreach ($nav_links as $nav_link)
                         @can($nav_link['can'])
@@ -204,7 +211,7 @@ $nav_links = [
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                Dashboard
+                Inicio
             </x-jet-responsive-nav-link>
             @foreach ($nav_links as $nav_link)
                 @can($nav_link['can'])

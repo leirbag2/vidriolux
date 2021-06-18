@@ -44,21 +44,6 @@ class VentaController extends Controller
         ]);
     }
 
-    /**
-     * Guarda el usuario creado en la base de datos
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $numFactura = $request->input('numFactura');
-        $venta = new Ventas;
-        $venta->numFactura = $numFactura;
-
-        $venta->save();
-        return redirect("/ventas")->with('info', 'Se creó la facutra correctamente');
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -85,6 +70,9 @@ class VentaController extends Controller
     {
         $venta = Ventas::find($id);
         $numFactura = $request->input('numFactura');
+        if (Ventas::where('numFactura', $numFactura)->get()->count() > 0) {       
+            return redirect()->back()->with('info', 'El número de factura ingresado ya existe en los registros');
+        }
         $venta->numFactura = $numFactura;
         $venta->save();
         return redirect('/ventas')->with('info', 'El numero de factura se modificó correctamente');

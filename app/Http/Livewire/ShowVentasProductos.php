@@ -17,7 +17,15 @@ class ShowVentasProductos extends Component
 
     public function render()
     {
-        $productos = Productos::where('nombreProducto','LIKE','%'.$this->search.'%')->paginate(5);
+        $productos = Productos::select('productos.id as id','categorias.id as cId','codigo','nombreProducto','stock','nombreCategoria','precioNeto','precioIva','precioVenta')
+        ->leftJoin('categorias', 'categorias.id', '=', 'productos.categorias_id')
+        ->where('tipo_estado_id',1)
+        ->where('stock','>',0)
+        ->where(function ($query){
+            $query->where('nombreProducto','LIKE','%'.$this->search.'%')
+            ->orWhere('codigo','LIKE','%'.$this->search.'%')
+            ->orWhere('nombreCategoria','LIKE','%'.$this->search.'%');
+        })->paginate(5);
         return view('livewire.show-ventas-productos',compact('productos'));
     }
 }

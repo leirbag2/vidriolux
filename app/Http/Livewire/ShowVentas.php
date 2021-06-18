@@ -3,6 +3,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Ventas; 
+use App\Models\ReportController; 
 class ShowVentas extends Component
 {
     use WithPagination;
@@ -13,7 +14,7 @@ class ShowVentas extends Component
     }
     public function render()
     {  
-        $ventas = Ventas::where('fechaVenta','LIKE','%'.$this->search.'%')->orWhere('numFactura','LIKE','%'.$this->search.'%')->paginate(10);
+        $ventas = Ventas::orderByDesc('fechaVenta')->where('fechaVenta','LIKE','%'.$this->search.'%')->orWhere('numFactura','LIKE','%'.$this->search.'%')->paginate(10);
         return view('livewire.show-ventas',compact('ventas'));
     }
 }
