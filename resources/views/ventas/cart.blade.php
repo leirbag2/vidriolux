@@ -31,7 +31,7 @@
                                     <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal font-bold">
                                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Código</th>
                                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Producto</th>
-                                        <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Precio</th>
+                                        <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Precio Compra</th>
                                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Precio Venta</th>
                                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Disponible</th>
                                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Cantidad</th>
@@ -54,9 +54,9 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">
-                                                ${{number_format($producto['item']->precioNeto,0,',','.')}}
+                                                ${{number_format(($producto['item']->precioNeto+$producto['item']->precioIva),0,',','.')}}
                                             </div>
-                                        </td>                                    
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">
                                                 ${{number_format(($producto['item']->precioVenta),0,',','.')}}

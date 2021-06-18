@@ -1,20 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Productos;
-use App\Models\Cart;
-use App\Models\Ventas;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
-    public function index(Request $request)
+    public function __construct()
     {
-        return view('ventas/reporte', []);
+        $this->middleware('can:reportes.index')->only('index');
     }
-
-  
-
-
+    
+    public function index()
+    {
+        return view('ventas/reporte');
+    }
 }

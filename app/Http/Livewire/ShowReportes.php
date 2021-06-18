@@ -26,10 +26,13 @@ class ShowReportes extends Component
     {
         $ventas = Ventas::where('fechaVenta', '>=', $this->fechaIn . ' 00:00:00')
             ->where('fechaVenta', '<=', $this->fechaFin . ' 23:59:59')
-            ->orderByDesc('id')
+            ->orderByDesc('fechaVenta')
             ->paginate(10);
-        $ventasTotal = Ventas::where('fechaVenta', '>=', $this->fechaIn . ' 00:00:00')
-            ->where('fechaVenta', '<=', $this->fechaFin . ' 23:59:59')->sum('totalIva');
-        return view('livewire.show-reportes', compact('ventas', 'ventasTotal'));
+
+        $all = Ventas::where('fechaVenta', '>=', $this->fechaIn . ' 00:00:00')
+            ->where('fechaVenta', '<=', $this->fechaFin . ' 23:59:59');
+        $ventasTotal = $all->sum('totalIva');
+        $ganancias = $ventasTotal - $all->sum('precioCompra');
+        return view('livewire.show-reportes', compact('ventas', 'ventasTotal', 'ganancias'));
     }
 }

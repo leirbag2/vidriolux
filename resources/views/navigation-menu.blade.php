@@ -42,7 +42,7 @@ $nav_links = [
         'name' => 'Reportes',
         'route' => route('reporte.index'),
         'active' => request()->routeIs('reporte.index'),
-        'can' => 'ventas.index'
+        'can' => 'reportes.index'
     ]
 ];
 
