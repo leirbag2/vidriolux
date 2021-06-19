@@ -22,8 +22,8 @@ class VentasFactory extends Factory
     public function definition()
     {
         return [
-            'numFactura' => $this->faker->unique()->numerify('ABC###'),
-            'fechaVenta' => $this->faker->dateTimeBetween('-2 year'),
+            'numFactura' => $this->faker->unique()->bothify('???####'),
+            'fechaVenta' => $this->faker->dateTimeBetween('-6 month'),
             'users_id' => User::inRandomOrder()->first()->id,
             'totalNeto' =>0,
             'iva' => 0,

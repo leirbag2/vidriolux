@@ -52,7 +52,10 @@ class ProductoController extends Controller
         $precio = $request->input('precio');
         $precioVenta = $request->input('precioVenta');
         $tipo_estado = $request->input('tipo_estado');
-        $cantidad = $request->input('cantidad') > 0 ? $request->input('cantidad') : 1;
+        $cantidad = $request->input('cantidad');
+        if($cantidad <= 0){
+            return redirect()->back()->with('error', 'La cantidad ingresada debe ser mayor a 0');
+        }
         $categoria = $request->input('categoria');
         $producto = Productos::where('codigo', $codigo)->get();
         if (!Categorias::find($categoria)){
@@ -75,7 +78,6 @@ class ProductoController extends Controller
         $producto->categorias_id = $categoria;
         $producto->tipo_estado_id = $tipo_estado;
         $producto->save();
-        
         return redirect()->back()->with('info', 'Se agregó el producto correctamente');
     }
 
@@ -112,6 +114,9 @@ class ProductoController extends Controller
         $precioVenta = $request->input('precioVenta');
         $tipo_estado = $request->input('tipo_estado');
         $cantidad = $request->input('cantidad');
+        if($cantidad <= 0){
+            return redirect()->back()->with('error', 'La cantidad ingresada debe ser mayor a 0');
+        }
         $categoria = $request->input('categoria');
         if (!Categorias::find($categoria)){
             $categoria = null;

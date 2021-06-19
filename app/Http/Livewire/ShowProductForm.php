@@ -9,6 +9,7 @@ class ShowProductForm extends Component
 {
     use WithPagination;
     public $search;
+    public $is_editing;
 
     public function updatingSearch()
     {
@@ -16,8 +17,8 @@ class ShowProductForm extends Component
     }
     public function render()
     {
-        $productos = Productos::
-        leftJoin('categorias', 'categorias.id', '=', 'productos.categorias_id')
+        $productos = Productos::select('productos.*','categorias.id as cId','categorias.nombreCategoria')
+        ->leftJoin('categorias', 'categorias.id', '=', 'productos.categorias_id')
         ->where('tipo_estado_id',1)
         ->where(function ($query){
             $query->where('nombreProducto','LIKE','%'.$this->search.'%')

@@ -55,7 +55,7 @@ class UserController extends Controller
     {
         $name = $request->input('nombre');
         $email = $request->input('correo');
-        $password = Hash::make($request->input('password', 'P@ssw0rd'));
+        $password = Hash::make($request->input('password', 'password'));
         $tipo_estado = $request->input('tipo_estado');
         $user = User::where('email', $email)->get();
         if ($user->count() > 0) {

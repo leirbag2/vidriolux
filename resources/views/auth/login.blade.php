@@ -11,7 +11,17 @@
                 {{ session('status') }}
             </div>
         @endif
+        <div class="flex space-x-4 mb-8">
+            <div>
+                <div class="mt-8 text-2xl">
+                    VidrioLux
+                </div>
 
+                <div class="mt-6 text-gray-500">
+                    Bienvenido al sistema de bodega de VidrioLux.
+                </div>
+            </div>
+        </div>
         <form method="POST" action="{{ route('login') }}">
             @csrf
 

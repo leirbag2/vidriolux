@@ -3,9 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Categorias;
+use App\Models\Historial;
 
-class CategoriaSeeder extends Seeder
+class HistorialSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class CategoriaSeeder extends Seeder
      */
     public function run()
     {
-        Categorias::factory(10)->create();
+        Historial::factory(50)->create();
     }
 }
