@@ -1,1 +1,1 @@
-<img src="{{asset('/images/vidriolux.png')}}" alt="" style="width:128px" class="border border-grey-200 rounded-full">
+<img src="{{asset('/images/vidriolux.png')}}" alt="" style="width:128px" class="border-2 border-gray-100 rounded-full">

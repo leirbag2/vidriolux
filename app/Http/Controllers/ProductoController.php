@@ -117,9 +117,6 @@ class ProductoController extends Controller
             $categoria = null;
         }
         $producto = Productos::where('codigo', $codigo)->where('id','<>',Productos::find($id)->id)->get();
-        if (!Categorias::find($categoria)){
-            $categoria = null;
-        }
         if ($producto->count() > 0) {
             return redirect()->back()->with('error', 'El codigo ingresado ya existe en los registros');
         }
