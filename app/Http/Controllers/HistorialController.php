@@ -34,10 +34,7 @@ class HistorialController extends Controller
      */
     public function create()
     {
-        return view('bodeguero/historial.form', [
-            'is_editing' => false,
-            'historial' => new Historial
-        ]);
+        return view('bodeguero/historial.add',['is_editing'=> false]);
     }
 
     /**
@@ -48,16 +45,15 @@ class HistorialController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $codigo = $request->input('codigo');
-        $producto = Productos::where('codigo',$codigo)->where('tipo_estado_id',1)->first();
+        $id = $request->input('id');
+        $producto = Productos::where('id',$id)->where('tipo_estado_id',1)->first();
         $cantidad = $request->input('cantidad');
         $tipo = $request->input('tipo');
         if(!$producto){
             return redirect('/historial/create')->with('info', 'No existe el producto ingresado');
         }
         if ($tipo < 1 || $tipo > 2) {
-            $tipo = 1;
+            return redirect('/historial/create')->with('info', 'Debe seleccionar ingreso o retiro');
         }
         if ($cantidad <= 0) {
             return redirect('/historial/create')->with('info', 'La cantidad debe ser mayor a 0');
@@ -70,7 +66,7 @@ class HistorialController extends Controller
         }
         
         $historial = new Historial;
-        $historial->users_id = Auth::id();
+        $historial->user_id = Auth::id();
         $historial->productos_id = $producto->id;
         $historial->cantidad = $cantidad;
         $historial->save();
