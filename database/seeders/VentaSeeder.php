@@ -14,7 +14,7 @@ class VentaSeeder extends Seeder
      */
     public function run()
     {
-        Ventas::factory(50)->create();
+        Ventas::factory(75)->create();
         $ventas = Ventas::all();
         foreach ($ventas as $venta) {
             $cantidadP = rand(1, 5);

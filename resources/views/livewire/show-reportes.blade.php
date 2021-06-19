@@ -1,19 +1,31 @@
 <div>
-    <div class="flex flex-row">
-        <div class="mr-4">
+    <div class="md:flex md:flex-row md:space-x-4">
+        <div>
             <span>Fecha Inicial:</span>
             <input
-                class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
+                class="appearance-none block w-full rounded-lg h-10 px-4 border-gray-200"
                 type="date" name="fecha_inicial" id="fecha_inicial" wire:model="fechaIn">
         </div>
         <div>
             <span>Fecha Final:</span>
             <input
-                class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
+                class="appearance-none block w-full rounded-lg h-10 px-4 border-gray-200"
                 type="date" name="fecha_fin" id="fecha_fin" wire:model="fechaFin">
         </div>
+        <div>
+            <span>Vendedor:</span>
+            <input type="text"
+                class="appearance-none block w-full h-10 px-4 border-gray-200 rounded-xl hover:border-gray-300 focus:outline-none focus:border-blue-500 transition-colors"
+                placeholder="Buscar vendedor" wire:model="vendedor">
+        </div>
     </div>
-    <div class="p-5 mt-4 border border-gray-400 rounded-lg shadow max-w-40 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+    @if ($error)
+        <div class="mt-8 focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-red-500 mb-5">
+            Las fecha inicial debe ser menor a la fecha final
+        </div>
+    @endif
+    <div
+        class="p-5 mt-4 border border-gray-400 rounded-lg shadow max-w-40 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         <div class="mr-8">
             <span>Total de ingresos:</span>
             <div class="text-lg font-bold">

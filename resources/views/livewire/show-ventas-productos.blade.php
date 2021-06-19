@@ -58,7 +58,7 @@
 
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-right text-gray-900">
-                            <input class=" w-20 text-grey-darker border border-gray-200 rounded-lg h-10 px-4" min="1" max="{{ $producto->stock }}" type="number" id="cantidad-{{ $producto->id }}" name="cantidad" value="">
+                            <input class=" w-20 text-grey-darker border border-gray-200 rounded-lg h-10 px-4" min="1" max="{{ $producto->stock }}" type="number" id="cantidad-{{ $producto->id }}" name="cantidad" value="1">
                         </div>
                     </td>
 

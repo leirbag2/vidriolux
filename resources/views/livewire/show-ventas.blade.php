@@ -8,9 +8,38 @@
                 </a>
             </div>
         @endcan
-        <input type="text" id="password"
-            class="w-full pl-3 pr-10 py-2 border-2 border-gray-200 rounded-xl hover:border-gray-300 focus:outline-none focus:border-blue-500 transition-colors"
-            placeholder="Buscar" wire:model="search" type="search">
+    </div>
+    @if ($error)
+        <div class="mt-8 focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-red-500 mb-5">
+            Las fecha inicial debe ser menor a la fecha final
+        </div>
+    @endif
+    <div class="lg:flex lg:flex-row lg:space-x-4 mt-4">
+
+        <div>
+            <span>Fecha Inicial:</span>
+            <input class="appearance-none block w-full border rounded-lg h-10 px-4 border-gray-200" type="date"
+                name="fecha_inicial" id="fecha_inicial" wire:model="fechaIn">
+        </div>
+        <div>
+            <span>Fecha Final:</span>
+            <input class="appearance-none block w-full border rounded-lg h-10 px-4 border-gray-200" type="date"
+                name="fecha_fin" id="fecha_fin" wire:model="fechaFin">
+        </div>
+        @if(auth()->user()->hasRole('Administrador'))
+        <div>
+            <span>Vendedor:</span>
+            <input type="text"
+                class="appearance-none block w-full h-10 px-4 border-gray-200 rounded-xl hover:border-gray-300 focus:outline-none focus:border-blue-500 transition-colors"
+                placeholder="Buscar vendedor" wire:model="vendedor">
+        </div>
+        @endif
+        <div>
+            <span>Número factura:</span>
+            <input type="text"
+                class="appearance-none block w-full h-10 px-4 border-gray-200 rounded-xl hover:border-gray-300 focus:outline-none focus:border-blue-500 transition-colors"
+                placeholder="Buscar factura" wire:model="search">
+        </div>
     </div>
     <x-table>
         <table class="min-w-full divide-y divide-gray-200">

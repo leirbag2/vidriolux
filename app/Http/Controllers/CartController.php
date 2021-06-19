@@ -9,9 +9,13 @@ use App\Models\Ventas;
 
 class CartController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:ventas.index')->only('index');
+    }
+
     public function index(Request $request)
     {
-        //dd($request->session()->get('cart'));
         if (!$request->session()->get('cart')) {
             return view('ventas.cart', ['cart' => null]);
         }
@@ -28,8 +32,9 @@ class CartController extends Controller
         $id = $request->get('id');
         $producto = Productos::find($id);
         $cantidad = $request->input('cantidad');
-        $precioVenta = $request->input('venta');
-        $producto->precioVenta = $precioVenta;
+        if ($request->input('cantidad') <= 0) {
+            return redirect()->back()->with('error', 'La cantidad debe ser mayor a 0');
+        }
         $oldCart =  $request->session()->has('cart') ? $request->session()->get('cart') : null;
         $cart = new Cart($oldCart);
         if ($cart->disponible($producto, $producto->id, $cantidad)) {
@@ -37,7 +42,7 @@ class CartController extends Controller
             $request->session()->put('cart', $cart);
             return redirect('ventas/create')->with('info', 'Agregado correctamente al carrito');
         }
-        return redirect()->back()->with('error', 'No hay suficiente');
+        return redirect()->back()->with('error', 'No hay suficiente stock');
     }
 
     public function store(Request $request)

@@ -4,15 +4,20 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
                     <h2 class="font-semibold text-2xl text-gray-800 leading-tight text-center mb-5">
-                        Ventas Registradas
+                        Realizar registro
                     </h2>
                     @if (session('info'))
-                    <div class="mt-8 focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-green-500">
+                    <div class="mt-8 focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-red-500">
                         {{session('info')}}
                     </div>
                     @endif
-                    <div class="text-gray-500">               
-                        @livewire('show-ventas')
+                    @if (session('ok'))
+                    <div class="mt-8 focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-green-500">
+                        {{session('ok')}}
+                    </div>
+                    @endif
+                    <div class="mt-8 text-gray-500">
+                        @livewire('show-product-form',['is_editing' => $is_editing])
                         <!-- end table -->
                     </div>
                 </div>
