@@ -48,7 +48,7 @@
                                 {{ $user->estado->descripcionEstado }}
                             </div>
                         </td>
-                        @canany(['usuarios.edit', 'usuarios.destroy'])
+                        @can('usuarios.edit')
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex item-center justify-center">
                                     @can('usuarios.edit')
@@ -62,55 +62,13 @@
                                             </a>
                                         </div>
                                     @endcan
-                                    @can('usuarios.destroy')
-                                        <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                            <a wire:click="$emit('deleteUser',{{ $user->id }})">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                    stroke="currentColor" class="stroke-current text-red-600">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                </svg>
-                                            </a>
-                                        </div>
-                                        <form id="delete-form-{{ $user->id }}" action="/usuarios/{{ $user->id }}"
-                                            method="POST">
-                                            @csrf
-                                            <input name="_method" type="hidden" value="DELETE">
-                                        </form>
-                                    @endcan
                                 </div>
                             </td>
-                        @endcanany
+                        @endcan
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </x-table>
     {{ $users->links() }}
-    @push('js')
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script>
-            Livewire.on('deleteUser', userId => {
-                Swal.fire({
-                    title: '¿Está seguro?',
-                    text: "No podrá revertir el cambio",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    cancelButtonText: 'Cancelar',
-                    confirmButtonText: 'Eliminar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        document.getElementById('delete-form-' + userId).submit();
-                        Swal.fire(
-                            '¡Eliminado!',
-                            'Se ha eliminado correctamente.',
-                            'success'
-                        )
-                    }
-                })
-            });
-        </script>
-    @endpush
 </div>

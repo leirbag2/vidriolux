@@ -16,7 +16,6 @@ class UserController extends Controller
         $this->middleware('can:usuarios.index')->only('index');
         $this->middleware('can:usuarios.create')->only('create');
         $this->middleware('can:usuarios.edit')->only('edit', 'update');
-        $this->middleware('can:usuarios.destroy')->only('destroy');
     }
 
     /**
@@ -126,20 +125,5 @@ class UserController extends Controller
             $usuario->syncPermissions(null);
         }
         return redirect('/usuarios')->with('info', 'El usuario se modificó correctamente');
-    }
-    /**
-     * Elimina el usuario seleccionado.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $usuario = User::find($id);
-        if ($usuario == null) {
-            return abort(404);
-        }
-        $usuario->delete();
-        return redirect("/usuarios")->with('info', 'Se eliminó el usuario correctamente');
     }
 }
