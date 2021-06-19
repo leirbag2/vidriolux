@@ -18,6 +18,6 @@ class UserSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',//password
         ])->assignRole('Administrador');
-        User::factory(49)->create();
+        User::factory(19)->create();
     }
 }

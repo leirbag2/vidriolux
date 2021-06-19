@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Productos;
 use Illuminate\Http\Request;
 use App\Models\Ventas;
 
@@ -12,6 +11,7 @@ class VentaController extends Controller
     //Define los permisos para acceder a cada ruta
     public function __construct()
     {
+        $this->middleware('can:ventas.index')->only('index');
         $this->middleware('can:ventas.destroy')->only('destroy');
         $this->middleware('can:ventas.edit')->only('edit', 'update');
         $this->middleware('can:ventas.create')->only('create');
