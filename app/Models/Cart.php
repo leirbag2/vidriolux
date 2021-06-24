@@ -23,22 +23,22 @@ class Cart extends Model
     public function add($item, $id, $cantidad)
     {
 
-        $ItemAlmacenado = ['Cantidad' => 0, 'Precio' => $item->precioVenta, 'item' => $item];
+        $ItemAlmacenado = ['Cantidad' => 0, 'Precio' => $item->precioIva, 'item' => $item];
         if ($this->items) {
             if (array_key_exists($id, $this->items)) {
                 $ItemAlmacenado = $this->items[$id];
             }
         }
         $ItemAlmacenado['Cantidad'] += $cantidad;
-        $ItemAlmacenado['Precio'] = $item->precioVenta * $ItemAlmacenado['Cantidad'];
+        $ItemAlmacenado['Precio'] = $item->precioIva * $ItemAlmacenado['Cantidad'];
         $this->Cantidad += $cantidad;
-        $this->PrecioTotal += $item->precioVenta * $cantidad;
+        $this->PrecioTotal += $item->precioIva * $cantidad;
         $this->items[$id] = $ItemAlmacenado;
     }
 
     public function disponible($item, $id, $cantidad)
     {
-        $ItemAlmacenado = ['Cantidad' => 0, 'Precio' => $item->precioVenta, 'item' => $item];
+        $ItemAlmacenado = ['Cantidad' => 0, 'Precio' => $item->precioIva, 'item' => $item];
         if ($this->items) {
             if (array_key_exists($id, $this->items)) {
                 $ItemAlmacenado = $this->items[$id];

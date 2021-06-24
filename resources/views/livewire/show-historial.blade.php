@@ -43,7 +43,6 @@
             <thead>
                 <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal font-bold">
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Fecha</th>
-                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Fecha Actualizacion</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Usuario</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Codigo</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Producto</th>
@@ -60,11 +59,6 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm font-medium text-gray-900">
                                 {{ $historial->created_at }}
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900">
-                                {{ $historial->updated_at }}
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">

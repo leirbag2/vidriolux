@@ -22,15 +22,15 @@ class ProductosFactory extends Factory
      */
     public function definition()
     {
-        $precio = $this->faker->numberBetween(100,5000);
+        $precio = $this->faker->numberBetween(100, 2000);
         return [
             'codigo' => $this->faker->unique()->bothify('???#####'),
-            'nombreProducto' => $this->faker->words(2,true),
-            'descripcionProducto' => $this->faker->sentences(1,true),
-            'stock' => $this->faker->numberBetween(200,400),
-            'precioNeto' => $precio,
-            'precioIva' => $precio * 0.19,
-            'precioVenta' => (($precio * 1.19) * 5),
+            'nombreProducto' => $this->faker->words(2, true),
+            'descripcionProducto' => $this->faker->sentences(1, true),
+            'stock' => $this->faker->numberBetween(200, 400),
+            'precioCompra' => $precio,
+            'precioNeto' => $precio * 2,
+            'precioIva' => $precio * 2 * 1.19,
             'categorias_id' => Categorias::inRandomOrder()->first()->id,
             'tipo_estado_id' => 1
         ];

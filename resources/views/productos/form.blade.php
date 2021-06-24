@@ -24,11 +24,8 @@
                                     </div>
                                 @endif
                             </div>
-
                             <div class="md:flex md:flex-row md:space-x-4 w-full text-xs">
-
                                 <div class="mb-3 md:space-y-2 w-full text-xs">
-
                                     <label class="font-semibold text-gray-600 py-2">Codigo<abbr
                                             title="obligatorio">*</abbr></label>
                                     <input placeholder="Codigo"
@@ -46,7 +43,6 @@
                                     <p class="text-red text-xs hidden">Please fill out this field.</p>
                                 </div>
                             </div>
-
                             <div class="mb-3 md:space-y-2 w-full text-xs">
                                 <div class="flex-auto w-full mb-1 text-xs space-y-2">
                                     <label class="font-semibold text-gray-600 py-2">Descripción</label>
@@ -55,9 +51,15 @@
                                         spellcheck="false">{{ $producto->descripcionProducto }}</textarea>
                                 </div>
                             </div>
-
-
                             <div class="md:flex md:flex-row md:space-x-4 w-full text-xs">
+                                <div class="w-full flex flex-col mb-3">
+                                    <label class="font-semibold text-gray-600 py-2">Precio Compra<abbr
+                                            title="obligatorio">*</abbr></label>
+                                    <input placeholder="Precio Compra"
+                                        class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
+                                        type="number" name="precioCompra" required
+                                        value="{{ $producto->precioCompra }}">
+                                </div>
                                 <div class="w-full flex flex-col mb-3">
                                     <label class="font-semibold text-gray-600 py-2">Precio Neto<abbr
                                             title="obligatorio">*</abbr></label>
@@ -72,14 +74,6 @@
                                     <input placeholder="Precio + IVA" id="precioIva"
                                         class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
                                         type="number" name="precio" disabled value="{{ $producto->precioIva }}">
-                                </div>
-                                <div class="w-full flex flex-col mb-3">
-                                    <label class="font-semibold text-gray-600 py-2">Precio Venta<abbr
-                                            title="obligatorio">*</abbr></label>
-                                    <input placeholder="Precio Venta"
-                                        class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
-                                        type="number" name="precioVenta"
-                                        value="{{ $producto->precioVenta }}">
                                 </div>
                                 <div class="w-full flex flex-col mb-3">
                                     <label class="font-semibold text-gray-600 py-2">Cantidad<abbr
@@ -140,7 +134,7 @@
         document.getElementById("precio").addEventListener('keyup', (event) => {
             var precio = document.getElementById("precio").value;
             precio *= 1.19;
-            document.getElementById("precioIva").setAttribute("value",Math.round(precio));
+            document.getElementById("precioIva").setAttribute("value", Math.round(precio));
         });
     </script>
 </x-app-layout>

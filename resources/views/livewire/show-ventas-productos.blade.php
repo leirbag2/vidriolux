@@ -46,13 +46,13 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-center text-gray-900">
-                            ${{ number_format(($producto->precioNeto + $producto->precioIva), 0, ',', '.')  }}
+                            ${{ number_format(($producto->precioCompra), 0, ',', '.')  }}
                         </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-center text-gray-900">
                             <input class="w-40 text-grey-darker border
-                            border-gray-200 rounded-lg h-10 px-4" type="number" name="precioVenta" id="precio-venta-{{$producto->id}}" value="{{ $producto->precioVenta}}">
+                            border-gray-200 rounded-lg h-10 px-4" type="number" name="precioVenta" id="precio-venta-{{$producto->id}}" value="{{$producto->precioIva}}">
                         </div>
                     </td>
 

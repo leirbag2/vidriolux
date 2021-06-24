@@ -27,11 +27,14 @@
             <!-- Page Content -->
             <main>
                 {{ $slot }}
+
             </main>
+            <footer class="bg-gray-800 text-white text-center font-bold inset-x-0 bottom-0 py-4 shadow mx-auto">
+                <p>Ingeniería de Software - Otoño 2021</p>
+                <p>Inacap</p>
+            </footer>
         </div>
-
         @stack('modals')
-
         @livewireScripts
         @stack('js')
     </body>

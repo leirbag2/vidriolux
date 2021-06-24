@@ -4,7 +4,7 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
                     <h2 class="font-semibold text-2xl text-gray-800 leading-tight text-center mb-5">
-                        Factura: {{$venta->numFactura}}
+                        Factura: {{ $venta->numFactura }}
                     </h2>
                     <div class="text-gray-500">
                         <x-table>
@@ -16,48 +16,51 @@
                                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Precio Compra</th>
                                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Precio Venta</th>
                                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Cantidad</th>
-                                        <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Subtotal</th>
+                                        <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Subtotal Compra</th>
+                                        <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Subtotal Venta</th>
                                     </tr>
                                 </thead>
-                                <?php $cantidad = 0 ?>
+                                <?php $cantidad = 0; ?>
                                 <tbody class="bg-white divide-y divide-gray-200">
                                     @foreach ($detalleVentas as $detalleventa)
-                                    <tr class="hover:bg-gray-100">
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">
-                                                {{ $detalleventa->producto->codigo }}
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">
-                                                {{ $detalleventa->producto->nombreProducto }}
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">
-                                            ${{ number_format($detalleventa->precioCompra , 0, ',', '.') }}
-                                      
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">
-                                            ${{ number_format($detalleventa->precioVenta , 0, ',', '.') }}
-                                       
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">
-                                                {{ $detalleventa->cantidad }}
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">
-                                            ${{ number_format($detalleventa->subtotal , 0, ',', '.') }}
-            
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <?php $cantidad += $detalleventa->cantidad ?>
+                                        <tr class="hover:bg-gray-100">
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">
+                                                    {{ $detalleventa->producto->codigo }}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">
+                                                    {{ $detalleventa->producto->nombreProducto }}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">
+                                                    ${{ number_format($detalleventa->precioCompra, 0, ',', '.') }}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">
+                                                    ${{ number_format($detalleventa->precioVenta, 0, ',', '.') }}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">
+                                                    {{ $detalleventa->cantidad }}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">
+                                                    ${{ number_format(($detalleventa->precioCompra * $detalleventa->cantidad), 0, ',', '.') }}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">
+                                                    ${{ number_format($detalleventa->subtotal, 0, ',', '.') }}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <?php $cantidad += $detalleventa->cantidad; ?>
                                     @endforeach
                                 </tbody>
                                 <tfoot>
@@ -72,13 +75,17 @@
                                         <td></td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900 font-bold">
-                                                {{$cantidad}}
+                                                {{ $cantidad }}
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900 font-bold">
-                                            ${{ number_format($venta->totalIva , 0, ',', '.') }}
-                                
+                                                ${{ number_format($venta->precioCompra, 0, ',', '.') }}
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900 font-bold">
+                                                ${{ number_format($venta->totalIva, 0, ',', '.') }}
                                             </div>
                                         </td>
                                     </tr>

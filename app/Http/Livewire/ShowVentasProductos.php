@@ -17,7 +17,7 @@ class ShowVentasProductos extends Component
 
     public function render()
     {
-        $productos = Productos::select('productos.id as id','categorias.id as cId','codigo','nombreProducto','stock','nombreCategoria','precioNeto','precioIva','precioVenta')
+        $productos = Productos::select('productos.*','categorias.id as cId','nombreCategoria')
         ->leftJoin('categorias', 'categorias.id', '=', 'productos.categorias_id')
         ->where('tipo_estado_id',1)
         ->where('stock','>',0)

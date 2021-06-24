@@ -28,13 +28,13 @@ class CartController extends Controller
 
     public function add(Request $request)
     {
-
-        $id = $request->get('id');
-        $producto = Productos::find($id);
         $cantidad = $request->input('cantidad');
         if ($request->input('cantidad') <= 0) {
             return redirect()->back()->with('error', 'La cantidad debe ser mayor a 0');
         }
+        $id = $request->get('id');
+        $producto = Productos::find($id);
+        $producto->precioIva = $request->input('venta');
         $oldCart =  $request->session()->has('cart') ? $request->session()->get('cart') : null;
         $cart = new Cart($oldCart);
         if ($cart->disponible($producto, $producto->id, $cantidad)) {
@@ -47,11 +47,11 @@ class CartController extends Controller
 
     public function store(Request $request)
     {
-        $cart = $request->session()->get('cart');
         $numFactura = $request->input('num_factura');
         if (Ventas::where('numFactura', $numFactura)->get()->count() > 0) {
             return redirect()->back()->with('error', 'El número de factura ingresado ya existe en los registros');
         }
+        $cart = $request->session()->get('cart');
         $venta = new Ventas;
         $venta->users_id = auth()->id();
         $venta->fechaVenta = date("Y-m-d H:i:s");
@@ -61,7 +61,7 @@ class CartController extends Controller
         $venta->totalNeto = $cart->PrecioTotal / 1.19;
         $precioCompra = 0;
         foreach ($cart->items as $producto) {
-            $precioCompra += ($producto['item']->precioNeto + $producto['item']->precioIva) * $producto['Cantidad'];
+            $precioCompra += $producto['item']->precioCompra * $producto['Cantidad'];
         }
         $venta->precioCompra = $precioCompra;
         $venta->save();
@@ -71,9 +71,9 @@ class CartController extends Controller
                     $producto['item']->id,
                     [
                         'cantidad' => $producto['Cantidad'],
-                        'subtotal' => $producto['Cantidad'] * ($producto['item']->precioVenta),
-                        'precioCompra' => ($producto['item']->precioNeto + $producto['item']->precioIva),
-                        'precioVenta' => $producto['item']->precioVenta
+                        'subtotal' => $producto['Cantidad'] * $producto['item']->precioIva,
+                        'precioCompra' => $producto['item']->precioCompra,
+                        'precioVenta' => $producto['item']->precioIva
                     ]
                 );
         }
