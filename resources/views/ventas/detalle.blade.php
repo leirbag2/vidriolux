@@ -6,6 +6,9 @@
                     <h2 class="font-semibold text-2xl text-gray-800 leading-tight text-center mb-5">
                         Factura: {{ $venta->numFactura }}
                     </h2>
+                    <a href="{{url()->previous()}}"
+                    class="mb-2 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-full hover:shadow-lg hover:bg-gray-100">
+                    Atrás</a>
                     <div class="text-gray-500">
                         <x-table>
                             <table class="min-w-full divide-y divide-gray-200">
@@ -13,10 +16,14 @@
                                     <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal font-bold">
                                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Código</th>
                                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Producto</th>
-                                        <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Precio Compra</th>
+                                        @if (auth()->user()->hasRole('Administrador'))
+                                            <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Precio Compra</th>
+                                        @endif
                                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Precio Venta</th>
                                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Cantidad</th>
-                                        <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Subtotal Compra</th>
+                                        @if (auth()->user()->hasRole('Administrador'))
+                                            <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Subtotal Compra</th>
+                                        @endif
                                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Subtotal Venta</th>
                                     </tr>
                                 </thead>
@@ -34,11 +41,13 @@
                                                     {{ $detalleventa->producto->nombreProducto }}
                                                 </div>
                                             </td>
+                                            @if (auth()->user()->hasRole('Administrador'))
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm text-gray-900">
                                                     ${{ number_format($detalleventa->precioCompra, 0, ',', '.') }}
                                                 </div>
                                             </td>
+                                            @endif
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm text-gray-900">
                                                     ${{ number_format($detalleventa->precioVenta, 0, ',', '.') }}
@@ -49,11 +58,13 @@
                                                     {{ $detalleventa->cantidad }}
                                                 </div>
                                             </td>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="text-sm text-gray-900">
-                                                    ${{ number_format(($detalleventa->precioCompra * $detalleventa->cantidad), 0, ',', '.') }}
-                                                </div>
-                                            </td>
+                                            @if (auth()->user()->hasRole('Administrador'))
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <div class="text-sm text-gray-900">
+                                                        ${{ number_format(($detalleventa->precioCompra * $detalleventa->cantidad), 0, ',', '.') }}
+                                                    </div>
+                                                </td>
+                                            @endif
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm text-gray-900">
                                                     ${{ number_format($detalleventa->subtotal, 0, ',', '.') }}
@@ -71,18 +82,20 @@
                                             </div>
                                         </td>
                                         <td></td>
-                                        <td></td>
+                                        @if (auth()->user()->hasRole('Administrador'))<td></td>@endif
                                         <td></td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900 font-bold">
                                                 {{ $cantidad }}
                                             </div>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900 font-bold">
-                                                ${{ number_format($venta->precioCompra, 0, ',', '.') }}
-                                            </div>
-                                        </td>
+                                        @if (auth()->user()->hasRole('Administrador'))
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900 font-bold">
+                                                    ${{ number_format($venta->precioCompra, 0, ',', '.') }}
+                                                </div>
+                                            </td>
+                                        @endif
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900 font-bold">
                                                 ${{ number_format($venta->totalIva, 0, ',', '.') }}

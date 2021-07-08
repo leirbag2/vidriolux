@@ -62,7 +62,9 @@
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Vendedor</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Numero de Factura</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Fecha de Venta</th>
-                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Precio Compra</th>
+                    @if (auth()->user()->hasRole('Administrador'))
+                        <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Precio Compra</th>
+                    @endif
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Total Neto</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Iva</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Total + Iva</th>
@@ -71,58 +73,60 @@
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
                 @foreach ($ventas as $venta)
-                        <tr class="hover:bg-gray-100">
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">
-                                    {{ $venta->usuario->name }}
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">
-                                    {{ $venta->numFactura }}
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">
-                                    {{ $venta->fechaVenta }}
-                                </div>
-                            </td>
+                    <tr class="hover:bg-gray-100">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-900">
+                                {{ $venta->usuario->name }}
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-900">
+                                {{ $venta->numFactura }}
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-900">
+                                {{ $venta->fechaVenta }}
+                            </div>
+                        </td>
+                        @if (auth()->user()->hasRole('Administrador'))
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm text-gray-900">
                                     ${{ number_format($venta->precioCompra, 0, ',', '.') }}
                                 </div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">
-                                    ${{ number_format($venta->totalNeto, 0, ',', '.') }}
+                        @endif
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-900">
+                                ${{ number_format($venta->totalNeto, 0, ',', '.') }}
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-900">
+                                ${{ number_format($venta->iva, 0, ',', '.') }}
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-900">
+                                ${{ number_format($venta->totalIva, 0, ',', '.') }}
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex item-center justify-center">
+                                <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                                    <a href="{{ route('ventas.show', $venta->id) }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor" class="stroke-current text-blue-600">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                        </svg>
+                                    </a>
                                 </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">
-                                    ${{ number_format($venta->iva, 0, ',', '.') }}
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">
-                                    ${{ number_format($venta->totalIva, 0, ',', '.') }}
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex item-center justify-center">
-                                    <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                        <a href="{{ route('ventas.show', $venta->id) }}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke="currentColor" class="stroke-current text-blue-600">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+                            </div>
+                        </td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>

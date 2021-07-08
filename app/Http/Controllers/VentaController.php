@@ -106,7 +106,7 @@ class VentaController extends Controller
         if (!$venta){
             return redirect('/ventas')->with('error', 'No existe la venta ingresada');
         }
-        if (auth()->user()->ventas->firstWhere('id', $venta->id) || auth()->user()->hasRole('Administrador')) {
+        if (auth()->user()->ventas->firstWhere('id', $venta->id) || auth()->user()->hasRole('Administrador') || auth()->user()->can('reportes.index')) {
             $detalleVentas = $venta->detalle;
             return view('ventas/detalle', compact('detalleVentas', 'venta'));
         } else {

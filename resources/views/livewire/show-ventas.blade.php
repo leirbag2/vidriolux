@@ -56,7 +56,9 @@
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Vendedor</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">N° Factura</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Fecha de Venta</th>
-                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Total Compra</th>
+                    @if (auth()->user()->hasRole('Administrador'))
+                        <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Total Compra</th>
+                    @endif
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Total Neto</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Iva</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Total Iva</th>
@@ -68,7 +70,6 @@
             <tbody class="bg-white divide-y divide-gray-200">
                 @foreach ($ventas as $venta)
                     <tr class="hover:bg-gray-100">
-
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">
                                 {{ $venta->usuario->name }}
@@ -84,29 +85,28 @@
                                 {{ $venta->fechaVenta }}
                             </div>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900">
-                                ${{ number_format($venta->precioCompra, 0, ',', '.') }}
-                            </div>
-                        </td>
+                        @if (auth()->user()->hasRole('Administrador'))
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900">
+                                    ${{ number_format($venta->precioCompra, 0, ',', '.') }}
+                                </div>
+                            </td>
+                        @endif
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">
                                 ${{ number_format($venta->totalNeto, 0, ',', '.') }}
                             </div>
                         </td>
-
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">
                                 ${{ number_format($venta->iva, 0, ',', '.') }}
                             </div>
                         </td>
-
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">
                                 ${{ number_format($venta->totalIva, 0, ',', '.') }}
                             </div>
                         </td>
-
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">
                                 {{ $venta->estado->estado }}
