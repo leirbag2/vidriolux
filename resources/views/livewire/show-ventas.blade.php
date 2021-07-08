@@ -63,7 +63,7 @@
                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Total Neto</th>
                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Iva</th>
                         <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Total Iva</th>
-                        <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Nota de credito</th>
+                        <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Estado</th>
                         <th scope="col" class="px-6 py-3 text-center uppercase tracking-wider">Acciones</th>
                     </tr>
                 </thead>
