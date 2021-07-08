@@ -56,7 +56,7 @@ class VentaController extends Controller
     public function edit($id)
     {
         $venta =  Ventas::find($id);
-        if($venta->estado_venta_id == 2){
+        if ($venta->estado_venta_id == 2) {
             return redirect('/ventas')->with('error', 'No puede modificar una venta anulada');
         }
         return view('ventas.form', [
@@ -103,7 +103,14 @@ class VentaController extends Controller
     public function show($id)
     {
         $venta = Ventas::find($id);
-        $detalleVentas = $venta->detalle;
-        return view('ventas/detalle', compact('detalleVentas', 'venta'));
+        if (!$venta){
+            return redirect('/ventas')->with('error', 'No existe la venta ingresada');
+        }
+        if (auth()->user()->ventas->firstWhere('id', $venta->id) || auth()->user()->hasRole('Administrador')) {
+            $detalleVentas = $venta->detalle;
+            return view('ventas/detalle', compact('detalleVentas', 'venta'));
+        } else {
+            return redirect('/ventas')->with('error', 'No puede ver las ventas de los demas usuarios');
+        }
     }
 }

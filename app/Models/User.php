@@ -12,6 +12,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\TipoEstado;
+use App\Models\Ventas;
 
 
 class User extends Authenticatable
@@ -69,5 +70,9 @@ class User extends Authenticatable
     //Obtiene el estado del usuario
     public function getEstadoAttribute() {
         return TipoEstado::firstWhere('id', $this->tipo_estado_id);
+    }
+
+    public function ventas(){
+        return $this->hasMany(Ventas::class,'users_id');
     }
 }
