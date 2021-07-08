@@ -15,7 +15,6 @@
         </div>
     @endif
     <div class="lg:flex lg:flex-row lg:space-x-4 mt-4">
-
         <div>
             <span>Fecha Inicial:</span>
             <input class="appearance-none block w-full border rounded-lg h-10 px-4 border-gray-200" type="date"
@@ -26,19 +25,28 @@
             <input class="appearance-none block w-full border rounded-lg h-10 px-4 border-gray-200" type="date"
                 name="fecha_fin" id="fecha_fin" wire:model="fechaFin">
         </div>
-        @if(auth()->user()->hasRole('Administrador'))
-        <div>
-            <span>Vendedor:</span>
-            <input type="text"
-                class="appearance-none block w-full h-10 px-4 border-gray-200 rounded-xl hover:border-gray-300 focus:outline-none focus:border-blue-500 transition-colors"
-                placeholder="Buscar vendedor" wire:model="vendedor">
-        </div>
+        @if (auth()->user()->hasRole('Administrador'))
+            <div>
+                <span>Vendedor:</span>
+                <input type="text"
+                    class="appearance-none block w-full h-10 px-4 border-gray-200 rounded-xl hover:border-gray-300 focus:outline-none focus:border-blue-500 transition-colors"
+                    placeholder="Buscar vendedor" wire:model="vendedor">
+            </div>
         @endif
         <div>
             <span>Número factura:</span>
             <input type="text"
                 class="appearance-none block w-full h-10 px-4 border-gray-200 rounded-xl hover:border-gray-300 focus:outline-none focus:border-blue-500 transition-colors"
                 placeholder="Buscar factura" wire:model="search">
+        </div>
+        <div class="w-40">
+            <span>Estado de venta:</span>
+            <select
+                class="appearance-none block w-full h-10 px-4 border-gray-200 rounded-xl hover:border-gray-300 focus:outline-none focus:border-blue-500 transition-colors"
+                wire:model="estado">
+                <option value="1">Realizado</option>
+                <option value="2">Anulado</option>
+            </select>
         </div>
     </div>
     <x-table>
@@ -53,9 +61,9 @@
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Iva</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Total Iva</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Nota de credito</th>
-                    @canany(['ventas.edit', 'ventas.destroy'])
+                    @can('ventas.edit')
                         <th scope="col" class="px-6 py-3 text-center uppercase tracking-wider">Acciones</th>
-                    @endcanany
+                    @endcan
                 </tr>
             </thead>
 
@@ -100,7 +108,7 @@
                                 ${{ number_format($venta->totalIva, 0, ',', '.') }}
                             </div>
                         </td>
-                        
+
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">
                                 {{ $venta->estado->estado }}
@@ -122,30 +130,17 @@
                                         </a>
                                     </div>
                                     <!-- Boton : EditarVenta -->
-                                    <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                        <a href="{{ route('ventas.edit', $venta->id) }}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke="currentColor" class="stroke-current text-green-600">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                                            </svg>
-                                        </a>
-                                    </div>
-                                    <!-- Boton : EliminarVenta -->
-                                    <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                        <a wire:click="$emit('ventas',{{ $venta->id }})">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke="currentColor" class="stroke-current text-red-600">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                            </svg>
-                                        </a>
-                                    </div>
-                                    <form id="delete-form-{{ $venta->id }}" action="/ventas/{{ $venta->id }}"
-                                        method="POST">
-                                        @csrf
-                                        <input name="_method" type="hidden" value="DELETE">
-                                    </form>
+                                    @if ($venta->estado_venta_id == 1)
+                                        <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                                            <a href="{{ route('ventas.edit', $venta->id) }}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke="currentColor" class="stroke-current text-green-600">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    @endif
                                 </div>
                             </td>
                         @endcanany
@@ -155,32 +150,4 @@
         </table>
     </x-table>
     {{ $ventas->links() }}
-    @push('js')
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script>
-            Livewire.on('ventas', ventas => {
-
-                Swal.fire({
-                    title: '¿Está seguro?',
-                    text: "No podrá revertir el cambio",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    cancelButtonText: 'Cancelar',
-                    confirmButtonText: 'Eliminar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        document.getElementById('delete-form-' + ventas).submit();
-                        Swal.fire(
-                            '¡Eliminado!',
-                            'Se ha eliminado correctamente.',
-                            'success'
-                        )
-                    }
-                })
-            });
-
-        </script>
-    @endpush
 </div>

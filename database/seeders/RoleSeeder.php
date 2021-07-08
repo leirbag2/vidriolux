@@ -35,7 +35,6 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'ventas.index', 'description' => 'Ver ventas'])->syncRoles([$admin,$vendedor]);
         Permission::create(['name' => 'ventas.create', 'description' => 'Crear ventas'])->syncRoles([$admin,$vendedor]);
         Permission::create(['name' => 'ventas.edit', 'description' => 'Modificar ventas'])->assignRole($admin);
-        Permission::create(['name' => 'ventas.destroy', 'description' => 'Eliminar ventas'])->assignRole($admin);
 
         Permission::create(['name' => 'historial.index', 'description' => 'Ver historial de actualización de stock'])->syncRoles([$admin,$bodeguero]);
         Permission::create(['name' => 'historial.create', 'description' => 'Ingresar/Retirar productos de bodega'])->syncRoles([$admin,$bodeguero]);
