@@ -30,19 +30,16 @@ class ShowReportes extends Component
     public function render()
     {
         $error = false;
-        $ventas = Ventas::select('ventas.*', 'users.name')
-            ->join('users', 'ventas.users_id', '=', 'users.id')
-            ->where('fechaVenta', '>=', $this->fechaIn . ' 00:00:00')
-            ->where('fechaVenta', '<=', $this->fechaFin . ' 23:59:59')
-            ->where('name', 'LIKE', '%' . $this->vendedor . '%')
-            ->orderByDesc('fechaVenta')
-            ->paginate(10);
 
         $all = Ventas::select('ventas.*', 'users.name')
             ->join('users', 'ventas.users_id', '=', 'users.id')
             ->where('fechaVenta', '>=', $this->fechaIn . ' 00:00:00')
             ->where('fechaVenta', '<=', $this->fechaFin . ' 23:59:59')
-            ->where('name', 'LIKE', '%' . $this->vendedor . '%');
+            ->where('name', 'LIKE', '%' . $this->vendedor . '%')
+            ->where('estado_venta_id', 1);
+        $ventas = $all
+            ->orderByDesc('fechaVenta')
+            ->paginate(10);
         $ventasTotal = $all->sum('totalIva');
         $ganancias = $ventasTotal - $all->sum('precioCompra');
         if ($this->fechaIn > $this->fechaFin) {

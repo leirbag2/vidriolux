@@ -21,21 +21,13 @@
                         {!! Form::model($ventas, ['route' => [$is_editing ? 'ventas.update' : 'ventas.store', $ventas], 'method' => $is_editing ? 'PUT' : 'POST']) !!}
 
                         <div class="mt-5 mb-5">
-                                <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" type="hidden" name="numFacturaAnterior" id="numFacturaAnterior"
-                                value="{{ $is_editing ? $ventas->numFactura : ''}}">
-                                <p class="text-red text-xs hidden">Please fill out this field.</p>
-
                             <div class="md:flex md:flex-row md:space-x-4 w-full text-xs">
-
                                 <div class="w-full flex flex-col mb-3">
-
                                     <label class="font-semibold text-gray-600 py-2">Numero de Factura<abbr title="obligatorio">*</abbr></label>
                                     <input placeholder="numerofactura" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" type="text" name="numFactura" id="num_factura"
                                     value="{{ $is_editing ? $ventas->numFactura : ''}}">
                                     <p class="text-red text-xs hidden">Please fill out this field.</p>
                                 </div>
-                                
-                              
                             </div>
 
                             <div class="md:flex md:flex-row md:space-x-4 w-full text-xs">
