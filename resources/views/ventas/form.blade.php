@@ -5,7 +5,7 @@
                 <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
                     <div class="mt-6 text-gray-500">
                         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                            {{ $is_editing ? 'Modificar' : 'Agregar' }}&nbsp;Numero de Factura
+                            {{ $is_editing ? 'Modificar' : 'Agregar' }}&nbsp;factura: {{ $ventas->numFactura}}
                         </h2>
                         @if (session('info'))
                         <div class="mt-2 focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-red-500 mb-5">
@@ -19,7 +19,12 @@
                         @endif
                         <!-- FORMULARIO -->
                         {!! Form::model($ventas, ['route' => [$is_editing ? 'ventas.update' : 'ventas.store', $ventas], 'method' => $is_editing ? 'PUT' : 'POST']) !!}
+
                         <div class="mt-5 mb-5">
+                                <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" type="hidden" name="numFacturaAnterior" id="numFacturaAnterior"
+                                value="{{ $is_editing ? $ventas->numFactura : ''}}">
+                                <p class="text-red text-xs hidden">Please fill out this field.</p>
+
                             <div class="md:flex md:flex-row md:space-x-4 w-full text-xs">
 
                                 <div class="w-full flex flex-col mb-3">
@@ -29,8 +34,24 @@
                                     value="{{ $is_editing ? $ventas->numFactura : ''}}">
                                     <p class="text-red text-xs hidden">Please fill out this field.</p>
                                 </div>
+                                
                               
                             </div>
+
+                            <div class="md:flex md:flex-row md:space-x-4 w-full text-xs">
+                                <div class="w-full flex flex-col mb-3">
+                                    <label class="font-semibold text-gray-600 py-2">Estado de factura<abbr title="obligatorio">*</abbr></label>
+                                    <select
+                                        class="block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4 md:w-full "
+                                        required="required" name="estado_venta" id="estado_venta">
+                                        <option value="1" {{ $ventas->estado_venta_id == 1 ? 'selected' : '' }}>
+                                            Realizado</option>
+                                        <option value="2" {{ $ventas->estado_venta_id == 2 ? 'selected' : '' }}>
+                                            Anulado</option>
+                                    </select>
+                                </div>
+                            </div>    
+                            
                             <p class="text-xs text-red-500 text-right my-3">Los campos obligatorios están
                                 marcados con un asterisco <abbr title="Campo obligatorio">*</abbr></p>
 

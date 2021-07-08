@@ -69,13 +69,18 @@ class VentaController extends Controller
     public function update(Request $request, $id)
     {
         $venta = Ventas::find($id);
+        $numFacturaAnterior = $request->input('numFacturaAnterior');
         $numFactura = $request->input('numFactura');
-        if (Ventas::where('numFactura', $numFactura)->get()->count() > 0) {       
-            return redirect()->back()->with('info', 'El número de factura ingresado ya existe en los registros');
+        $estado_venta = $request->input('estado_venta');
+        if($numFacturaAnterior!=$numFactura){
+            if (Ventas::where('numFactura', $numFactura)->get()->count() > 0) {       
+                return redirect()->back()->with('info', 'El número de factura ingresado ya existe en los registros');
+            }
         }
         $venta->numFactura = $numFactura;
+        $venta->estado_venta_id= $estado_venta;
         $venta->save();
-        return redirect('/ventas')->with('info', 'El numero de factura se modificó correctamente');
+        return redirect('/ventas')->with('info', 'La factura se modificó correctamente');
     }
 
     public function show($id)

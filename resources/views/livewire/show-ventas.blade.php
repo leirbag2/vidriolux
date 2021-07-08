@@ -52,6 +52,7 @@
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Total Neto</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Iva</th>
                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Total Iva</th>
+                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Nota de credito</th>
                     @canany(['ventas.edit', 'ventas.destroy'])
                         <th scope="col" class="px-6 py-3 text-center uppercase tracking-wider">Acciones</th>
                     @endcanany
@@ -97,6 +98,12 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">
                                 ${{ number_format($venta->totalIva, 0, ',', '.') }}
+                            </div>
+                        </td>
+                        
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-900">
+                                {{ $venta->estado->estado }}
                             </div>
                         </td>
                         <!-- Boton : VerDetalleVenta -->
