@@ -52,6 +52,11 @@ class CartController extends Controller
             return redirect()->back()->with('error', 'El número de factura ingresado ya existe en los registros');
         }
         $cart = $request->session()->get('cart');
+        foreach ($cart->items as $p) {
+            if (Productos::find($p['item']->id)->stock < $p['Cantidad']){
+                return redirect('cart')->with('error', 'No hay stock suficiente del producto '.$p['item']->nombreProducto);
+            }
+        }
         $venta = new Ventas;
         $venta->users_id = auth()->id();
         $venta->fechaVenta = date("Y-m-d H:i:s");
