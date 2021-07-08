@@ -13,8 +13,4 @@ class ReportController extends Controller
     {
         return view('ventas/reporte');
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 0de591e93606ca7e61a7056218a7bc4d18d4c1f4

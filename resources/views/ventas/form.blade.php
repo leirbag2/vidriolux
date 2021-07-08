@@ -33,16 +33,18 @@
                             <div class="md:flex md:flex-row md:space-x-4 w-full text-xs">
                                 <div class="w-full flex flex-col mb-3">
                                     <label class="font-semibold text-gray-600 py-2">Estado de factura<abbr title="obligatorio">*</abbr></label>
-                                    <select
+                                    <select {{ $ventas->estado_venta_id == 2 ? 'disabled' : '' }}
                                         class="block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4 md:w-full "
-                                        required="required" name="estado_venta" id="estado_venta">
+                                        required="required" name="estado_venta" id="estado_venta" onchange="alertarCambioEstado(this.value);">
                                         <option value="1" {{ $ventas->estado_venta_id == 1 ? 'selected' : '' }}>
                                             Realizado</option>
                                         <option value="2" {{ $ventas->estado_venta_id == 2 ? 'selected' : '' }}>
                                             Anulado</option>
                                     </select>
                                 </div>
-                            </div>    
+                            </div>
+                            
+                            <div id="edicion"></div>
                             
                             <p class="text-xs text-red-500 text-right my-3">Los campos obligatorios están
                                 marcados con un asterisco <abbr title="Campo obligatorio">*</abbr></p>
@@ -61,5 +63,12 @@
             </div>
         </div>
     </div>
-    </div>
+
+    <script>
+        function alertarCambioEstado(){
+            var option = document.getElementById('#estado_venta');
+            document.getElementById("edicion").innerHTML = "<div class='mt-2 focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-red-500 mb-5'>Una vez anulado el estado de la factura, el estado ya no podra ser modificado</div>";
+        }
+    </script>
+
 </x-app-layout>

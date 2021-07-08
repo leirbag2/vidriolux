@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DetalleVentas;
+use App\Models\Productos;
 use Illuminate\Http\Request;
 use App\Models\Ventas;
 
@@ -69,14 +71,27 @@ class VentaController extends Controller
     public function update(Request $request, $id)
     {
         $venta = Ventas::find($id);
-        $numFacturaAnterior = $request->input('numFacturaAnterior');
-        $numFactura = $request->input('numFactura');
-        $estado_venta = $request->input('estado_venta');
-            if (Ventas::where('numFactura', $numFactura)->where('numFactura','<>',$venta->numFactura)->get()->count() > 0) {       
-                return redirect()->back()->with('info', 'El número de factura ingresado ya existe en los registros');
+        $detalle = $venta->detalle;
+
+        if($request->input('estado_venta')!=null){
+            if($request->input('estado_venta') == 2){
+                foreach($detalle as $v){
+                    $producto = Productos::find($v->productos_id);
+                    $stockActualizado= $producto->stock + $v->cantidad;
+                    $producto->stock = $stockActualizado;
+                    $producto->update();
+                }
             }
+
+            $estado_venta = $request->input('estado_venta');
+            $venta->estado_venta_id= $estado_venta;
+        }
+        
+        $numFactura = $request->input('numFactura');
+        if (Ventas::where('numFactura', $numFactura)->where('numFactura','<>',$venta->numFactura)->get()->count() > 0) {       
+            return redirect()->back()->with('info', 'El número de factura ingresado ya existe en los registros');
+        }
         $venta->numFactura = $numFactura;
-        $venta->estado_venta_id= $estado_venta;
         $venta->save();
         return redirect('/ventas')->with('info', 'La factura se modificó correctamente');
     }

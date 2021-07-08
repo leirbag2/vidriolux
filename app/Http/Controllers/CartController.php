@@ -48,7 +48,7 @@ class CartController extends Controller
     public function store(Request $request)
     {
         $numFactura = $request->input('num_factura');
-        if (Ventas::where('numFactura', $numFactura)->get()->count() > 0) {
+        if (Ventas::where('numFactura', $numFactura)->where('estado_venta_id',1)->get()->count() > 0) {
             return redirect()->back()->with('error', 'El número de factura ingresado ya existe en los registros');
         }
         $cart = $request->session()->get('cart');
