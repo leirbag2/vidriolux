@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DetalleVentas;
+use App\Models\Productos;
 use Illuminate\Http\Request;
 use App\Models\Ventas;
 
@@ -53,8 +55,12 @@ class VentaController extends Controller
      */
     public function edit($id)
     {
+        $venta =  Ventas::find($id);
+        if ($venta->estado_venta_id == 2) {
+            return redirect('/ventas')->with('error', 'No puede modificar una venta anulada');
+        }
         return view('ventas.form', [
-            'ventas' => Ventas::find($id),
+            'ventas' => $venta,
             'is_editing' => true
         ]);
     }
@@ -70,35 +76,41 @@ class VentaController extends Controller
     {
         $venta = Ventas::find($id);
         $numFactura = $request->input('numFactura');
-        if (Ventas::where('numFactura', $numFactura)->get()->count() > 0) {       
+        if (Ventas::where('numFactura', $numFactura)->where('numFactura', '<>', $venta->numFactura)->get()->count() > 0) {
             return redirect()->back()->with('info', 'El número de factura ingresado ya existe en los registros');
         }
-        $venta->numFactura = $numFactura;
-        $venta->save();
-        return redirect('/ventas')->with('info', 'El numero de factura se modificó correctamente');
+        $detalle = $venta->detalle;
+        $estado = $request->input('estado_venta');
+        if ($estado == 1 || $estado == 2) {
+            if ($request->input('estado_venta') == 2) {
+                foreach ($detalle as $v) {
+                    $producto = Productos::find($v->productos_id);
+                    $stockActualizado = $producto->stock + $v->cantidad;
+                    $producto->stock = $stockActualizado;
+                    $producto->save();
+                }
+            }
+            $estado_venta = $request->input('estado_venta');
+            $venta->estado_venta_id = $estado_venta;
+            $venta->numFactura = $numFactura;
+            $venta->save();
+        } else {
+            return redirect()->back()->with('info', 'Debe ingresar un estado válido');
+        }
+        return redirect('/ventas')->with('info', 'La factura se modificó correctamente');
     }
 
     public function show($id)
     {
         $venta = Ventas::find($id);
-        $detalleVentas = $venta->detalle;
-        return view('ventas/detalle', compact('detalleVentas', 'venta'));
-    }
-
-    /**
-     * Eliminar la venta Seleccionada.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $ventas = Ventas::find($id);
-        if ($ventas == null) {
-            return abort(404);
+        if (!$venta){
+            return redirect('/ventas')->with('error', 'No existe la venta ingresada');
         }
-        $ventas->productos()->sync(null);
-        $ventas->delete();
-        return redirect("/ventas")->with('info', 'Se eliminó la venta correctamente');
+        if (auth()->user()->ventas->firstWhere('id', $venta->id) || auth()->user()->hasRole('Administrador')) {
+            $detalleVentas = $venta->detalle;
+            return view('ventas/detalle', compact('detalleVentas', 'venta'));
+        } else {
+            return redirect('/ventas')->with('error', 'No puede ver las ventas de los demas usuarios');
+        }
     }
 }

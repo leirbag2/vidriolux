@@ -13,6 +13,7 @@ class ShowVentas extends Component
     public $search;
     public $fechaIn;
     public $fechaFin;
+    public $estado;
 
     public function mount()
     {
@@ -22,6 +23,7 @@ class ShowVentas extends Component
             $this->fechaIn = date('Y-m-d');
         }
         $this->fechaFin = date('Y-m-d');
+        $this->estado = 1;
     }
 
     public function updatingSearch()
@@ -38,7 +40,8 @@ class ShowVentas extends Component
             ->where('fechaVenta', '>=',  $this->fechaIn . ' 00:00:00')
             ->where('fechaVenta', '<=', $this->fechaFin . ' 23:59:59')
             ->where('numFactura', 'LIKE', '%' . $this->search . '%')
-            ->where('name', 'LIKE', '%' . $this->vendedor . '%');
+            ->where('name', 'LIKE', '%' . $this->vendedor . '%')
+            ->where('estado_venta_id',$this->estado);
         if ($this->fechaIn > $this->fechaFin) {
             $error = true;
         }

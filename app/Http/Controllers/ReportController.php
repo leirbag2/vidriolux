@@ -8,7 +8,7 @@ class ReportController extends Controller
     {
         $this->middleware('can:reportes.index')->only('index');
     }
-    
+
     public function index()
     {
         return view('ventas/reporte');

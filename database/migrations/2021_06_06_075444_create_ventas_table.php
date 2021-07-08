@@ -23,6 +23,8 @@ class CreateVentasTable extends Migration
             $table->integer('iva');
             $table->integer('totalIva');
             $table->integer('precioCompra');
+            $table->unsignedBigInteger('estado_venta_id')->default(1);
+            $table->foreign('estado_venta_id')->references('id')->on('estado_venta')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

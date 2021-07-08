@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             CategoriaSeeder::class,
             ProductosSeeder::class,
+            EstadoFacturaSeeder::class,
             VentaSeeder::class,
             HistorialSeeder::class
         ]);

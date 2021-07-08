@@ -11,6 +11,11 @@
                         {{session('info')}}
                     </div>
                     @endif
+                    @if (session('error'))
+                    <div class="mt-8 focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-red-500">
+                        {{session('error')}}
+                    </div>
+                    @endif
                     <div class="text-gray-500">               
                         @livewire('show-ventas')
                         <!-- end table -->
