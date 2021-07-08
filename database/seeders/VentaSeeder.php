@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Ventas;
 use App\Models\Productos;
+
 class VentaSeeder extends Seeder
 {
     /**
@@ -23,23 +24,23 @@ class VentaSeeder extends Seeder
             for ($i = 0; $i < $cantidadP; $i++) {
                 $producto = Productos::inRandomOrder()->first();
                 $cantidad = rand(1, 10);
-                $total += $producto->precioVenta * $cantidad;
-                $totalCompra += ($producto->precioNeto + $producto->precioIva) * $cantidad;
+                $total +=  $producto->precioIva * $cantidad;
+                $totalCompra += $producto->precioCompra * $cantidad;
                 $venta->productos()
                     ->attach(
                         $producto->id,
                         [
                             'cantidad' => $cantidad,
-                            'subtotal' => $cantidad * $producto->precioVenta,
-                            'precioCompra' => ($producto->precioNeto + $producto->precioIva),
-                            'precioVenta' => $producto->precioVenta
+                            'subtotal' => $cantidad * $producto->precioIva,
+                            'precioCompra' => $producto->precioCompra,
+                            'precioVenta' => $producto->precioIva
                         ]
                     );
             }
             $venta->precioCompra = $totalCompra;
             $venta->totalIva = $total;
-            $venta->totalNeto = $total /1.19;
-            $venta->iva = ($total/1.19)*0.19;
+            $venta->totalNeto = $total / 1.19;
+            $venta->iva = ($total / 1.19) * 0.19;
             $venta->save();
         }
     }

@@ -21,6 +21,10 @@ class Ventas extends Model
         return Productos::firstWhere('id', $this->id);
     }
 
+    public function getEstadoAttribute() {
+        return EstadoVenta::firstWhere('id', $this->estado_venta_id);
+    }
+
     public function detalle()
     {
         return $this->hasMany(DetalleVentas::class);

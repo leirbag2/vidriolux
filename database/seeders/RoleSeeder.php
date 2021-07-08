@@ -22,7 +22,6 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'usuarios.index', 'description' => 'Ver usuarios'])->assignRole($admin);
         Permission::create(['name' => 'usuarios.create', 'description' => 'Crear usuarios'])->assignRole($admin);
         Permission::create(['name' => 'usuarios.edit', 'description' => 'Modificar usuarios'])->assignRole($admin);
-        Permission::create(['name' => 'usuarios.destroy', 'description' => 'Eliminar usuarios'])->assignRole($admin);
 
         Permission::create(['name' => 'productos.index', 'description' => 'Ver productos'])->syncRoles([$admin,$bodeguero,$vendedor]);
         Permission::create(['name' => 'productos.create', 'description' => 'Crear productos'])->assignRole($admin);
@@ -36,7 +35,6 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'ventas.index', 'description' => 'Ver ventas'])->syncRoles([$admin,$vendedor]);
         Permission::create(['name' => 'ventas.create', 'description' => 'Crear ventas'])->syncRoles([$admin,$vendedor]);
         Permission::create(['name' => 'ventas.edit', 'description' => 'Modificar ventas'])->assignRole($admin);
-        Permission::create(['name' => 'ventas.destroy', 'description' => 'Eliminar ventas'])->assignRole($admin);
 
         Permission::create(['name' => 'historial.index', 'description' => 'Ver historial de actualización de stock'])->syncRoles([$admin,$bodeguero]);
         Permission::create(['name' => 'historial.create', 'description' => 'Ingresar/Retirar productos de bodega'])->syncRoles([$admin,$bodeguero]);
