@@ -67,6 +67,9 @@ class ProductoController extends Controller
         $descripcion = $request->input('description');
         $precio = $request->input('precio');
         $precioCompra = $request->input('precioCompra');
+        if($precio < 0 || $precioCompra < 0){
+            return redirect()->back()->with('error', 'Los precios deben ser mayor a 0');
+        }
         $producto = new Productos;
         $producto->codigo = $codigo;
         $producto->nombreProducto = $nombre;
@@ -124,10 +127,13 @@ class ProductoController extends Controller
         if ($tipo_estado < 1 || $tipo_estado > 2) {
             $tipo_estado = 2;
         }
-        $nombre = $request->input('nombre');
-        $descripcion = $request->input('description');
         $precio = $request->input('precio');
         $precioCompra = $request->input('precioCompra');
+        if($precio < 0 || $precioCompra < 0){
+            return redirect()->back()->with('error', 'Los precios deben ser mayor a 0');
+        }
+        $nombre = $request->input('nombre');
+        $descripcion = $request->input('description');
         $producto = Productos::find($id);
         $producto->codigo = $codigo;
         $producto->nombreProducto = $nombre;

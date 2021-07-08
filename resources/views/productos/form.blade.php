@@ -57,7 +57,7 @@
                                             title="obligatorio">*</abbr></label>
                                     <input placeholder="Precio Compra"
                                         class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
-                                        type="number" name="precioCompra" required
+                                        type="number" name="precioCompra" required min="1"
                                         value="{{ $producto->precioCompra }}">
                                 </div>
                                 <div class="w-full flex flex-col mb-3">
@@ -65,7 +65,7 @@
                                             title="obligatorio">*</abbr></label>
                                     <input placeholder="Precio neto "
                                         class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
-                                        required="required" type="number" name="precio" min="0" id="precio"
+                                        required="required" type="number" name="precio" min="1" id="precio"
                                         value="{{ $producto->precioNeto }}">
                                 </div>
                                 <div class="w-full flex flex-col mb-3">
@@ -80,7 +80,7 @@
                                             title="obligatorio">*</abbr></label>
                                     <input placeholder="Cantidad"
                                         class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4"
-                                        required="required" type="number" name="cantidad"
+                                        required="required" type="number" name="cantidad" min="0"
                                         value="{{ $producto->stock }}">
                                 </div>
                             </div>
