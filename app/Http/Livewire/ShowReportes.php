@@ -35,6 +35,7 @@ class ShowReportes extends Component
             ->where('fechaVenta', '>=', $this->fechaIn . ' 00:00:00')
             ->where('fechaVenta', '<=', $this->fechaFin . ' 23:59:59')
             ->where('name', 'LIKE', '%' . $this->vendedor . '%')
+            ->where('estado_venta_id','=', 1)
             ->orderByDesc('fechaVenta')
             ->paginate(10);
 
@@ -42,7 +43,9 @@ class ShowReportes extends Component
             ->join('users', 'ventas.users_id', '=', 'users.id')
             ->where('fechaVenta', '>=', $this->fechaIn . ' 00:00:00')
             ->where('fechaVenta', '<=', $this->fechaFin . ' 23:59:59')
-            ->where('name', 'LIKE', '%' . $this->vendedor . '%');
+            ->where('name', 'LIKE', '%' . $this->vendedor . '%')
+            ->where('estado_venta_id','=', 1);
+        
         $ventasTotal = $all->sum('totalIva');
         $ganancias = $ventasTotal - $all->sum('precioCompra');
         if ($this->fechaIn > $this->fechaFin) {
